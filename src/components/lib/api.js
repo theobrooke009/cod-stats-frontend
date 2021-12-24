@@ -9,3 +9,7 @@ export function getAllGuns() {
 export function registerUser(formdata) {
   return axios.post(`${baseUrl}/register`, formdata)
 }
+
+export function loginUser(formData) {
+  return axios.post(`${baseUrl}/login`, formData)
+}
