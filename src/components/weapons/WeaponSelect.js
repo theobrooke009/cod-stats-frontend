@@ -31,7 +31,6 @@ function WeaponList() {
           </div>
           <div className="class slot-two">
             <h2>CUSTOM CLASS 2</h2>
-
           </div>
           <div className="class slot-three">
             <h2>CUSTOM CLASS 3</h2>
@@ -56,6 +55,10 @@ function WeaponList() {
           </div>
           <div className="class slot-ten">
             <h2>CUSTOM CLASS 10</h2>
+          </div>
+          
+          <div className="selected-loadout">
+
           </div>
 
 
