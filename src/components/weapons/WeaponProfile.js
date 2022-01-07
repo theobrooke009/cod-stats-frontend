@@ -66,9 +66,6 @@ function WeaponProfile() {
     return 0
   }
 
-
-
-
   console.log(isError)
   
   return (
@@ -77,7 +74,7 @@ function WeaponProfile() {
         <section >
           <div className='title'>
             <h1>{weapon.name}</h1>
-            <select
+            <select className='profile-select dropdown button'
               onChange={setProfileStats}>
               { weapon.profileOne[0] &&
               <option value='Profile One'>{weapon.profileOne[0].profileName}</option>
@@ -96,11 +93,38 @@ function WeaponProfile() {
               }
             </select>
           </div>
-          <div className='weapon-profile'>
-            <div className='damage-profiles'>
-             
-              {
-                weapon && getProfileStats().rangeOne[0] &&
+          {/* <div className='container'> */}
+          <div className='columns'>
+            {weapon && 
+              <div className='column is-one-fifth gun-stats' >
+
+                <h3>ADS Time: {weapon.adsTime} Ms</h3>
+                <h3>ADS Movement Speed: {weapon.adsMovementSpeed} Ms</h3>
+                <h3>Strafe Speed: {weapon.strafeSpeed} Ms</h3>
+                <h3>Reload Time: {weapon.reloadTime} Ms</h3>
+                <h3>Hipfire Area: {weapon.hipfireArea} Ms</h3>
+                <h3>Bullet Velocity: {weapon.bulletVelocity} Meters per second</h3>
+                <h3>Movement Speed: {weapon.movementSpeed} Mph</h3>
+                <h3>Sprint Speed: {weapon.sprintSpeed} Mph</h3>
+                <h3>Sprint To Fire: {weapon.sprintToFire} Mph</h3>
+                <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire} Mph</h3>
+                <h3>Open Bolt Delay: {weapon.openBoltDelay} Ms</h3>
+                <h3>Magazine Size: {weapon.magSize} Ms</h3>
+              </div>
+            }
+
+            <div className=' column is-four-fifths weapon-profile'>
+              <div className='columns rate-of-fire'>
+                <div className='column is-full'>
+                  {
+                    weapon &&  <h3>Rate of Fire: {getProfileStats().fireRate}</h3>
+                  }
+                </div>
+              </div>
+
+              <div className='damage-profiles'>
+                {
+                  weapon && getProfileStats().rangeOne[0] &&
                 
                   <div className='range-component'>
                     {
@@ -112,9 +136,9 @@ function WeaponProfile() {
                     }
                   </div>
                 
-              }
-              {
-                weapon && getProfileStats().rangeTwo[0] &&
+                }
+                {
+                  weapon && getProfileStats().rangeTwo[0] &&
                 
                   <div>
                     {
@@ -125,11 +149,9 @@ function WeaponProfile() {
                       )
                     }
                   </div>
-             
-              }
-              {
-                weapon && getProfileStats().rangeThree[0] &&
-           
+                }
+                {
+                  weapon && getProfileStats().rangeThree[0] &&
                   <div>
                     {
                       getProfileStats().rangeThree.map(
@@ -140,10 +162,10 @@ function WeaponProfile() {
                     }
                   </div>
               
-              }
+                }
 
-              {
-                weapon && getProfileStats().rangeFour[0] &&
+                {
+                  weapon && getProfileStats().rangeFour[0] &&
               
                   <div>
                     {
@@ -154,16 +176,18 @@ function WeaponProfile() {
                       )
                     }
                   </div>
-              }              
+                }              
                 
               
-            </div>
-            <div>
-              <img src={weapon.image}/>
+              </div>
+              <div>
+                <img src={weapon.image}/>
 
-            </div>
+              </div>
             
-          </div> 
+            </div> 
+          </div>
+          {/* </div> */}
         </section>
       }
     </>

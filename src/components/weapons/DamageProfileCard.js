@@ -3,10 +3,11 @@ function DamageProfileCard({ profile }) {
 
     <div className='damage-ranges'>
       
-      <div className='damage-range'>
+      <div className='start-range'>
         { profile.rangeEnd > 300 && 
-          <h1 className='range-value'>Range Start: {profile.rangeStart} + meters
+          <h1 className='range-value hidden-value'>Range Start: {profile.rangeStart} + meters
           </h1>
+          
         }
 
         { profile.rangeEnd < 300 && 
@@ -15,7 +16,7 @@ function DamageProfileCard({ profile }) {
         }
       </div>
       { profile.rangeEnd < 300 &&
-        <div className='range-value'>
+        <div className='end-range'>
           <h1>Range End: {profile.rangeEnd} meters</h1>
         </div>
       }
