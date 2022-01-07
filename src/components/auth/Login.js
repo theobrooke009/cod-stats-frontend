@@ -3,6 +3,7 @@ import { loginUser } from '../lib/api.js'
 import { useNavigate } from 'react-router-dom'
 import { setToken } from '../lib/auth.js'
 
+export const userId = []
 
 function Login() {
 
@@ -18,15 +19,18 @@ function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     })
+   
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
       const { data } = await loginUser(formData)
-      console.log('data', data)
       setToken(data.token)
-      navigate('/weapons')
+      userId.push(data.userToLogin._id)
+      console.log('userId', userId)
+      navigate('/profile')
+     
     } catch (err) {
       setIsError(true)
       console.log(isError)

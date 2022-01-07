@@ -35,9 +35,6 @@ function Register() {
       console.log(error)
     }
   }
-  
-
-
   return (
     <div>
       <h1>Register Page</h1>
