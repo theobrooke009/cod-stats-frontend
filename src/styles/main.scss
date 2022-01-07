@@ -90,7 +90,7 @@
   flex-direction: column;
   align-items: center;
   img{ 
-    width: 1000px;
+    width: 800px;
     height: auto;
   }
 }
@@ -104,17 +104,21 @@
 
 .damage-profiles{
   display: flex;
-  justify-content: flex-start;
   flex-direction: row;
+  margin-bottom: 25px;
+  
 }
 
+
+
 .damage-ranges{
-  border: 1px solid black;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
   h1{
     font-size: 25px;
   }
-  width: 175px;;
-  .damage-range{
-    display: flex;
-  }
+  width: 250px;
 }
+
+
