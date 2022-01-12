@@ -18,16 +18,20 @@ function CreateAClass() {
     barrelAds: 0,
     opticAds: 0,
     stockAds: 0,
+    underBarrelAds: 0,
     perkAds: 0,
     ammoAds: 0,
     gripAds: 0,
   })
+
+  const sumAds = Object.values(adsModifier).reduce((a, b) => a + b, 0)
   const [rangeModifier, setRangeModifier] = React.useState({
     muzzleRange: 0,
     laserRange: 0,
     barrelRange: 0,
     opticRange: 0,
     stockRange: 0,
+    underBarrelRange: 0,
     perkRange: 0,
     ammoRange: 0,
     gripRange: 0,
@@ -39,6 +43,7 @@ function CreateAClass() {
     barrelVel: 0,
     opticVel: 0,
     stockVel: 0,
+    underBarrelVel: 0,
     perkVel: 0,
     ammoVel: 0,
     gripVel: 0,
@@ -50,6 +55,7 @@ function CreateAClass() {
     barrelVert: 0,
     opticVert: 0,
     stockVert: 0,
+    underBarrelVert: 0,
     perkVert: 0,
     ammoVert: 0,
     gripVert: 0,
@@ -61,6 +67,7 @@ function CreateAClass() {
     barrelHoriz: 0,
     opticHoriz: 0,
     stockHoriz: 0,
+    underBarrelHoriz: 0,
     perkHoriz: 0,
     ammoHoriz: 0,
     gripHoriz: 0,
@@ -72,6 +79,7 @@ function CreateAClass() {
     barrelMov: 0,
     opticMov: 0,
     stockMov: 0,
+    underBarrelMov: 0,
     perkMov: 0,
     ammoMov: 0,
     gripMov: 0,
@@ -83,6 +91,7 @@ function CreateAClass() {
     barrelAdsMov: 0,
     opticAdsMov: 0,
     stockAdsMov: 0,
+    underBarrelAdsMov: 0,
     perkAdsMov: 0,
     ammoAdsMov: 0,
     gripAdsMov: 0,
@@ -94,6 +103,7 @@ function CreateAClass() {
     barrelSprintSpeed: 0,
     opticSprintSpeed: 0,
     stockSprintSpeed: 0,
+    underBarrelSprintSpeed: 0,
     perkSprintSpeed: 0,
     ammoSprintSpeed: 0,
     gripSprintSpeed: 0,
@@ -105,6 +115,7 @@ function CreateAClass() {
     barrelMag: 0,
     opticMag: 0,
     stockMag: 0,
+    underBarrelMag: 0,
     perkMag: 0,
     ammoMag: 0,
     gripMag: 0,
@@ -116,6 +127,7 @@ function CreateAClass() {
     barrelHipFire: 0,
     opticHipFire: 0,
     stockHipFire: 0,
+    underBarrelHipFire: 0,
     perkHipFire: 0,
     ammoHipFire: 0,
     gripHipFire: 0,
@@ -127,6 +139,7 @@ function CreateAClass() {
     barrelSprintToFire: 0,
     opticSprintToFire: 0,
     stockSprintToFire: 0,
+    underBarrelSprintToFire: 0,
     perkSprintToFire: 0,
     ammoSprintToFire: 0,
     gripSprintToFire: 0,
@@ -138,6 +151,7 @@ function CreateAClass() {
     barrelTacSprint: 0,
     opticTacSprint: 0,
     stockTacSprint: 0,
+    underBarrelTacSprint: 0,
     perkTacSprint: 0,
     ammoTacSprint: 0,
     gripTacSprint: 0,
@@ -149,6 +163,7 @@ function CreateAClass() {
     barrelReload: 0,
     opticReload: 0,
     stockReload: 0,
+    underBarrelReload: 0,
     perkReload: 0,
     ammoReload: 0,
     gripReload: 0,
@@ -161,6 +176,7 @@ function CreateAClass() {
     barrelStrafe: 0,
     opticStrafe: 0,
     stockStrafe: 0,
+    underBarrelStrafe: 0,
     perkStrafe: 0,
     ammoStrafe: 0,
     gripStrafe: 0,
@@ -180,6 +196,12 @@ function CreateAClass() {
   let selectMuzzle = {}
   let selectLaser = {}
   let selectBarrel = {}
+  let selectOptic = {}
+  let selectStock = {}
+  let selectUnderBarrel = {}
+  let selectPerk = {}
+  let selectAmmo = {}
+  let selectGrip = {}
   
 
   React.useEffect(() => {
@@ -565,6 +587,109 @@ function CreateAClass() {
     return 0
   }
 
+  function oneOptic(e) {
+    if (attachments && weapon) {
+      const selectedOptic = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
+
+      selectOptic = selectedOptic
+      if (selectOptic[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, opticAds: selectOptic[0].adsModifier }
+        )
+      } else (adsModifier.opticAds = 0)
+
+      if (selectOptic[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, opticRange: selectOptic[0].rangeModifier,
+        })
+      } else (rangeModifier.opticRange = 0)
+
+      if (selectOptic[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, opticVel: selectOptic[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.opticVel = 0)
+
+      if (selectOptic[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, opticVert: selectOptic[0].verticalRecoil,
+        })
+      } else (vertRecoil.opticVert = 0)
+
+      if (selectOptic[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, opticHoriz: selectOptic[0].horizontalRecoil,
+        })
+      } else (horizRecoil.opticHoriz = 0)
+
+      if (selectOptic[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, opticMov: selectOptic[0].movementSpeed,
+        })
+      } else (movSpeed.opticMov = 0)
+
+      if (selectOptic[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, opticAdsMov: selectOptic[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.opticAdsMov = 0 )
+
+      if (selectOptic[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, opticSprintSpeed: selectOptic[0].sprintSpeed,
+        })
+      } else (sprintSpeed.opticSprintSpeed = 0)
+      
+      if (selectOptic[0].magSize) {
+        setMagSize({
+          ...magSize, opticMag: selectOptic[0].magSize,
+        })
+      } else (magSize.opticMag = 0)
+
+      if (selectOptic[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, opticHipFire: selectOptic[0].hipfireArea,
+        })
+      } else (hipFire.opticHipFire = 0)
+
+      if (selectOptic[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, opticSprintToFire: selectOptic[0].sprintToFire,
+        })
+      } else (sprintToFire.opticSprintToFire = 0)
+
+      if (selectOptic[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, opticTacSprint: selectOptic[0].tacSprintToFire,
+        })
+      } else (tacSprint.opticTacSprint = 0)
+
+      if (selectOptic[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, opticReload: selectOptic[0].reloadTime,
+        })
+      } else (reloadTime.opticReload = 0)
+
+      if (selectOptic[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, opticStrafe: selectOptic[0].strafeSpeed,
+        })
+      } else (strafe.opticStrafe = 0)
+
+      return selectedOptic
+    } 
+
+
+    return 0
+  }
+
+  //Stock functions
+
   function getStock() {
     if (attachments && weapon) {
       return attachments.filter(
@@ -575,6 +700,110 @@ function CreateAClass() {
     }
     return 0
   }
+
+  function oneStock(e) {
+    if (attachments && weapon) {
+      const selectedStock = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
+
+      selectStock = selectedStock
+      if (selectStock[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, stockAds: selectStock[0].adsModifier }
+        )
+      } else (adsModifier.stockAds = 0)
+
+      if (selectStock[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, stockRange: selectStock[0].rangeModifier,
+        })
+      } else (rangeModifier.stockRange = 0)
+
+      if (selectStock[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, stockVel: selectStock[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.stockVel = 0)
+
+      if (selectStock[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, stockVert: selectStock[0].verticalRecoil,
+        })
+      } else (vertRecoil.stockVert = 0)
+
+      if (selectStock[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, stockHoriz: selectStock[0].horizontalRecoil,
+        })
+      } else (horizRecoil.stockHoriz = 0)
+
+      if (selectStock[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, stockMov: selectStock[0].movementSpeed,
+        })
+      } else (movSpeed.stockMov = 0)
+
+      if (selectStock[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, stockAdsMov: selectStock[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.stockAdsMov = 0 )
+
+      if (selectStock[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, stockSprintSpeed: selectStock[0].sprintSpeed,
+        })
+      } else (sprintSpeed.stockSprintSpeed = 0)
+      
+      if (selectStock[0].magSize) {
+        setMagSize({
+          ...magSize, stockMag: selectStock[0].magSize,
+        })
+      } else (magSize.stockMag = 0)
+
+      if (selectStock[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, stockHipFire: selectStock[0].hipfireArea,
+        })
+      } else (hipFire.stockHipFire = 0)
+
+      if (selectStock[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, stockSprintToFire: selectStock[0].sprintToFire,
+        })
+      } else (sprintToFire.stockSprintToFire = 0)
+
+      if (selectStock[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, stockTacSprint: selectStock[0].tacSprintToFire,
+        })
+      } else (tacSprint.stockTacSprint = 0)
+
+      if (selectStock[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, stockReload: selectStock[0].reloadTime,
+        })
+      } else (reloadTime.stockReload = 0)
+
+      if (selectStock[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, stockStrafe: selectStock[0].strafeSpeed,
+        })
+      } else (strafe.stockStrafe = 0)
+
+      return selectedStock
+    } 
+
+
+    return 0
+  }
+
+
+  //Underbarrel functions
 
   function getUnderBarrel() {
     if (attachments && weapon) {
@@ -587,6 +816,109 @@ function CreateAClass() {
     return 0
   }
 
+  function oneUnderBarrel(e) {
+    if (attachments && weapon) {
+      const selectedUnderBarrel = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
+
+      selectUnderBarrel = selectedUnderBarrel
+      if (selectUnderBarrel[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, underBarrelAds: selectUnderBarrel[0].adsModifier }
+        )
+      } else (adsModifier.underBarrelAds = 0)
+
+      if (selectUnderBarrel[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, underBarrelRange: selectUnderBarrel[0].rangeModifier,
+        })
+      } else (rangeModifier.underBarrelRange = 0)
+
+      if (selectUnderBarrel[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, underBarrelVel: selectUnderBarrel[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.underBarrelVel = 0)
+
+      if (selectUnderBarrel[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, underBarrelVert: selectUnderBarrel[0].verticalRecoil,
+        })
+      } else (vertRecoil.underBarrelVert = 0)
+
+      if (selectUnderBarrel[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, underBarrelHoriz: selectUnderBarrel[0].horizontalRecoil,
+        })
+      } else (horizRecoil.underBarrelHoriz = 0)
+
+      if (selectUnderBarrel[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, underBarrelMov: selectUnderBarrel[0].movementSpeed,
+        })
+      } else (movSpeed.underBarrelMov = 0)
+
+      if (selectUnderBarrel[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, underBarrelAdsMov: selectUnderBarrel[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.underBarrelAdsMov = 0 )
+
+      if (selectUnderBarrel[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, UnderBarrelSprintSpeed: selectUnderBarrel[0].sprintSpeed,
+        })
+      } else (sprintSpeed.underBarrelSprintSpeed = 0)
+      
+      if (selectUnderBarrel[0].magSize) {
+        setMagSize({
+          ...magSize, underBarrelMag: selectUnderBarrel[0].magSize,
+        })
+      } else (magSize.underBarrelMag = 0)
+
+      if (selectUnderBarrel[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, underBarrelHipFire: selectUnderBarrel[0].hipfireArea,
+        })
+      } else (hipFire.underBarrelHipFire = 0)
+
+      if (selectUnderBarrel[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, underBarrelSprintToFire: selectUnderBarrel[0].sprintToFire,
+        })
+      } else (sprintToFire.underBarrelSprintToFire = 0)
+
+      if (selectUnderBarrel[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, underBarrelTacSprint: selectUnderBarrel[0].tacSprintToFire,
+        })
+      } else (tacSprint.underBarrelTacSprint = 0)
+
+      if (selectUnderBarrel[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, underBarrelReload: selectUnderBarrel[0].reloadTime,
+        })
+      } else (reloadTime.underBarrelReload = 0)
+
+      if (selectUnderBarrel[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, underBarrelStrafe: selectUnderBarrel[0].strafeSpeed,
+        })
+      } else (strafe.underBarrelStrafe = 0)
+
+      return selectedUnderBarrel
+    } 
+
+
+    return 0
+  }
+
+  //perk functions
+
   function getPerk() {
     if (attachments && weapon) {
       return attachments.filter(
@@ -597,6 +929,110 @@ function CreateAClass() {
     }
     return 0
   }
+
+  function onePerk(e) {
+    if (attachments && weapon) {
+      const selectedPerk = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
+
+      selectPerk = selectedPerk
+      if (selectPerk[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, perkAds: selectPerk[0].adsModifier }
+        )
+      } else (adsModifier.perkAds = 0)
+
+      if (selectPerk[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, perkRange: selectPerk[0].rangeModifier,
+        })
+      } else (rangeModifier.perkRange = 0)
+
+      if (selectPerk[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, perkVel: selectPerk[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.perkVel = 0)
+
+      if (selectPerk[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, perkVert: selectPerk[0].verticalRecoil,
+        })
+      } else (vertRecoil.perkVert = 0)
+
+      if (selectPerk[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, perkHoriz: selectPerk[0].horizontalRecoil,
+        })
+      } else (horizRecoil.perkHoriz = 0)
+
+      if (selectPerk[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, perkMov: selectPerk[0].movementSpeed,
+        })
+      } else (movSpeed.perkMov = 0)
+
+      if (selectPerk[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, perkAdsMov: selectPerk[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.perkAdsMov = 0 )
+
+      if (selectPerk[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, perkSprintSpeed: selectPerk[0].sprintSpeed,
+        })
+      } else (sprintSpeed.perkSprintSpeed = 0)
+      
+      if (selectPerk[0].magSize) {
+        setMagSize({
+          ...magSize, perkMag: selectPerk[0].magSize,
+        })
+      } else (magSize.perkMag = 0)
+
+      if (selectPerk[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, perkHipFire: selectPerk[0].hipfireArea,
+        })
+      } else (hipFire.perkHipFire = 0)
+
+      if (selectPerk[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, perkSprintToFire: selectPerk[0].sprintToFire,
+        })
+      } else (sprintToFire.perkSprintToFire = 0)
+
+      if (selectPerk[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, perkTacSprint: selectPerk[0].tacSprintToFire,
+        })
+      } else (tacSprint.perkTacSprint = 0)
+
+      if (selectPerk[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, perkReload: selectPerk[0].reloadTime,
+        })
+      } else (reloadTime.perkReload = 0)
+
+      if (selectPerk[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, perkStrafe: selectPerk[0].strafeSpeed,
+        })
+      } else (strafe.perkStrafe = 0)
+
+      return selectedPerk
+    } 
+
+
+    return 0
+  }
+
+
+  //Ammo functions
 
   function getAmmo() {
     if (attachments && weapon) {
@@ -609,6 +1045,108 @@ function CreateAClass() {
     return 0
   }
 
+  function oneAmmo(e) {
+    if (attachments && weapon) {
+      const selectedAmmo = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
+
+      selectAmmo = selectedAmmo
+      if (selectAmmo[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, ammoAds: selectAmmo[0].adsModifier }
+        )
+      } else (adsModifier.ammoAds = 0)
+
+      if (selectAmmo[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, ammoRange: selectAmmo[0].rangeModifier,
+        })
+      } else (rangeModifier.ammoRange = 0)
+
+      if (selectAmmo[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, ammoVel: selectAmmo[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.ammoVel = 0)
+
+      if (selectAmmo[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, ammoVert: selectAmmo[0].verticalRecoil,
+        })
+      } else (vertRecoil.ammoVert = 0)
+
+      if (selectAmmo[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, ammoHoriz: selectAmmo[0].horizontalRecoil,
+        })
+      } else (horizRecoil.ammoHoriz = 0)
+
+      if (selectAmmo[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, ammoMov: selectAmmo[0].movementSpeed,
+        })
+      } else (movSpeed.ammoMov = 0)
+
+      if (selectAmmo[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, ammoAdsMov: selectAmmo[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.ammoAdsMov = 0 )
+
+      if (selectAmmo[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, ammoSprintSpeed: selectAmmo[0].sprintSpeed,
+        })
+      } else (sprintSpeed.ammoSprintSpeed = 0)
+      
+      if (selectAmmo[0].magSize) {
+        setMagSize({
+          ...magSize, ammoMag: selectAmmo[0].magSize,
+        })
+      } else (magSize.ammoMag = 0)
+
+      if (selectAmmo[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, ammoHipFire: selectAmmo[0].hipfireArea,
+        })
+      } else (hipFire.ammoHipFire = 0)
+
+      if (selectAmmo[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, ammoSprintToFire: selectAmmo[0].sprintToFire,
+        })
+      } else (sprintToFire.ammoSprintToFire = 0)
+
+      if (selectAmmo[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, ammoTacSprint: selectAmmo[0].tacSprintToFire,
+        })
+      } else (tacSprint.ammoTacSprint = 0)
+
+      if (selectAmmo[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, ammoReload: selectAmmo[0].reloadTime,
+        })
+      } else (reloadTime.ammoReload = 0)
+
+      if (selectAmmo[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, ammoStrafe: selectAmmo[0].strafeSpeed,
+        })
+      } else (strafe.ammoStrafe = 0)
+
+      return selectedAmmo
+    } 
+
+
+    return 0
+  }
+  //Grip functions
+
   function getGrip() {
     if (attachments && weapon) {
       return attachments.filter(
@@ -620,19 +1158,120 @@ function CreateAClass() {
     return 0
   }
 
-  function setClass(e) {
-    if (part === 'Muzzle') {
-      setMuzzle(e.target.innerText)
-    }
+  function oneGrip(e) {
+    if (attachments && weapon && e.target.innerHTML !== 'Select Grip') {
+      const selectedGrip = attachments.filter(
+        attachment => {
+          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
+          
+        }
+      )
 
-    if (part === 'Laser') {
-      setLaser(e.target.innerText)
-    }
-    if (part === 'Barrel') {
-      setBarrel(e.target.innerText)
-    }
+      selectGrip = selectedGrip
+      if (selectGrip[0].adsModifier){
+        setAdsModifier(
+          { ...adsModifier, gripAds: selectGrip[0].adsModifier }
+        )
+      } else (adsModifier.gripAds = 0)
+
+      if (selectGrip[0].rangeModifier){
+        setRangeModifier({
+          ...rangeModifier, gripRange: selectGrip[0].rangeModifier,
+        })
+      } else (rangeModifier.gripRange = 0)
+
+      if (selectGrip[0].bulletVelocityModifier) {
+        setBulletVelMod({
+          ...bulletVelMod, gripVel: selectGrip[0].bulletVelocityModifier,
+        })
+      } else (bulletVelMod.gripVel = 0)
+
+      if (selectGrip[0].verticalRecoil) {
+        setVertRecoil({
+          ...vertRecoil, gripVert: selectGrip[0].verticalRecoil,
+        })
+      } else (vertRecoil.gripVert = 0)
+
+      if (selectGrip[0].horizontalRecoil) {
+        setHorizRecoil({
+          ...horizRecoil, gripHoriz: selectGrip[0].horizontalRecoil,
+        })
+      } else (horizRecoil.gripHoriz = 0)
+
+      if (selectGrip[0].movementSpeed) {
+        setMovSpeed({
+          ...movSpeed, gripMov: selectGrip[0].movementSpeed,
+        })
+      } else (movSpeed.gripMov = 0)
+
+      if (selectGrip[0].adsMovementSpeed) {
+        setAdsMovSpeed({
+          ...adsMovSpeed, gripAdsMov: selectGrip[0].adsMovementSpeed,
+        })
+      } else (adsMovSpeed.gripAdsMov = 0 )
+
+      if (selectGrip[0].sprintSpeed) {
+        setSprintSpeed({
+          ...sprintSpeed, gripSprintSpeed: selectGrip[0].sprintSpeed,
+        })
+      } else (sprintSpeed.gripSprintSpeed = 0)
       
+      if (selectGrip[0].magSize) {
+        setMagSize({
+          ...magSize, gripMag: selectGrip[0].magSize,
+        })
+      } else (magSize.gripMag = 0)
+
+      if (selectGrip[0].hipfireArea) {
+        setHipFire({
+          ...hipFire, gripHipFire: selectGrip[0].hipfireArea,
+        })
+      } else (hipFire.gripHipFire = 0)
+
+      if (selectGrip[0].sprintToFire) {
+        setSprintToFire({
+          ...sprintToFire, gripSprintToFire: selectGrip[0].sprintToFire,
+        })
+      } else (sprintToFire.gripSprintToFire = 0)
+
+      if (selectGrip[0].tacSprintToFire) {
+        setTacSprint({
+          ...tacSprint, gripTacSprint: selectGrip[0].tacSprintToFire,
+        })
+      } else (tacSprint.gripTacSprint = 0)
+
+      if (selectGrip[0].reloadTime) {
+        setReloadTime({
+          ...reloadTime, gripReload: selectGrip[0].reloadTime,
+        })
+      } else (reloadTime.gripReload = 0)
+
+      if (selectGrip[0].strafeSpeed) {
+        setStrafe({
+          ...strafe, gripStrafe: selectGrip[0].strafeSpeed,
+        })
+      } else (strafe.gripStrafe = 0)
+
+      return selectedGrip
+    } 
+
+
+    return 0
   }
+
+  // function setClass(e) {
+  //   if (part === 'Muzzle') {
+  //     setMuzzle(e.target.innerText)
+  //   }
+
+  //   if (part === 'Laser') {
+  //     setLaser(e.target.innerText)
+  //   }
+  //   if (part === 'Barrel') {
+  //     setBarrel(e.target.innerText)
+  //   }
+      
+  // }
 
   const setProfileStats = (e)=> {
     setProfile(e.target.value)
@@ -784,7 +1423,7 @@ function CreateAClass() {
           getOptic().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneOptic}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -816,7 +1455,7 @@ function CreateAClass() {
           getStock().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneStock}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -839,7 +1478,7 @@ function CreateAClass() {
           getUnderBarrel().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -853,13 +1492,13 @@ function CreateAClass() {
                 <button className='button is-black'>Perk</button>
                 { attachments &&
             <select className='dropdown button'>
-              <option >Select Perk</option>
+              <option disabled >Select Perk</option>
               {
                 attachments &&
           getPerk().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -879,7 +1518,7 @@ function CreateAClass() {
           getAmmo().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneAmmo}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -893,13 +1532,13 @@ function CreateAClass() {
                 <button className='button is-black'>Grip</button>
                 { attachments &&
             <select className='dropdown button'>
-              <option >Select Grip</option>
+              <option default>Select Grip</option>
               {
                 attachments &&
           getGrip().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={setClass}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -910,7 +1549,7 @@ function CreateAClass() {
             </div>
             <div className='base-stats'>
               {
-                <h3>ADS Time: {ads + adsModifier.laserAds + adsModifier.muzzleAds}</h3>
+                <h3>ADS Time: {ads + sumAds }</h3>
               }
             </div>
             
