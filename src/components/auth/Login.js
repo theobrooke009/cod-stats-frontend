@@ -3,7 +3,6 @@ import { loginUser } from '../lib/api.js'
 import { useNavigate } from 'react-router-dom'
 import { setToken } from '../lib/auth.js'
 
-export const userId = []
 
 function Login() {
 
@@ -26,10 +25,10 @@ function Login() {
     event.preventDefault()
     try {
       const { data } = await loginUser(formData)
-      setToken(data.token)
-      userId.push(data.userToLogin._id)
-      console.log('userId', userId)
-      navigate('/profile')
+      
+      setToken(data.token) 
+      console.log('token here', data.token)
+      navigate('/weapons')
      
     } catch (err) {
       setIsError(true)

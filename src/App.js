@@ -4,6 +4,7 @@ import WeaponSelect from './components/weapons/WeaponSelect.js'
 import Register from './components/auth/Register.js'
 import Login from './components/auth/Login.js'
 import WeaponProfile from './components/weapons/WeaponProfile.js'
+import CreateAClass from './components/weapons/CreateAClass.js'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/weapons/:weaponId" element={<WeaponProfile/>}/>
+        <Route path="/weapons/:weaponId/build" element={<CreateAClass/>}/>
 
       </Routes>
     </BrowserRouter>

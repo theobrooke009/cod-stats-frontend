@@ -13,6 +13,58 @@
 
 }
 
+.weapon-image{
+  img{ 
+    width: 500px;
+    height: auto;
+    margin: 20px 10px;
+  }
+}
+
+
+.weapon-stats{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .stats-title{
+    width: 700px;
+  }
+  h2{
+    font-size: 35px;
+    color: white;
+    background-color: black;
+    text-align: center;
+  }
+  h3{
+    font-size: 25px;
+  }
+  .stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin: 0 10px 10px 10px;
+    .stat-boxes{
+      margin: 10px 10px 10px 10px;
+    }
+  }
+}
+
+.create-class{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .game-buttons{
   display: flex;
   justify-content: center;
@@ -83,15 +135,21 @@
   }
 }
 
+.profile{
+  width: 3000px;
+}
+
 .weapon-profile{
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
+}
+
+.weapon-page{
+  display: flex;
+  justify-content: center;
   align-items: flex-start;
-  img{ 
-    width: 800px;
-    height: auto;
-  }
 }
 
 
@@ -102,18 +160,26 @@
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  margin: 20px 10px;
+  .dropdown{
+    width: 250px;
+  }
 }
 
-.damage-profiles{
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 25px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  width: 800px;
+.damage-profile{
+  .stats-title{
+    width: 700px;
+  }
+  h2{
+    font-size: 35px;
+    color: white;
+    background-color: black;
+    text-align: center;
+  }
+  h3{
+    font-size: 25px;
+  }
 }
-
-
 
 .damage-ranges{
   display: flex;
@@ -129,8 +195,6 @@
   .end-range{
     padding-bottom: 10px;
   }
-
-  
 }
 
 .rate-of-fire{
@@ -161,3 +225,52 @@
   }
 
 
+  .profile-and-create{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-buttons{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .profile-select{
+    width: 250px;
+    margin: 0 5px;
+  }
+
+  .header{
+    display: flex;
+    justify-content: center;
+  }
+
+  .range-boxes{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px 10px 10px;
+  }
+
+
+.attachments{
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  align-items: center;
+  border: 1px solid black;
+  .weapon-image{
+display: flex;
+justify-content: center;
+  }
+  .weapon-part{
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+  }
+  .columns{
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+}

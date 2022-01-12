@@ -10,7 +10,8 @@ function WeaponList() {
   const [isError, setIsError] = React.useState(false)
 
 
- 
+  console.log('here',weapons)
+  
   React.useEffect(() => {
     const getData = async () => {
       try {
@@ -27,7 +28,7 @@ function WeaponList() {
   
   function setGameState(e){
     setGame(e.target.innerText)
-    setType('')
+    // setType('')
   }
 
   function setWeaponType(e){
@@ -82,7 +83,7 @@ function WeaponList() {
         )
     }
     
-
+   
   }
 
   return (
