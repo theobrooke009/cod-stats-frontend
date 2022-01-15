@@ -21,6 +21,11 @@ export function getOneWeapon(weaponId) {
   return axios.get(`${baseUrl}/weapons/${weaponId}`)
 }
 
+
+export function createAClass(weaponId, formData) {
+  return axios.post(`${baseUrl}/weapons/${weaponId}/build`, formData, headers())
+}
+
 export function registerUser(formdata) {
   return axios.post(`${baseUrl}/register`, formdata)
 }

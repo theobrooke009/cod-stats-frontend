@@ -1,17 +1,17 @@
 import React from 'react'
-import { getOneWeapon } from '../lib/api.js'
-import { getAllAttachments } from '../lib/api.js'
+// import { getOneWeapon } from '../lib/api.js'
+import { getAllAttachments, createAClass, getOneWeapon } from '../lib/api.js'
 import { useParams } from 'react-router-dom'
 import DamageProfileCard from './DamageProfileCard.js'
+import { useNavigate } from 'react-router-dom'
 
 
 
 function CreateAClass() {
   const [weapon, setWeapon] = React.useState(null)
   const [attachments, setAttachments] = React.useState(null)
-  const [muzzle, setMuzzle] = React.useState()
-  const [laser, setLaser] = React.useState(null)
   const [ads, setAds] = React.useState(null)
+
   const [adsModifier, setAdsModifier] = React.useState({
     muzzleAds: 0,
     laserAds: 0,
@@ -25,6 +25,7 @@ function CreateAClass() {
   })
 
   const sumAds = Object.values(adsModifier).reduce((a, b) => a + b, 0)
+
   const [rangeModifier, setRangeModifier] = React.useState({
     muzzleRange: 0,
     laserRange: 0,
@@ -36,6 +37,8 @@ function CreateAClass() {
     ammoRange: 0,
     gripRange: 0,
   })
+
+  const sumRange = Object.values(rangeModifier).reduce( (a, b) => a + b, 0)
 
   const [bulletVelMod, setBulletVelMod] = React.useState({
     muzzleVel: 0,
@@ -49,6 +52,8 @@ function CreateAClass() {
     gripVel: 0,
   })
 
+  const sumBulletVel = Object.values(bulletVelMod).reduce( (a, b) => a + b, 0)
+
   const [vertRecoil, setVertRecoil] = React.useState({
     muzzleVert: 0,
     laserVert: 0,
@@ -60,6 +65,8 @@ function CreateAClass() {
     ammoVert: 0,
     gripVert: 0,
   })
+
+  const sumVertRec = Object.values(vertRecoil).reduce( (a, b) => a + b, 0)
 
   const [horizRecoil, setHorizRecoil] = React.useState({
     muzzleHoriz: 0,
@@ -73,6 +80,8 @@ function CreateAClass() {
     gripHoriz: 0,
   })
 
+  const sumHorizRec = Object.values(horizRecoil).reduce( (a, b) => a + b, 0)
+
   const [movSpeed, setMovSpeed] = React.useState({
     muzzleMov: 0,
     laserMov: 0,
@@ -84,6 +93,8 @@ function CreateAClass() {
     ammoMov: 0,
     gripMov: 0,
   })
+
+  const sumMovSpeed = Object.values(movSpeed).reduce( (a, b) => a + b, 0)
 
   const [adsMovSpeed, setAdsMovSpeed] = React.useState({
     muzzleAdsMov: 0,
@@ -97,6 +108,8 @@ function CreateAClass() {
     gripAdsMov: 0,
   })
 
+  const sumAdsMovSpeed = Object.values(adsMovSpeed).reduce( (a, b) => a + b, 0)
+
   const [sprintSpeed, setSprintSpeed] = React.useState({
     muzzleSprintSpeed: 0,
     laserSprintSpeed: 0,
@@ -108,6 +121,8 @@ function CreateAClass() {
     ammoSprintSpeed: 0,
     gripSprintSpeed: 0,
   })
+
+  const sumSprintSpeed = Object.values(sprintSpeed).reduce( (a, b) => a + b, 0)
 
   const [magSize, setMagSize] = React.useState({
     muzzleMag: 0,
@@ -121,6 +136,8 @@ function CreateAClass() {
     gripMag: 0,
   })
 
+  const sumMagSize = Object.values(magSize).reduce( (a, b) => a + b, 0)
+
   const [hipFire, setHipFire] = React.useState({
     muzzleHipFire: 0,
     laserHipFire: 0,
@@ -132,6 +149,8 @@ function CreateAClass() {
     ammoHipFire: 0,
     gripHipFire: 0,
   })
+
+  const sumHipFire = Object.values(hipFire).reduce( (a, b) => a + b, 0)
 
   const [sprintToFire, setSprintToFire] = React.useState({
     muzzleSprintToFire: 0,
@@ -145,6 +164,8 @@ function CreateAClass() {
     gripSprintToFire: 0,
   })
 
+  const sumSprintToFire = Object.values(sprintToFire).reduce( (a, b) => a + b, 0)
+
   const [tacSprint, setTacSprint] = React.useState({
     muzzleTacSprint: 0,
     laserTacSprint: 0,
@@ -157,6 +178,8 @@ function CreateAClass() {
     gripTacSprint: 0,
   })
 
+  const sumTacSprint = Object.values(tacSprint).reduce( (a, b) => a + b, 0)
+
   const [reloadTime, setReloadTime] = React.useState({
     muzzleReload: 0,
     laserReload: 0,
@@ -168,6 +191,8 @@ function CreateAClass() {
     ammoReload: 0,
     gripReload: 0,
   })
+
+  const sumReloadTime = Object.values(reloadTime).reduce( (a, b) => a + b, 0)
 
 
   const [strafe, setStrafe] = React.useState({
@@ -182,16 +207,30 @@ function CreateAClass() {
     gripStrafe: 0,
   })
 
-  
-  const [barrel, setBarrel] = React.useState(null)
-  const [part, setPart] = React.useState('')
+  const sumStrafe = Object.values(strafe).reduce( (a, b) => a + b, 0)
+
   const [isError, setIsError] = React.useState(false)
   const [profile, setProfile] = React.useState('Profile One')
   const { weaponId } = useParams()
+  const [formData, setFormData] = React.useState({
+    profile: '',
+    name: '',
+    image: '',
+    muzzle: '',
+    barrel: '',
+    laser: '',
+    optic: '',
+    stock: '',
+    underBarrel: '',
+    ammunition: '',
+    rearGrip: '',
+    perk: '',
+  })
 
-  console.log(part, setPart, isError,  muzzle, sprintSpeed, reloadTime, setSprintSpeed, bulletVelMod, setBulletVelMod, setMuzzle, laser, setLaser, barrel, setBarrel, ads, setAds, rangeModifier, adsMovSpeed, movSpeed, setMovSpeed, setRangeModifier, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, magSize, hipFire, sprintToFire, tacSprint, strafe, setAdsModifier)
+  console.log(isError, setFormData, setSprintSpeed, setBulletVelMod, ads, setAds, setMovSpeed, setRangeModifier, setVertRecoil, setHorizRecoil, setAdsModifier, sumRange, sumBulletVel, sumVertRec, sumHorizRec, sumMovSpeed, setProfile, sumAdsMovSpeed, sumSprintSpeed, sumMagSize, sumHipFire, sumSprintToFire, sumTacSprint, sumReloadTime, sumStrafe, createAClass)
 
-  console.log('ADS', adsModifier)
+  const navigate = useNavigate()
+
 
   let selectMuzzle = {}
   let selectLaser = {}
@@ -235,7 +274,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Muzzle'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Muzzle' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -344,20 +383,20 @@ function CreateAClass() {
   }
 
 
-
-
   //Laser Functions
 
   function getLaser() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Laser'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Laser' && attachment.attachmentName !== 'None'
         }
       )
     }
     return 0
   }
+
+
 
   function oneLaser(e) {
     if (attachments && weapon) {
@@ -466,7 +505,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Barrel'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Barrel' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -580,7 +619,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Optic'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Optic' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -694,7 +733,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Stock'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Stock' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -809,7 +848,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Underbarrel'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Underbarrel' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -923,7 +962,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Perk'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Perk' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -1038,7 +1077,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammunition'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammunition' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -1151,7 +1190,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Rear Grip'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Rear Grip' && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -1259,23 +1298,11 @@ function CreateAClass() {
     return 0
   }
 
-  // function setClass(e) {
-  //   if (part === 'Muzzle') {
-  //     setMuzzle(e.target.innerText)
-  //   }
+  //Damage Profile functions
 
-  //   if (part === 'Laser') {
-  //     setLaser(e.target.innerText)
-  //   }
-  //   if (part === 'Barrel') {
-  //     setBarrel(e.target.innerText)
-  //   }
-      
+  // const setProfileStats = (e)=> {
+  //   setProfile(e.target.value)
   // }
-
-  const setProfileStats = (e)=> {
-    setProfile(e.target.value)
-  }
 
   const getProfileStats = () => {
     if (weapon){
@@ -1301,6 +1328,27 @@ function CreateAClass() {
     return 0
   }
 
+  //form submit
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      const { data } = await createAClass(weaponId, formData)
+      console.log('data here', data)
+      navigate('/weapons')
+    } catch (err) {
+      console.log(err)
+      setIsError(err)
+    }
+  }
+
+  const handleChange = e => {
+    console.log('FORM STUFF', e.target.value)
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  console.log('form data', formData)
+
 
   return (
     
@@ -1311,66 +1359,73 @@ function CreateAClass() {
      
         <div>
           <h1>{weapon.name}</h1>
-          
         </div>
-
+       
         <div className='attachments'>
           <div className='main-div'>
-
-            {/*Damage Profile*/}
-            <div className='columns is-one-fifth'>
+            <form
+              onSubmit={(handleSubmit)}>
+              {/*Damage Profile*/}
+              <div className='columns is-one-fifth'>
               
-              <div className=" column profile-and-create">
-                <button className='button is-black'>Stock</button>
-                <select className='dropdown button'
-                  onChange={setProfileStats}>
-                  <option value='Profile One'>Select Damage Profile</option>
-                  { weapon.profileOne[0] &&
-              <option value='Profile One'>{weapon.profileOne[0].profileName}</option>
-                  }
-                  { weapon.profileTwo[0] &&
-              <option value='Profile Two'>{weapon.profileTwo[0].profileName}</option>
-                  }
-                  { weapon.profileThree[0] &&
-              <option value>{weapon.profileThree[0].profileName}</option>
-                  }
-                  { weapon.profileFour[0] &&
-              <option value>{weapon.profileFour[0].profileName}</option>
-                  }
-                  { weapon.profileFive[0] &&
-              <option value>{weapon.profileFive[0].profileName}</option>
-                  }
-                </select>
-              </div>
+                <div className=" column profile-and-create">
+                  <button className='button is-black'>Stock</button>
+                  <select className='dropdown button'
+                    onChange={handleChange}
+                    name="profile">
+                    <option value={formData.profile}>Select Damage Profile</option>
+                    { weapon.profileOne[0] &&
+              <option value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
+                    }
+                    { weapon.profileTwo[0] &&
+              <option value={weapon.profileTwo[0].profileName}>{weapon.profileTwo[0].profileName}</option>
+                    }
+                    { weapon.profileThree[0] &&
+              <option value={weapon.profileThree[0].profileName}>{weapon.profileThree[0].profileName}</option>
+                    }
+                    { weapon.profileFour[0] &&
+              <option value={weapon.profileFour[0].profileName}>{weapon.profileFour[0].profileName}</option>
+                    }
+                    { weapon.profileFive[0] &&
+              <option  value={weapon.profileFive[0].profileName}>{weapon.profileFive[0].profileName}</option>
+                    }
+                  </select>
+                </div>
               
-
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Muzzle</button>
-                {
-                  muzzle && <h1>{muzzle}</h1>
-                }
-                { attachments &&
-            <select className='dropdown button'>
-              <option >Select muzzle</option>
+                {/*Muzzle*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Muzzle</button>
+                  { attachments &&
+            <select className='dropdown button' 
+              onChange={handleChange}
+              name="muzzle">
+              <option>Select muzzle</option>
               {
                 attachments &&
           getMuzzle().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneMuzzle}>{attachment.attachmentName}</option>
+                <option 
+                  key={attachment._id} 
+                  value={attachment.attachmentName} 
+                  onClick={oneMuzzle} 
+                >
+                  {attachment.attachmentName}</option>
               )
             }            
           )}
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
 
-              {/* Laser   */}
-              <div className='column is-one-fifth weapon-part'>
-                <button  className='button is-black'>Laser</button>
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Laser   */}
+                <div className='column is-one-fifth weapon-part'>
+                  <button  className='button is-black'>Laser</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="laser">
               <option>None</option>
               {
                 attachments &&
@@ -1383,40 +1438,40 @@ function CreateAClass() {
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Barrel*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Barrel</button>
-                {
-                  muzzle && <h1>{muzzle}</h1>
-                }
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Barrel*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Barrel</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="barrel">
               <option >None</option>
               {
                 attachments &&
           getBarrel().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneBarrel}>{attachment.attachmentName}</option>
+                <option key={attachment._id} 
+                  value={attachment.attachmentName} 
+                  onClick={oneBarrel}>{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Optic*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Optic</button>
-                {
-                  muzzle && <h1>{muzzle}</h1>
-                }
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Optic*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Optic</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="optic">
               <option >Select Optic</option>
               {
                 attachments &&
@@ -1429,26 +1484,22 @@ function CreateAClass() {
           )
               }
             </select> 
-                }
+                  }
+                </div>
               </div>
-            </div>
 
-            <div className='weapon-image'>
-             
-              <img src={weapon.image}/>
-              
-          
-            </div>
+              <div className='weapon-image'>
+                <img src={weapon.image}/>
+              </div>
 
-            {/* Stock*/}
-            <div className='columns'>
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Stock</button>
-                {
-                  muzzle && <h1>{muzzle}</h1>
-                }
-                { attachments &&
-            <select className='dropdown button'>
+              {/* Stock*/}
+              <div className='columns'>
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Stock</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="stock">
               <option >Select Stock</option>
               {
                 attachments &&
@@ -1461,102 +1512,107 @@ function CreateAClass() {
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Underbarrel*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Underbarrel</button>
-                {
-                  muzzle && <h1>{muzzle}</h1>
-                }
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Underbarrel*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Underbarrel</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="underBarrel">
               <option >Select Underbarrel</option>
               {
                 attachments &&
           getUnderBarrel().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel} name="Underbarrel">{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Perks*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Perk</button>
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Perks*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Perk</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="perk">
               <option disabled >Select Perk</option>
               {
                 attachments &&
           getPerk().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk} name="Perk">{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Ammo*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Ammo</button>
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Ammo*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Ammo</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="ammunition">
               <option >Select Ammo</option>
               {
                 attachments &&
           getAmmo().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneAmmo}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneAmmo} name="Ammo">{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
-                }
-              </div>
+                  }
+                </div>
 
-              {/* Grip*/}
-              <div className='column is-one-fifth weapon-part'>
-                <button className='button is-black'>Grip</button>
-                { attachments &&
-            <select className='dropdown button'>
+                {/* Grip*/}
+                <div className='column is-one-fifth weapon-part'>
+                  <button className='button is-black'>Grip</button>
+                  { attachments &&
+            <select className='dropdown button'
+              onChange={handleChange}
+              name="rearGrip">
               <option default>Select Grip</option>
               {
                 attachments &&
           getGrip().map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip}>{attachment.attachmentName}</option>
+                <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip} name="Grip">{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
+                  }
+                </div>
+              </div>
+              <div className='base-stats'>
+                {
+                  <h3>ADS Time: {ads + sumAds }</h3>
                 }
               </div>
-            </div>
-            <div className='base-stats'>
-              {
-                <h3>ADS Time: {ads + sumAds }</h3>
-              }
-            </div>
             
-            <div className='stats'>
-              <div className='range-boxes'>
-                {
-                  weapon && getProfileStats().rangeOne[0] &&
+              <div className='stats'>
+                <div className='range-boxes'>
+                  {
+                    weapon && getProfileStats().rangeOne[0] &&
                 
                   <div className='range-component'>
                     {
@@ -1568,9 +1624,9 @@ function CreateAClass() {
                     }
                   </div>
                 
-                }
-                {
-                  weapon && getProfileStats().rangeTwo[0] &&
+                  }
+                  {
+                    weapon && getProfileStats().rangeTwo[0] &&
                 
                   <div className='range-component'>
                     {
@@ -1581,9 +1637,9 @@ function CreateAClass() {
                       )
                     }
                   </div>
-                }
-                {
-                  weapon && getProfileStats().rangeThree[0] &&
+                  }
+                  {
+                    weapon && getProfileStats().rangeThree[0] &&
                   <div className='range-component'>
                     {
                       getProfileStats().rangeThree.map(
@@ -1594,10 +1650,10 @@ function CreateAClass() {
                     }
                   </div>
               
-                }
+                  }
 
-                {
-                  weapon && getProfileStats().rangeFour[0] &&
+                  {
+                    weapon && getProfileStats().rangeFour[0] &&
               
                   <div className='range-component'>
                     {
@@ -1608,18 +1664,18 @@ function CreateAClass() {
                       )
                     }
                   </div>
-                }  
-              </div>            
-            </div>
+                  }  
+                </div>            
+              </div>
             
 
 
 
-
-
+              <button type="submit" className="button is-info">Create This Class</button>
+            </form>
           </div>
         </div>
-      </div> }
+      </div>}
     </section>
 
 
