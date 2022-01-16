@@ -85,13 +85,13 @@ function WeaponProfile() {
               <option value='Profile Two'>{weapon.profileTwo[0].profileName}</option>
                   }
                   { weapon.profileThree[0] &&
-              <option value>{weapon.profileThree[0].profileName}</option>
+              <option value='Profile Three'>{weapon.profileThree[0].profileName}</option>
                   }
                   { weapon.profileFour[0] &&
-              <option value>{weapon.profileFour[0].profileName}</option>
+              <option value='Profile Four'>{weapon.profileFour[0].profileName}</option>
                   }
                   { weapon.profileFive[0] &&
-              <option value>{weapon.profileFive[0].profileName}</option>
+              <option value='Profile Five'>{weapon.profileFive[0].profileName}</option>
                   }
                 </select>
 

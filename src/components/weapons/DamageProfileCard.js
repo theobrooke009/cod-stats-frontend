@@ -1,23 +1,38 @@
-function DamageProfileCard({ profile }) {
+function DamageProfileCard({ profile, rangeMod }) {
+ 
+
+
+  function rangeModPercent() {
+    let rangeModifier = (rangeMod / 100)
+    if (rangeModifier < 0) {
+      rangeModifier * -1
+      return (100 + (rangeModifier * 100)) / 100
+    } else if (rangeModifier > 0) {
+      return (((rangeModifier / 100) * 100) + 1).toFixed(2)
+    } else return rangeModifier = 1
+  }
+  console.log('percent', rangeModPercent())
+  console.log('start', profile.rangeStart)
+
   return (
 
     <div className='damage-ranges'>
       
       <div className='start-range'>
-        { profile.rangeEnd > 300 && 
-          <h1 className='range-value hidden-value'>Range Start: {profile.rangeStart} + meters
+        { profile.rangeEnd > 300 &&
+          <h1 className='range-value hidden-value'>Range Start: {(profile.rangeStart * rangeModPercent()).toFixed(1)} + meters
           </h1>
           
         }
 
         { profile.rangeEnd < 300 && 
-          <h1 className='range-value'>Range Start: {profile.rangeStart} meters
+          <h1 className='range-value'>Range Start: {(profile.rangeStart * rangeModPercent()).toFixed(1)} meters
           </h1>
         }
       </div>
       { profile.rangeEnd < 300 &&
         <div className='end-range'>
-          <h1>Range End: {profile.rangeEnd} meters</h1>
+          <h1>Range End: {(profile.rangeEnd * rangeModPercent()).toFixed(1)} meters</h1>
         </div>
       }
 

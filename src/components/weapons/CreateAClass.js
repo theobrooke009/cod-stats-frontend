@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom'
 function CreateAClass() {
   const [weapon, setWeapon] = React.useState(null)
   const [attachments, setAttachments] = React.useState(null)
-  const [ads, setAds] = React.useState(null)
 
   const [adsModifier, setAdsModifier] = React.useState({
     muzzleAds: 0,
@@ -227,28 +226,16 @@ function CreateAClass() {
     perk: '',
   })
 
-  console.log(isError, setFormData, setSprintSpeed, setBulletVelMod, ads, setAds, setMovSpeed, setRangeModifier, setVertRecoil, setHorizRecoil, setAdsModifier, sumRange, sumBulletVel, sumVertRec, sumHorizRec, sumMovSpeed, setProfile, sumAdsMovSpeed, sumSprintSpeed, sumMagSize, sumHipFire, sumSprintToFire, sumTacSprint, sumReloadTime, sumStrafe, createAClass)
+  console.log(isError, setSprintSpeed, setBulletVelMod, setMovSpeed, setRangeModifier, setVertRecoil, setHorizRecoil, setAdsModifier, sumRange, sumBulletVel, sumVertRec, sumHorizRec, sumMovSpeed, setProfile, sumAdsMovSpeed, sumSprintSpeed, sumMagSize, sumHipFire, sumSprintToFire, sumTacSprint, sumReloadTime, sumStrafe)
 
   const navigate = useNavigate()
 
-
-  let selectMuzzle = {}
-  let selectLaser = {}
-  let selectBarrel = {}
-  let selectOptic = {}
-  let selectStock = {}
-  let selectUnderBarrel = {}
-  let selectPerk = {}
-  let selectAmmo = {}
-  let selectGrip = {}
-  
 
   React.useEffect(() => {
     const getData = async () => {
       try {
         const response = await getOneWeapon(weaponId)
-        setWeapon(response.data)
-        setAds(response.data.adsTime)
+        setWeapon(response.data)        
       } catch (err) {
         setIsError(err)
       }
@@ -290,90 +277,87 @@ function CreateAClass() {
           
         }
       )
-
-      selectMuzzle = selectedMuzzle 
-
-      if (selectMuzzle[0].adsModifier){
+      if (selectedMuzzle[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, muzzleAds: selectMuzzle[0].adsModifier }
+          { ...adsModifier, muzzleAds: selectedMuzzle[0].adsModifier }
         )
       } else (adsModifier.muzzleAds = 0)
 
-      if (selectMuzzle[0].rangeModifier){
+      if (selectedMuzzle[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, muzzleRange: selectMuzzle[0].rangeModifier,
+          ...rangeModifier, muzzleRange: selectedMuzzle[0].rangeModifier,
         })
       } else (rangeModifier.muzzleRange = 0)
 
-      if (selectMuzzle[0].bulletVelocityModifier) {
+      if (selectedMuzzle[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, muzzleVel: selectMuzzle[0].bulletVelocityModifier,
+          ...bulletVelMod, muzzleVel: selectedMuzzle[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.muzzleVel = 0)
 
-      if (selectMuzzle[0].verticalRecoil) {
+      if (selectedMuzzle[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, muzzleVert: selectMuzzle[0].verticalRecoil,
+          ...vertRecoil, muzzleVert: selectedMuzzle[0].verticalRecoil,
         })
       } else (vertRecoil.muzzleVert = 0)
 
-      if (selectMuzzle[0].horizontalRecoil) {
+      if (selectedMuzzle[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, muzzleHoriz: selectMuzzle[0].horizontalRecoil,
+          ...horizRecoil, muzzleHoriz: selectedMuzzle[0].horizontalRecoil,
         })
       } else (horizRecoil.muzzleHoriz = 0)
 
-      if (selectMuzzle[0].movementSpeed) {
+      if (selectedMuzzle[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, muzzleMov: selectMuzzle[0].movementSpeed,
+          ...movSpeed, muzzleMov: selectedMuzzle[0].movementSpeed,
         })
       } else (movSpeed.muzzleMov = 0)
 
-      if (selectMuzzle[0].adsMovementSpeed) {
+      if (selectedMuzzle[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, muzzleAdsMov: selectMuzzle[0].adsMovementSpeed,
+          ...adsMovSpeed, muzzleAdsMov: selectedMuzzle[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.muzzleAdsMov = 0 )
 
-      if (selectMuzzle[0].sprintSpeed) {
+      if (selectedMuzzle[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, muzzleSprintSpeed: selectMuzzle[0].sprintSpeed,
+          ...sprintSpeed, muzzleSprintSpeed: selectedMuzzle[0].sprintSpeed,
         })
       } else (sprintSpeed.muzzleSprintSpeed = 0)
       
-      if (selectMuzzle[0].magSize) {
+      if (selectedMuzzle[0].magSize) {
         setMagSize({
-          ...magSize, muzzleMag: selectMuzzle[0].magSize,
+          ...magSize, muzzleMag: selectedMuzzle[0].magSize,
         })
       } else (magSize.muzzleMag = 0)
 
-      if (selectMuzzle[0].hipfireArea) {
+      if (selectedMuzzle[0].hipfireArea) {
         setHipFire({
-          ...hipFire, muzzleHipFire: selectMuzzle[0].hipfireArea,
+          ...hipFire, muzzleHipFire: selectedMuzzle[0].hipfireArea,
         })
       } else (hipFire.muzzleHipFire = 0)
 
-      if (selectMuzzle[0].sprintToFire) {
+      if (selectedMuzzle[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, muzzleSprintToFire: selectMuzzle[0].sprintToFire,
+          ...sprintToFire, muzzleSprintToFire: selectedMuzzle[0].sprintToFire,
         })
       } else (sprintToFire.muzzleSprintToFire = 0)
 
-      if (selectMuzzle[0].tacSprintToFire) {
+      if (selectedMuzzle[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, muzzleTacSprint: selectMuzzle[0].tacSprintToFire,
+          ...tacSprint, muzzleTacSprint: selectedMuzzle[0].tacSprintToFire,
         })
       } else (tacSprint.muzzleTacSprint = 0)
 
-      if (selectMuzzle[0].reloadTime) {
+      if (selectedMuzzle[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, muzzleReload: selectMuzzle[0].reloadTime,
+          ...reloadTime, muzzleReload: selectedMuzzle[0].reloadTime,
         })
       } else (reloadTime.muzzleReload = 0)
 
-      if (selectMuzzle[0].strafeSpeed) {
+      if (selectedMuzzle[0].strafeSpeed) {
         setStrafe({
-          ...strafe, muzzleStrafe: selectMuzzle[0].strafeSpeed,
+          ...strafe, muzzleStrafe: selectedMuzzle[0].strafeSpeed,
         })
       } else (strafe.muzzleStrafe = 0)
       return selectedMuzzle
@@ -396,8 +380,6 @@ function CreateAClass() {
     return 0
   }
 
-
-
   function oneLaser(e) {
     if (attachments && weapon) {
       const selectedLaser = attachments.filter(
@@ -407,88 +389,87 @@ function CreateAClass() {
         }
       )
 
-      selectLaser = selectedLaser
-      if (selectLaser[0].adsModifier){
+      if (selectedLaser[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, laserAds: selectLaser[0].adsModifier }
+          { ...adsModifier, laserAds: selectedLaser[0].adsModifier }
         )
       } else (adsModifier.laserAds = 0)
 
-      if (selectLaser[0].rangeModifier){
+      if (selectedLaser[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, laserRange: selectLaser[0].rangeModifier,
+          ...rangeModifier, laserRange: selectedLaser[0].rangeModifier,
         })
       } else (rangeModifier.laserRange = 0)
 
-      if (selectLaser[0].bulletVelocityModifier) {
+      if (selectedLaser[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, laserVel: selectLaser[0].bulletVelocityModifier,
+          ...bulletVelMod, laserVel: selectedLaser[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.laserVel = 0)
 
-      if (selectLaser[0].verticalRecoil) {
+      if (selectedLaser[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, laserVert: selectLaser[0].verticalRecoil,
+          ...vertRecoil, laserVert: selectedLaser[0].verticalRecoil,
         })
       } else (vertRecoil.laserVert = 0)
 
-      if (selectLaser[0].horizontalRecoil) {
+      if (selectedLaser[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, laserHoriz: selectLaser[0].horizontalRecoil,
+          ...horizRecoil, laserHoriz: selectedLaser[0].horizontalRecoil,
         })
       } else (horizRecoil.laserHoriz = 0)
 
-      if (selectLaser[0].movementSpeed) {
+      if (selectedLaser[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, laserMov: selectLaser[0].movementSpeed,
+          ...movSpeed, laserMov: selectedLaser[0].movementSpeed,
         })
       } else (movSpeed.laserMov = 0)
 
-      if (selectLaser[0].adsMovementSpeed) {
+      if (selectedLaser[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, laserAdsMov: selectLaser[0].adsMovementSpeed,
+          ...adsMovSpeed, laserAdsMov: selectedLaser[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.laserAdsMov = 0 )
 
-      if (selectLaser[0].sprintSpeed) {
+      if (selectedLaser[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, laserSprintSpeed: selectLaser[0].sprintSpeed,
+          ...sprintSpeed, laserSprintSpeed: selectedLaser[0].sprintSpeed,
         })
       } else (sprintSpeed.laserSprintSpeed = 0)
       
-      if (selectLaser[0].magSize) {
+      if (selectedLaser[0].magSize) {
         setMagSize({
-          ...magSize, laserMag: selectLaser[0].magSize,
+          ...magSize, laserMag: selectedLaser[0].magSize,
         })
       } else (magSize.laserMag = 0)
 
-      if (selectLaser[0].hipfireArea) {
+      if (selectedLaser[0].hipfireArea) {
         setHipFire({
-          ...hipFire, laserHipFire: selectLaser[0].hipfireArea,
+          ...hipFire, laserHipFire: selectedLaser[0].hipfireArea,
         })
       } else (hipFire.laserHipFire = 0)
 
-      if (selectLaser[0].sprintToFire) {
+      if (selectedLaser[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, laserSprintToFire: selectLaser[0].sprintToFire,
+          ...sprintToFire, laserSprintToFire: selectedLaser[0].sprintToFire,
         })
       } else (sprintToFire.laserSprintToFire = 0)
 
-      if (selectLaser[0].tacSprintToFire) {
+      if (selectedLaser[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, laserTacSprint: selectLaser[0].tacSprintToFire,
+          ...tacSprint, laserTacSprint: selectedLaser[0].tacSprintToFire,
         })
       } else (tacSprint.laserTacSprint = 0)
 
-      if (selectLaser[0].reloadTime) {
+      if (selectedLaser[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, laserReload: selectLaser[0].reloadTime,
+          ...reloadTime, laserReload: selectedLaser[0].reloadTime,
         })
       } else (reloadTime.laserReload = 0)
 
-      if (selectLaser[0].strafeSpeed) {
+      if (selectedLaser[0].strafeSpeed) {
         setStrafe({
-          ...strafe, laserStrafe: selectLaser[0].strafeSpeed,
+          ...strafe, laserStrafe: selectedLaser[0].strafeSpeed,
         })
       } else (strafe.laserStrafe = 0)
 
@@ -521,88 +502,87 @@ function CreateAClass() {
         }
       )
 
-      selectBarrel = selectedBarrel
-      if (selectBarrel[0].adsModifier){
+      if (selectedBarrel[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, barrelAds: selectBarrel[0].adsModifier }
+          { ...adsModifier, barrelAds: selectedBarrel[0].adsModifier }
         )
       } else (adsModifier.barrelAds = 0)
 
-      if (selectBarrel[0].rangeModifier){
+      if (selectedBarrel[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, barrelRange: selectBarrel[0].rangeModifier,
+          ...rangeModifier, barrelRange: selectedBarrel[0].rangeModifier,
         })
       } else (rangeModifier.barrelRange = 0)
 
-      if (selectBarrel[0].bulletVelocityModifier) {
+      if (selectedBarrel[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, barrelVel: selectBarrel[0].bulletVelocityModifier,
+          ...bulletVelMod, barrelVel: selectedBarrel[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.barrelVel = 0)
 
-      if (selectBarrel[0].verticalRecoil) {
+      if (selectedBarrel[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, barrelVert: selectBarrel[0].verticalRecoil,
+          ...vertRecoil, barrelVert: selectedBarrel[0].verticalRecoil,
         })
       } else (vertRecoil.barrelVert = 0)
 
-      if (selectBarrel[0].horizontalRecoil) {
+      if (selectedBarrel[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, barrelHoriz: selectBarrel[0].horizontalRecoil,
+          ...horizRecoil, barrelHoriz: selectedBarrel[0].horizontalRecoil,
         })
       } else (horizRecoil.barrelHoriz = 0)
 
-      if (selectBarrel[0].movementSpeed) {
+      if (selectedBarrel[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, barrelMov: selectBarrel[0].movementSpeed,
+          ...movSpeed, barrelMov: selectedBarrel[0].movementSpeed,
         })
       } else (movSpeed.barrelMov = 0)
 
-      if (selectBarrel[0].adsMovementSpeed) {
+      if (selectedBarrel[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, barrelAdsMov: selectBarrel[0].adsMovementSpeed,
+          ...adsMovSpeed, barrelAdsMov: selectedBarrel[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.barrelAdsMov = 0 )
 
-      if (selectBarrel[0].sprintSpeed) {
+      if (selectedBarrel[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, barrelSprintSpeed: selectBarrel[0].sprintSpeed,
+          ...sprintSpeed, barrelSprintSpeed: selectedBarrel[0].sprintSpeed,
         })
       } else (sprintSpeed.barrelSprintSpeed = 0)
       
-      if (selectBarrel[0].magSize) {
+      if (selectedBarrel[0].magSize) {
         setMagSize({
-          ...magSize, barrelMag: selectBarrel[0].magSize,
+          ...magSize, barrelMag: selectedBarrel[0].magSize,
         })
       } else (magSize.barrelMag = 0)
 
-      if (selectBarrel[0].hipfireArea) {
+      if (selectedBarrel[0].hipfireArea) {
         setHipFire({
-          ...hipFire, barrelHipFire: selectBarrel[0].hipfireArea,
+          ...hipFire, barrelHipFire: selectedBarrel[0].hipfireArea,
         })
       } else (hipFire.barrelHipFire = 0)
 
-      if (selectBarrel[0].sprintToFire) {
+      if (selectedBarrel[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, barrelSprintToFire: selectBarrel[0].sprintToFire,
+          ...sprintToFire, barrelSprintToFire: selectedBarrel[0].sprintToFire,
         })
       } else (sprintToFire.barrelSprintToFire = 0)
 
-      if (selectBarrel[0].tacSprintToFire) {
+      if (selectedBarrel[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, barrelTacSprint: selectBarrel[0].tacSprintToFire,
+          ...tacSprint, barrelTacSprint: selectedBarrel[0].tacSprintToFire,
         })
       } else (tacSprint.barrelTacSprint = 0)
 
-      if (selectBarrel[0].reloadTime) {
+      if (selectedBarrel[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, barrelReload: selectBarrel[0].reloadTime,
+          ...reloadTime, barrelReload: selectedBarrel[0].reloadTime,
         })
       } else (reloadTime.barrelReload = 0)
 
-      if (selectBarrel[0].strafeSpeed) {
+      if (selectedBarrel[0].strafeSpeed) {
         setStrafe({
-          ...strafe, barrelStrafe: selectBarrel[0].strafeSpeed,
+          ...strafe, barrelStrafe: selectedBarrel[0].strafeSpeed,
         })
       } else (strafe.barrelStrafe = 0)
 
@@ -635,88 +615,87 @@ function CreateAClass() {
         }
       )
 
-      selectOptic = selectedOptic
-      if (selectOptic[0].adsModifier){
+      if (selectedOptic[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, opticAds: selectOptic[0].adsModifier }
+          { ...adsModifier, opticAds: selectedOptic[0].adsModifier }
         )
       } else (adsModifier.opticAds = 0)
 
-      if (selectOptic[0].rangeModifier){
+      if (selectedOptic[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, opticRange: selectOptic[0].rangeModifier,
+          ...rangeModifier, opticRange: selectedOptic[0].rangeModifier,
         })
       } else (rangeModifier.opticRange = 0)
 
-      if (selectOptic[0].bulletVelocityModifier) {
+      if (selectedOptic[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, opticVel: selectOptic[0].bulletVelocityModifier,
+          ...bulletVelMod, opticVel: selectedOptic[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.opticVel = 0)
 
-      if (selectOptic[0].verticalRecoil) {
+      if (selectedOptic[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, opticVert: selectOptic[0].verticalRecoil,
+          ...vertRecoil, opticVert: selectedOptic[0].verticalRecoil,
         })
       } else (vertRecoil.opticVert = 0)
 
-      if (selectOptic[0].horizontalRecoil) {
+      if (selectedOptic[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, opticHoriz: selectOptic[0].horizontalRecoil,
+          ...horizRecoil, opticHoriz: selectedOptic[0].horizontalRecoil,
         })
       } else (horizRecoil.opticHoriz = 0)
 
-      if (selectOptic[0].movementSpeed) {
+      if (selectedOptic[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, opticMov: selectOptic[0].movementSpeed,
+          ...movSpeed, opticMov: selectedOptic[0].movementSpeed,
         })
       } else (movSpeed.opticMov = 0)
 
-      if (selectOptic[0].adsMovementSpeed) {
+      if (selectedOptic[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, opticAdsMov: selectOptic[0].adsMovementSpeed,
+          ...adsMovSpeed, opticAdsMov: selectedOptic[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.opticAdsMov = 0 )
 
-      if (selectOptic[0].sprintSpeed) {
+      if (selectedOptic[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, opticSprintSpeed: selectOptic[0].sprintSpeed,
+          ...sprintSpeed, opticSprintSpeed: selectedOptic[0].sprintSpeed,
         })
       } else (sprintSpeed.opticSprintSpeed = 0)
       
-      if (selectOptic[0].magSize) {
+      if (selectedOptic[0].magSize) {
         setMagSize({
-          ...magSize, opticMag: selectOptic[0].magSize,
+          ...magSize, opticMag: selectedOptic[0].magSize,
         })
       } else (magSize.opticMag = 0)
 
-      if (selectOptic[0].hipfireArea) {
+      if (selectedOptic[0].hipfireArea) {
         setHipFire({
-          ...hipFire, opticHipFire: selectOptic[0].hipfireArea,
+          ...hipFire, opticHipFire: selectedOptic[0].hipfireArea,
         })
       } else (hipFire.opticHipFire = 0)
 
-      if (selectOptic[0].sprintToFire) {
+      if (selectedOptic[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, opticSprintToFire: selectOptic[0].sprintToFire,
+          ...sprintToFire, opticSprintToFire: selectedOptic[0].sprintToFire,
         })
       } else (sprintToFire.opticSprintToFire = 0)
 
-      if (selectOptic[0].tacSprintToFire) {
+      if (selectedOptic[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, opticTacSprint: selectOptic[0].tacSprintToFire,
+          ...tacSprint, opticTacSprint: selectedOptic[0].tacSprintToFire,
         })
       } else (tacSprint.opticTacSprint = 0)
 
-      if (selectOptic[0].reloadTime) {
+      if (selectedOptic[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, opticReload: selectOptic[0].reloadTime,
+          ...reloadTime, opticReload: selectedOptic[0].reloadTime,
         })
       } else (reloadTime.opticReload = 0)
 
-      if (selectOptic[0].strafeSpeed) {
+      if (selectedOptic[0].strafeSpeed) {
         setStrafe({
-          ...strafe, opticStrafe: selectOptic[0].strafeSpeed,
+          ...strafe, opticStrafe: selectedOptic[0].strafeSpeed,
         })
       } else (strafe.opticStrafe = 0)
 
@@ -749,88 +728,87 @@ function CreateAClass() {
         }
       )
 
-      selectStock = selectedStock
-      if (selectStock[0].adsModifier){
+      if (selectedStock[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, stockAds: selectStock[0].adsModifier }
+          { ...adsModifier, stockAds: selectedStock[0].adsModifier }
         )
       } else (adsModifier.stockAds = 0)
 
-      if (selectStock[0].rangeModifier){
+      if (selectedStock[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, stockRange: selectStock[0].rangeModifier,
+          ...rangeModifier, stockRange: selectedStock[0].rangeModifier,
         })
       } else (rangeModifier.stockRange = 0)
 
-      if (selectStock[0].bulletVelocityModifier) {
+      if (selectedStock[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, stockVel: selectStock[0].bulletVelocityModifier,
+          ...bulletVelMod, stockVel: selectedStock[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.stockVel = 0)
 
-      if (selectStock[0].verticalRecoil) {
+      if (selectedStock[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, stockVert: selectStock[0].verticalRecoil,
+          ...vertRecoil, stockVert: selectedStock[0].verticalRecoil,
         })
       } else (vertRecoil.stockVert = 0)
 
-      if (selectStock[0].horizontalRecoil) {
+      if (selectedStock[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, stockHoriz: selectStock[0].horizontalRecoil,
+          ...horizRecoil, stockHoriz: selectedStock[0].horizontalRecoil,
         })
       } else (horizRecoil.stockHoriz = 0)
 
-      if (selectStock[0].movementSpeed) {
+      if (selectedStock[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, stockMov: selectStock[0].movementSpeed,
+          ...movSpeed, stockMov: selectedStock[0].movementSpeed,
         })
       } else (movSpeed.stockMov = 0)
 
-      if (selectStock[0].adsMovementSpeed) {
+      if (selectedStock[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, stockAdsMov: selectStock[0].adsMovementSpeed,
+          ...adsMovSpeed, stockAdsMov: selectedStock[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.stockAdsMov = 0 )
 
-      if (selectStock[0].sprintSpeed) {
+      if (selectedStock[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, stockSprintSpeed: selectStock[0].sprintSpeed,
+          ...sprintSpeed, stockSprintSpeed: selectedStock[0].sprintSpeed,
         })
       } else (sprintSpeed.stockSprintSpeed = 0)
       
-      if (selectStock[0].magSize) {
+      if (selectedStock[0].magSize) {
         setMagSize({
-          ...magSize, stockMag: selectStock[0].magSize,
+          ...magSize, stockMag: selectedStock[0].magSize,
         })
       } else (magSize.stockMag = 0)
 
-      if (selectStock[0].hipfireArea) {
+      if (selectedStock[0].hipfireArea) {
         setHipFire({
-          ...hipFire, stockHipFire: selectStock[0].hipfireArea,
+          ...hipFire, stockHipFire: selectedStock[0].hipfireArea,
         })
       } else (hipFire.stockHipFire = 0)
 
-      if (selectStock[0].sprintToFire) {
+      if (selectedStock[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, stockSprintToFire: selectStock[0].sprintToFire,
+          ...sprintToFire, stockSprintToFire: selectedStock[0].sprintToFire,
         })
       } else (sprintToFire.stockSprintToFire = 0)
 
-      if (selectStock[0].tacSprintToFire) {
+      if (selectedStock[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, stockTacSprint: selectStock[0].tacSprintToFire,
+          ...tacSprint, stockTacSprint: selectedStock[0].tacSprintToFire,
         })
       } else (tacSprint.stockTacSprint = 0)
 
-      if (selectStock[0].reloadTime) {
+      if (selectedStock[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, stockReload: selectStock[0].reloadTime,
+          ...reloadTime, stockReload: selectedStock[0].reloadTime,
         })
       } else (reloadTime.stockReload = 0)
 
-      if (selectStock[0].strafeSpeed) {
+      if (selectedStock[0].strafeSpeed) {
         setStrafe({
-          ...strafe, stockStrafe: selectStock[0].strafeSpeed,
+          ...strafe, stockStrafe: selectedStock[0].strafeSpeed,
         })
       } else (strafe.stockStrafe = 0)
 
@@ -840,7 +818,6 @@ function CreateAClass() {
 
     return 0
   }
-
 
   //Underbarrel functions
 
@@ -864,88 +841,88 @@ function CreateAClass() {
         }
       )
 
-      selectUnderBarrel = selectedUnderBarrel
-      if (selectUnderBarrel[0].adsModifier){
+     
+      if (selectedUnderBarrel[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, underBarrelAds: selectUnderBarrel[0].adsModifier }
+          { ...adsModifier, underBarrelAds: selectedUnderBarrel[0].adsModifier }
         )
       } else (adsModifier.underBarrelAds = 0)
 
-      if (selectUnderBarrel[0].rangeModifier){
+      if (selectedUnderBarrel[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, underBarrelRange: selectUnderBarrel[0].rangeModifier,
+          ...rangeModifier, underBarrelRange: selectedUnderBarrel[0].rangeModifier,
         })
       } else (rangeModifier.underBarrelRange = 0)
 
-      if (selectUnderBarrel[0].bulletVelocityModifier) {
+      if (selectedUnderBarrel[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, underBarrelVel: selectUnderBarrel[0].bulletVelocityModifier,
+          ...bulletVelMod, underBarrelVel: selectedUnderBarrel[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.underBarrelVel = 0)
 
-      if (selectUnderBarrel[0].verticalRecoil) {
+      if (selectedUnderBarrel[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, underBarrelVert: selectUnderBarrel[0].verticalRecoil,
+          ...vertRecoil, underBarrelVert: selectedUnderBarrel[0].verticalRecoil,
         })
       } else (vertRecoil.underBarrelVert = 0)
 
-      if (selectUnderBarrel[0].horizontalRecoil) {
+      if (selectedUnderBarrel[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, underBarrelHoriz: selectUnderBarrel[0].horizontalRecoil,
+          ...horizRecoil, underBarrelHoriz: selectedUnderBarrel[0].horizontalRecoil,
         })
       } else (horizRecoil.underBarrelHoriz = 0)
 
-      if (selectUnderBarrel[0].movementSpeed) {
+      if (selectedUnderBarrel[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, underBarrelMov: selectUnderBarrel[0].movementSpeed,
+          ...movSpeed, underBarrelMov: selectedUnderBarrel[0].movementSpeed,
         })
       } else (movSpeed.underBarrelMov = 0)
 
-      if (selectUnderBarrel[0].adsMovementSpeed) {
+      if (selectedUnderBarrel[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, underBarrelAdsMov: selectUnderBarrel[0].adsMovementSpeed,
+          ...adsMovSpeed, underBarrelAdsMov: selectedUnderBarrel[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.underBarrelAdsMov = 0 )
 
-      if (selectUnderBarrel[0].sprintSpeed) {
+      if (selectedUnderBarrel[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, UnderBarrelSprintSpeed: selectUnderBarrel[0].sprintSpeed,
+          ...sprintSpeed, UnderBarrelSprintSpeed: selectedUnderBarrel[0].sprintSpeed,
         })
       } else (sprintSpeed.underBarrelSprintSpeed = 0)
       
-      if (selectUnderBarrel[0].magSize) {
+      if (selectedUnderBarrel[0].magSize) {
         setMagSize({
-          ...magSize, underBarrelMag: selectUnderBarrel[0].magSize,
+          ...magSize, underBarrelMag: selectedUnderBarrel[0].magSize,
         })
       } else (magSize.underBarrelMag = 0)
 
-      if (selectUnderBarrel[0].hipfireArea) {
+      if (selectedUnderBarrel[0].hipfireArea) {
         setHipFire({
-          ...hipFire, underBarrelHipFire: selectUnderBarrel[0].hipfireArea,
+          ...hipFire, underBarrelHipFire: selectedUnderBarrel[0].hipfireArea,
         })
       } else (hipFire.underBarrelHipFire = 0)
 
-      if (selectUnderBarrel[0].sprintToFire) {
+      if (selectedUnderBarrel[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, underBarrelSprintToFire: selectUnderBarrel[0].sprintToFire,
+          ...sprintToFire, underBarrelSprintToFire: selectedUnderBarrel[0].sprintToFire,
         })
       } else (sprintToFire.underBarrelSprintToFire = 0)
 
-      if (selectUnderBarrel[0].tacSprintToFire) {
+      if (selectedUnderBarrel[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, underBarrelTacSprint: selectUnderBarrel[0].tacSprintToFire,
+          ...tacSprint, underBarrelTacSprint: selectedUnderBarrel[0].tacSprintToFire,
         })
       } else (tacSprint.underBarrelTacSprint = 0)
 
-      if (selectUnderBarrel[0].reloadTime) {
+      if (selectedUnderBarrel[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, underBarrelReload: selectUnderBarrel[0].reloadTime,
+          ...reloadTime, underBarrelReload: selectedUnderBarrel[0].reloadTime,
         })
       } else (reloadTime.underBarrelReload = 0)
 
-      if (selectUnderBarrel[0].strafeSpeed) {
+      if (selectedUnderBarrel[0].strafeSpeed) {
         setStrafe({
-          ...strafe, underBarrelStrafe: selectUnderBarrel[0].strafeSpeed,
+          ...strafe, underBarrelStrafe: selectedUnderBarrel[0].strafeSpeed,
         })
       } else (strafe.underBarrelStrafe = 0)
 
@@ -978,88 +955,87 @@ function CreateAClass() {
         }
       )
 
-      selectPerk = selectedPerk
-      if (selectPerk[0].adsModifier){
+      if (selectedPerk[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, perkAds: selectPerk[0].adsModifier }
+          { ...adsModifier, perkAds: selectedPerk[0].adsModifier }
         )
       } else (adsModifier.perkAds = 0)
 
-      if (selectPerk[0].rangeModifier){
+      if (selectedPerk[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, perkRange: selectPerk[0].rangeModifier,
+          ...rangeModifier, perkRange: selectedPerk[0].rangeModifier,
         })
       } else (rangeModifier.perkRange = 0)
 
-      if (selectPerk[0].bulletVelocityModifier) {
+      if (selectedPerk[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, perkVel: selectPerk[0].bulletVelocityModifier,
+          ...bulletVelMod, perkVel: selectedPerk[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.perkVel = 0)
 
-      if (selectPerk[0].verticalRecoil) {
+      if (selectedPerk[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, perkVert: selectPerk[0].verticalRecoil,
+          ...vertRecoil, perkVert: selectedPerk[0].verticalRecoil,
         })
       } else (vertRecoil.perkVert = 0)
 
-      if (selectPerk[0].horizontalRecoil) {
+      if (selectedPerk[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, perkHoriz: selectPerk[0].horizontalRecoil,
+          ...horizRecoil, perkHoriz: selectedPerk[0].horizontalRecoil,
         })
       } else (horizRecoil.perkHoriz = 0)
 
-      if (selectPerk[0].movementSpeed) {
+      if (selectedPerk[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, perkMov: selectPerk[0].movementSpeed,
+          ...movSpeed, perkMov: selectedPerk[0].movementSpeed,
         })
       } else (movSpeed.perkMov = 0)
 
-      if (selectPerk[0].adsMovementSpeed) {
+      if (selectedPerk[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, perkAdsMov: selectPerk[0].adsMovementSpeed,
+          ...adsMovSpeed, perkAdsMov: selectedPerk[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.perkAdsMov = 0 )
 
-      if (selectPerk[0].sprintSpeed) {
+      if (selectedPerk[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, perkSprintSpeed: selectPerk[0].sprintSpeed,
+          ...sprintSpeed, perkSprintSpeed: selectedPerk[0].sprintSpeed,
         })
       } else (sprintSpeed.perkSprintSpeed = 0)
       
-      if (selectPerk[0].magSize) {
+      if (selectedPerk[0].magSize) {
         setMagSize({
-          ...magSize, perkMag: selectPerk[0].magSize,
+          ...magSize, perkMag: selectedPerk[0].magSize,
         })
       } else (magSize.perkMag = 0)
 
-      if (selectPerk[0].hipfireArea) {
+      if (selectedPerk[0].hipfireArea) {
         setHipFire({
-          ...hipFire, perkHipFire: selectPerk[0].hipfireArea,
+          ...hipFire, perkHipFire: selectedPerk[0].hipfireArea,
         })
       } else (hipFire.perkHipFire = 0)
 
-      if (selectPerk[0].sprintToFire) {
+      if (selectedPerk[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, perkSprintToFire: selectPerk[0].sprintToFire,
+          ...sprintToFire, perkSprintToFire: selectedPerk[0].sprintToFire,
         })
       } else (sprintToFire.perkSprintToFire = 0)
 
-      if (selectPerk[0].tacSprintToFire) {
+      if (selectedPerk[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, perkTacSprint: selectPerk[0].tacSprintToFire,
+          ...tacSprint, perkTacSprint: selectedPerk[0].tacSprintToFire,
         })
       } else (tacSprint.perkTacSprint = 0)
 
-      if (selectPerk[0].reloadTime) {
+      if (selectedPerk[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, perkReload: selectPerk[0].reloadTime,
+          ...reloadTime, perkReload: selectedPerk[0].reloadTime,
         })
       } else (reloadTime.perkReload = 0)
 
-      if (selectPerk[0].strafeSpeed) {
+      if (selectedPerk[0].strafeSpeed) {
         setStrafe({
-          ...strafe, perkStrafe: selectPerk[0].strafeSpeed,
+          ...strafe, perkStrafe: selectedPerk[0].strafeSpeed,
         })
       } else (strafe.perkStrafe = 0)
 
@@ -1093,88 +1069,88 @@ function CreateAClass() {
         }
       )
 
-      selectAmmo = selectedAmmo
-      if (selectAmmo[0].adsModifier){
+   
+      if (selectedAmmo[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, ammoAds: selectAmmo[0].adsModifier }
+          { ...adsModifier, ammoAds: selectedAmmo[0].adsModifier }
         )
       } else (adsModifier.ammoAds = 0)
 
-      if (selectAmmo[0].rangeModifier){
+      if (selectedAmmo[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, ammoRange: selectAmmo[0].rangeModifier,
+          ...rangeModifier, ammoRange: selectedAmmo[0].rangeModifier,
         })
       } else (rangeModifier.ammoRange = 0)
 
-      if (selectAmmo[0].bulletVelocityModifier) {
+      if (selectedAmmo[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, ammoVel: selectAmmo[0].bulletVelocityModifier,
+          ...bulletVelMod, ammoVel: selectedAmmo[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.ammoVel = 0)
 
-      if (selectAmmo[0].verticalRecoil) {
+      if (selectedAmmo[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, ammoVert: selectAmmo[0].verticalRecoil,
+          ...vertRecoil, ammoVert: selectedAmmo[0].verticalRecoil,
         })
       } else (vertRecoil.ammoVert = 0)
 
-      if (selectAmmo[0].horizontalRecoil) {
+      if (selectedAmmo[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, ammoHoriz: selectAmmo[0].horizontalRecoil,
+          ...horizRecoil, ammoHoriz: selectedAmmo[0].horizontalRecoil,
         })
       } else (horizRecoil.ammoHoriz = 0)
 
-      if (selectAmmo[0].movementSpeed) {
+      if (selectedAmmo[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, ammoMov: selectAmmo[0].movementSpeed,
+          ...movSpeed, ammoMov: selectedAmmo[0].movementSpeed,
         })
       } else (movSpeed.ammoMov = 0)
 
-      if (selectAmmo[0].adsMovementSpeed) {
+      if (selectedAmmo[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, ammoAdsMov: selectAmmo[0].adsMovementSpeed,
+          ...adsMovSpeed, ammoAdsMov: selectedAmmo[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.ammoAdsMov = 0 )
 
-      if (selectAmmo[0].sprintSpeed) {
+      if (selectedAmmo[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, ammoSprintSpeed: selectAmmo[0].sprintSpeed,
+          ...sprintSpeed, ammoSprintSpeed: selectedAmmo[0].sprintSpeed,
         })
       } else (sprintSpeed.ammoSprintSpeed = 0)
       
-      if (selectAmmo[0].magSize) {
+      if (selectedAmmo[0].magSize) {
         setMagSize({
-          ...magSize, ammoMag: selectAmmo[0].magSize,
+          ...magSize, ammoMag: selectedAmmo[0].magSize,
         })
       } else (magSize.ammoMag = 0)
 
-      if (selectAmmo[0].hipfireArea) {
+      if (selectedAmmo[0].hipfireArea) {
         setHipFire({
-          ...hipFire, ammoHipFire: selectAmmo[0].hipfireArea,
+          ...hipFire, ammoHipFire: selectedAmmo[0].hipfireArea,
         })
       } else (hipFire.ammoHipFire = 0)
 
-      if (selectAmmo[0].sprintToFire) {
+      if (selectedAmmo[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, ammoSprintToFire: selectAmmo[0].sprintToFire,
+          ...sprintToFire, ammoSprintToFire: selectedAmmo[0].sprintToFire,
         })
       } else (sprintToFire.ammoSprintToFire = 0)
 
-      if (selectAmmo[0].tacSprintToFire) {
+      if (selectedAmmo[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, ammoTacSprint: selectAmmo[0].tacSprintToFire,
+          ...tacSprint, ammoTacSprint: selectedAmmo[0].tacSprintToFire,
         })
       } else (tacSprint.ammoTacSprint = 0)
 
-      if (selectAmmo[0].reloadTime) {
+      if (selectedAmmo[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, ammoReload: selectAmmo[0].reloadTime,
+          ...reloadTime, ammoReload: selectedAmmo[0].reloadTime,
         })
       } else (reloadTime.ammoReload = 0)
 
-      if (selectAmmo[0].strafeSpeed) {
+      if (selectedAmmo[0].strafeSpeed) {
         setStrafe({
-          ...strafe, ammoStrafe: selectAmmo[0].strafeSpeed,
+          ...strafe, ammoStrafe: selectedAmmo[0].strafeSpeed,
         })
       } else (strafe.ammoStrafe = 0)
 
@@ -1206,88 +1182,87 @@ function CreateAClass() {
         }
       )
 
-      selectGrip = selectedGrip
-      if (selectGrip[0].adsModifier){
+      if (selectedGrip[0].adsModifier){
         setAdsModifier(
-          { ...adsModifier, gripAds: selectGrip[0].adsModifier }
+          { ...adsModifier, gripAds: selectedGrip[0].adsModifier }
         )
       } else (adsModifier.gripAds = 0)
 
-      if (selectGrip[0].rangeModifier){
+      if (selectedGrip[0].rangeModifier){
         setRangeModifier({
-          ...rangeModifier, gripRange: selectGrip[0].rangeModifier,
+          ...rangeModifier, gripRange: selectedGrip[0].rangeModifier,
         })
       } else (rangeModifier.gripRange = 0)
 
-      if (selectGrip[0].bulletVelocityModifier) {
+      if (selectedGrip[0].bulletVelocityModifier) {
         setBulletVelMod({
-          ...bulletVelMod, gripVel: selectGrip[0].bulletVelocityModifier,
+          ...bulletVelMod, gripVel: selectedGrip[0].bulletVelocityModifier,
         })
       } else (bulletVelMod.gripVel = 0)
 
-      if (selectGrip[0].verticalRecoil) {
+      if (selectedGrip[0].verticalRecoil) {
         setVertRecoil({
-          ...vertRecoil, gripVert: selectGrip[0].verticalRecoil,
+          ...vertRecoil, gripVert: selectedGrip[0].verticalRecoil,
         })
       } else (vertRecoil.gripVert = 0)
 
-      if (selectGrip[0].horizontalRecoil) {
+      if (selectedGrip[0].horizontalRecoil) {
         setHorizRecoil({
-          ...horizRecoil, gripHoriz: selectGrip[0].horizontalRecoil,
+          ...horizRecoil, gripHoriz: selectedGrip[0].horizontalRecoil,
         })
       } else (horizRecoil.gripHoriz = 0)
 
-      if (selectGrip[0].movementSpeed) {
+      if (selectedGrip[0].movementSpeed) {
         setMovSpeed({
-          ...movSpeed, gripMov: selectGrip[0].movementSpeed,
+          ...movSpeed, gripMov: selectedGrip[0].movementSpeed,
         })
       } else (movSpeed.gripMov = 0)
 
-      if (selectGrip[0].adsMovementSpeed) {
+      if (selectedGrip[0].adsMovementSpeed) {
         setAdsMovSpeed({
-          ...adsMovSpeed, gripAdsMov: selectGrip[0].adsMovementSpeed,
+          ...adsMovSpeed, gripAdsMov: selectedGrip[0].adsMovementSpeed,
         })
       } else (adsMovSpeed.gripAdsMov = 0 )
 
-      if (selectGrip[0].sprintSpeed) {
+      if (selectedGrip[0].sprintSpeed) {
         setSprintSpeed({
-          ...sprintSpeed, gripSprintSpeed: selectGrip[0].sprintSpeed,
+          ...sprintSpeed, gripSprintSpeed: selectedGrip[0].sprintSpeed,
         })
       } else (sprintSpeed.gripSprintSpeed = 0)
       
-      if (selectGrip[0].magSize) {
+      if (selectedGrip[0].magSize) {
         setMagSize({
-          ...magSize, gripMag: selectGrip[0].magSize,
+          ...magSize, gripMag: selectedGrip[0].magSize,
         })
       } else (magSize.gripMag = 0)
 
-      if (selectGrip[0].hipfireArea) {
+      if (selectedGrip[0].hipfireArea) {
         setHipFire({
-          ...hipFire, gripHipFire: selectGrip[0].hipfireArea,
+          ...hipFire, gripHipFire: selectedGrip[0].hipfireArea,
         })
       } else (hipFire.gripHipFire = 0)
 
-      if (selectGrip[0].sprintToFire) {
+      if (selectedGrip[0].sprintToFire) {
         setSprintToFire({
-          ...sprintToFire, gripSprintToFire: selectGrip[0].sprintToFire,
+          ...sprintToFire, gripSprintToFire: selectedGrip[0].sprintToFire,
         })
       } else (sprintToFire.gripSprintToFire = 0)
 
-      if (selectGrip[0].tacSprintToFire) {
+      if (selectedGrip[0].tacSprintToFire) {
         setTacSprint({
-          ...tacSprint, gripTacSprint: selectGrip[0].tacSprintToFire,
+          ...tacSprint, gripTacSprint: selectedGrip[0].tacSprintToFire,
         })
       } else (tacSprint.gripTacSprint = 0)
 
-      if (selectGrip[0].reloadTime) {
+      if (selectedGrip[0].reloadTime) {
         setReloadTime({
-          ...reloadTime, gripReload: selectGrip[0].reloadTime,
+          ...reloadTime, gripReload: selectedGrip[0].reloadTime,
         })
       } else (reloadTime.gripReload = 0)
 
-      if (selectGrip[0].strafeSpeed) {
+      if (selectedGrip[0].strafeSpeed) {
         setStrafe({
-          ...strafe, gripStrafe: selectGrip[0].strafeSpeed,
+          ...strafe, gripStrafe: selectedGrip[0].strafeSpeed,
         })
       } else (strafe.gripStrafe = 0)
 
@@ -1298,18 +1273,24 @@ function CreateAClass() {
     return 0
   }
 
-  //Damage Profile functions
 
-  // const setProfileStats = (e)=> {
-  //   setProfile(e.target.value)
-  // }
+  const setProfileStats = (e) => {
+    console.log('set prof', e.target.text)
+    setProfile(e.target.text)
 
+  
+  }
+
+  console.log('profile here', profile)
+ 
+  
   const getProfileStats = () => {
     if (weapon){
-      if (profile && profile === 'Profile One') {
+      if (profile && profile.includes('Profile One')) {
         return weapon.profileOne[0]
       }
-      if ( profile && profile === 'Profile Two') {
+      if ( profile && profile.includes('Profile Two')) {
+        console.log('this is text', profile.text)
         return weapon.profileTwo[0]
       }
       if (profile && profile === 'Profile Three') {
@@ -1328,6 +1309,7 @@ function CreateAClass() {
     return 0
   }
 
+  console.log('ranges here', getProfileStats().rangeOne)
   //form submit
 
   const handleSubmit = async e => {
@@ -1348,6 +1330,7 @@ function CreateAClass() {
   }
 
   console.log('form data', formData)
+  console.log('profile', profile)
 
 
   return (
@@ -1355,16 +1338,26 @@ function CreateAClass() {
     <section className='create-class'>
       { weapon && 
       <div>
-
-     
-        <div>
-          <h1>{weapon.name}</h1>
-        </div>
+        <form
+          onSubmit={(handleSubmit)}
+          className="form">
+          <div className="create-header">
+            <div>
+              <h1>{weapon.name}</h1>
+            </div>
+            <div className="class-buttons">
+              <input 
+                placeholder="Name your class"
+                onChange={handleChange}
+                name="profile"
+              ></input>
+              <button type="submit" className="button is-info">Create This Class</button>
+            </div>
+          </div>
        
-        <div className='attachments'>
-          <div className='main-div'>
-            <form
-              onSubmit={(handleSubmit)}>
+          <div className='attachments'>
+            <div className='main-div'>
+
               {/*Damage Profile*/}
               <div className='columns is-one-fifth'>
               
@@ -1375,19 +1368,25 @@ function CreateAClass() {
                     name="profile">
                     <option value={formData.profile}>Select Damage Profile</option>
                     { weapon.profileOne[0] &&
-              <option value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
+              <option onClick={setProfileStats} value={weapon.profileOne[0].profileName}
+              
+                text='Profile One'
+              >Profile One: {weapon.profileOne[0].profileName}</option>
                     }
                     { weapon.profileTwo[0] &&
-              <option value={weapon.profileTwo[0].profileName}>{weapon.profileTwo[0].profileName}</option>
+              <option value= {weapon.profileTwo[0].profileName}
+                onClick={setProfileStats}
+                text='Profile Two'
+              >Profile Two: {weapon.profileTwo[0].profileName}</option>
                     }
                     { weapon.profileThree[0] &&
-              <option value={weapon.profileThree[0].profileName}>{weapon.profileThree[0].profileName}</option>
+              <option value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
                     }
                     { weapon.profileFour[0] &&
-              <option value={weapon.profileFour[0].profileName}>{weapon.profileFour[0].profileName}</option>
+              <option value={weapon.profileFour[0].profileName}>Profile Four: {weapon.profileFour[0].profileName}</option>
                     }
                     { weapon.profileFive[0] &&
-              <option  value={weapon.profileFive[0].profileName}>{weapon.profileFive[0].profileName}</option>
+              <option  value={weapon.profileFive[0].profileName}>Profile Five: {weapon.profileFive[0].profileName}</option>
                     }
                   </select>
                 </div>
@@ -1605,20 +1604,43 @@ function CreateAClass() {
               </div>
               <div className='base-stats'>
                 {
-                  <h3>ADS Time: {ads + sumAds }</h3>
+                  <div className='variable-stats'>
+                    <h1>Gunfight</h1>
+                    <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
+                    <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
+                    <h3>Bullet Velocity: {weapon.bulletVelocity + sumBulletVel}</h3>
+                    <h3>Hipfire Area: {weapon.hipfireArea + sumHipFire}</h3>
+                    <h3>Magazine Size: {weapon.magSize + sumMagSize}</h3>
+                    <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
+                  </div>
                 }
+
+                <div className='variable-stats'>
+                  <h1>Movement</h1>
+                  <h3>Movement Speed: {weapon.movementSpeed + sumMovSpeed}</h3>
+                  <h3>Strafe Speed: {weapon.strafeSpeed + sumStrafe}</h3>
+                  <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
+                  <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
+                  <h3>ADS Movement: {weapon.adsMovementSpeed + sumAdsMovSpeed}</h3>
+                </div>
+
+                <div className='variable-stats'>
+                  <h1>Recoil</h1>
+                  <h3>Vertical Recoil as %: { sumVertRec}</h3>
+                  <h3>Horizontal Recoil as %: {sumHorizRec}</h3>
+                </div>
               </div>
             
               <div className='stats'>
                 <div className='range-boxes'>
                   {
-                    weapon && getProfileStats().rangeOne[0] &&
+                    weapon && getProfileStats().rangeOne &&
                 
                   <div className='range-component'>
                     {
                       getProfileStats().rangeOne.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile}/>
+                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
@@ -1626,25 +1648,26 @@ function CreateAClass() {
                 
                   }
                   {
-                    weapon && getProfileStats().rangeTwo[0] &&
+                    weapon && getProfileStats().rangeTwo &&
                 
                   <div className='range-component'>
                     {
                       getProfileStats().rangeTwo.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile}/>
+                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
                   </div>
                   }
+
                   {
-                    weapon && getProfileStats().rangeThree[0] &&
+                    weapon && getProfileStats().rangeThree &&
                   <div className='range-component'>
                     {
                       getProfileStats().rangeThree.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile}/>
+                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
@@ -1653,13 +1676,13 @@ function CreateAClass() {
                   }
 
                   {
-                    weapon && getProfileStats().rangeFour[0] &&
+                    weapon && getProfileStats().rangeFour &&
               
                   <div className='range-component'>
                     {
                       getProfileStats().rangeFour.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile}/>
+                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
@@ -1667,14 +1690,11 @@ function CreateAClass() {
                   }  
                 </div>            
               </div>
+
             
-
-
-
-              <button type="submit" className="button is-info">Create This Class</button>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>}
     </section>
 

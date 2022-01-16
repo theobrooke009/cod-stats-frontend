@@ -17,7 +17,7 @@
   img{ 
     width: 500px;
     height: auto;
-    margin: 20px 10px;
+    margin: 0px 10px 20px 10px;
   }
 }
 
@@ -47,6 +47,29 @@
     margin: 0 10px 10px 10px;
     .stat-boxes{
       margin: 10px 10px 10px 10px;
+    }
+  }
+}
+
+.create-header{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  h1{
+    font-size: 60px;
+    margin: 0 30px;
+  }
+  .class-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    input{
+      height: 30px;
+      margin: 5px;
+    }
+    button{
+      height: 30px;
+      margin: 5px;
     }
   }
 }
@@ -270,7 +293,20 @@ justify-content: center;
   .columns{
     display: flex;
     justify-content: center;
-  }
-  
-  
+  } 
 }
+
+.base-stats{
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  justify-content: center;
+  .variable-stats{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
