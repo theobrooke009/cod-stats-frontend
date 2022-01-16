@@ -11,8 +11,7 @@ function DamageProfileCard({ profile, rangeMod }) {
       return (((rangeModifier / 100) * 100) + 1).toFixed(2)
     } else return rangeModifier = 1
   }
-  console.log('percent', rangeModPercent())
-  console.log('start', profile.rangeStart)
+
 
   return (
 

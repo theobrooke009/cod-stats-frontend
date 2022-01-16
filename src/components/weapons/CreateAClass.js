@@ -226,7 +226,7 @@ function CreateAClass() {
     perk: '',
   })
 
-  console.log(isError, setSprintSpeed, setBulletVelMod, setMovSpeed, setRangeModifier, setVertRecoil, setHorizRecoil, setAdsModifier, sumRange, sumBulletVel, sumVertRec, sumHorizRec, sumMovSpeed, setProfile, sumAdsMovSpeed, sumSprintSpeed, sumMagSize, sumHipFire, sumSprintToFire, sumTacSprint, sumReloadTime, sumStrafe)
+  console.log(isError)
 
   const navigate = useNavigate()
 
@@ -1273,15 +1273,16 @@ function CreateAClass() {
     return 0
   }
 
+  //Damage Profile Functions
+
 
   const setProfileStats = (e) => {
-    console.log('set prof', e.target.text)
+
     setProfile(e.target.text)
 
   
   }
 
-  console.log('profile here', profile)
  
   
   const getProfileStats = () => {
@@ -1290,7 +1291,6 @@ function CreateAClass() {
         return weapon.profileOne[0]
       }
       if ( profile && profile.includes('Profile Two')) {
-        console.log('this is text', profile.text)
         return weapon.profileTwo[0]
       }
       if (profile && profile === 'Profile Three') {
@@ -1309,7 +1309,7 @@ function CreateAClass() {
     return 0
   }
 
-  console.log('ranges here', getProfileStats().rangeOne)
+
   //form submit
 
   const handleSubmit = async e => {
@@ -1325,12 +1325,22 @@ function CreateAClass() {
   }
 
   const handleChange = e => {
-    console.log('FORM STUFF', e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   console.log('form data', formData)
-  console.log('profile', profile)
+
+  //percent handler
+
+  function percentConverter(percent) {
+    let percerntHandler = (percent / 100)
+    if (percerntHandler < 0 ) {
+      return (100 - (percent * -1)) / 100
+    } else if (percerntHandler > 0) {
+      return ((percerntHandler / 100) * 100) + 1
+    } else return percerntHandler = 1
+  }
+
 
 
   return (
@@ -1608,8 +1618,8 @@ function CreateAClass() {
                     <h1>Gunfight</h1>
                     <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
                     <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
-                    <h3>Bullet Velocity: {weapon.bulletVelocity + sumBulletVel}</h3>
-                    <h3>Hipfire Area: {weapon.hipfireArea + sumHipFire}</h3>
+                    <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
+                    <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
                     <h3>Magazine Size: {weapon.magSize + sumMagSize}</h3>
                     <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
                   </div>
@@ -1617,11 +1627,12 @@ function CreateAClass() {
 
                 <div className='variable-stats'>
                   <h1>Movement</h1>
-                  <h3>Movement Speed: {weapon.movementSpeed + sumMovSpeed}</h3>
-                  <h3>Strafe Speed: {weapon.strafeSpeed + sumStrafe}</h3>
+                  <h3>Movement Speed: {(weapon.movementSpeed * percentConverter(sumMovSpeed)).toFixed(2)}</h3>
+                  <h3>Strafe Speed: {(weapon.strafeSpeed * percentConverter(sumStrafe)).toFixed(2)}</h3>
+                  <h3>Sprint Speed: {(weapon.sprintSpeed * percentConverter(sumSprintSpeed)).toFixed(2)}</h3>
                   <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
                   <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
-                  <h3>ADS Movement: {weapon.adsMovementSpeed + sumAdsMovSpeed}</h3>
+                  <h3>ADS Movement: {(weapon.adsMovementSpeed * percentConverter(sumAdsMovSpeed)).toFixed(2)}</h3>
                 </div>
 
                 <div className='variable-stats'>
