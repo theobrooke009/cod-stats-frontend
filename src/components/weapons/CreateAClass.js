@@ -11,6 +11,7 @@ function CreateAClass() {
   const [weapon, setWeapon] = React.useState(null)
   const [attachments, setAttachments] = React.useState(null)
 
+
   const [adsModifier, setAdsModifier] = React.useState({
     muzzleAds: 0,
     laserAds: 0,
@@ -211,22 +212,35 @@ function CreateAClass() {
   const [isError, setIsError] = React.useState(false)
   const [profile, setProfile] = React.useState('Profile One')
   const { weaponId } = useParams()
-  const [formData, setFormData] = React.useState({
-    profile: '',
-    name: '',
-    image: '',
-    muzzle: '',
-    barrel: '',
-    laser: '',
-    optic: '',
-    stock: '',
-    underBarrel: '',
-    ammunition: '',
-    rearGrip: '',
-    perk: '',
-  })
 
+  const [formData, setFormData] = React.useState({
+    profile: 'None',
+    name: 'None',
+    image: 'None',
+    muzzle: 'None',
+    barrel: 'None',
+    laser: 'None',
+    optic: 'None',
+    stock: 'None',
+    underBarrel: 'None',
+    rearGrip: 'None',
+    perk: 'None',
+  })
+  
+  const attachArray = Object.entries(formData).filter(
+    keys => {
+      return keys[1] !== null && !keys[1].includes('None') && keys[0] !== 'profile'
+    }
+  ).map(
+    key => {
+      return key[0]
+    }
+  )
+
+  console.log('array', attachArray)
   console.log(isError)
+
+
 
   const navigate = useNavigate()
 
@@ -261,7 +275,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Muzzle' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Muzzle'
         }
       )
     }
@@ -373,7 +387,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Laser' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Laser'
         }
       )
     }
@@ -486,7 +500,8 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Barrel' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Barrel' 
+          // & attachment.attachmentName !== 'None'
         }
       )
     }
@@ -599,7 +614,8 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Optic' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Optic' 
+          // && attachment.attachmentName !== 'None'
         }
       )
     }
@@ -712,7 +728,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Stock' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Stock'
         }
       )
     }
@@ -825,12 +841,13 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Underbarrel' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Underbarrel'
         }
       )
     }
     return 0
   }
+
 
   function oneUnderBarrel(e) {
     if (attachments && weapon) {
@@ -939,7 +956,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Perk' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Perk'
         }
       )
     }
@@ -1053,7 +1070,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammunition' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammo'
         }
       )
     }
@@ -1061,6 +1078,7 @@ function CreateAClass() {
   }
 
   function oneAmmo(e) {
+    console.log('AMMO', e.target.innerHTML)
     if (attachments && weapon) {
       const selectedAmmo = attachments.filter(
         attachment => {
@@ -1068,7 +1086,6 @@ function CreateAClass() {
           
         }
       )
-
    
       if (selectedAmmo[0].adsModifier){
         setAdsModifier(
@@ -1166,7 +1183,7 @@ function CreateAClass() {
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Rear Grip' && attachment.attachmentName !== 'None'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Rear Grip'
         }
       )
     }
@@ -1283,6 +1300,7 @@ function CreateAClass() {
   
   }
 
+  console.log('profile stats', profile)
  
   
   const getProfileStats = () => {
@@ -1293,18 +1311,18 @@ function CreateAClass() {
       if ( profile && profile.includes('Profile Two')) {
         return weapon.profileTwo[0]
       }
-      if (profile && profile === 'Profile Three') {
+      if (profile && profile.includes('Profile Three')) {
         return weapon.profileThree[0]
       }
-      if (profile && profile === 'Profile Four') {
+      if (profile && profile.includes('Profile Four')) {
         return weapon.profileFour[0]
       }
-      if (profile && profile === 'Profile Five') {
+      if (profile && profile.includes('Profile Five')) {
         return weapon.profileFive[0]
       }
-      if (profile && profile === 'Profile Six') {
+      if (profile && profile.includes('Profile Six')) {
         return weapon.profileSix[0]
-      }
+      } else return weapon.profileOne[0]
     }
     return 0
   }
@@ -1324,8 +1342,12 @@ function CreateAClass() {
     }
   }
 
+  const [display, setDisplay] = React.useState(true)
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    if (attachArray.length === 4) {
+      return setDisplay(false)
+    } else return setDisplay(true)
   }
 
   console.log('form data', formData)
@@ -1333,15 +1355,16 @@ function CreateAClass() {
   //percent handler
 
   function percentConverter(percent) {
-    let percerntHandler = (percent / 100)
-    if (percerntHandler < 0 ) {
+    let percentHandler = (percent / 100)
+    if (percentHandler < 0 ) {
       return (100 - (percent * -1)) / 100
-    } else if (percerntHandler > 0) {
-      return ((percerntHandler / 100) * 100) + 1
-    } else return percerntHandler = 1
+    } else if (percentHandler > 0) {
+      return ((percentHandler / 100) * 100) + 1
+    } else return percentHandler = 1
   }
 
-
+  console.log('display', display)
+ 
 
   return (
     
@@ -1364,56 +1387,30 @@ function CreateAClass() {
               <button type="submit" className="button is-info">Create This Class</button>
             </div>
           </div>
-       
           <div className='attachments'>
             <div className='main-div'>
 
-              {/*Damage Profile*/}
               <div className='columns is-one-fifth'>
-              
-                <div className=" column profile-and-create">
-                  <button className='button is-black'>Stock</button>
-                  <select className='dropdown button'
-                    onChange={handleChange}
-                    name="profile">
-                    <option value={formData.profile}>Select Damage Profile</option>
-                    { weapon.profileOne[0] &&
-              <option onClick={setProfileStats} value={weapon.profileOne[0].profileName}
-              
-                text='Profile One'
-              >Profile One: {weapon.profileOne[0].profileName}</option>
-                    }
-                    { weapon.profileTwo[0] &&
-              <option value= {weapon.profileTwo[0].profileName}
-                onClick={setProfileStats}
-                text='Profile Two'
-              >Profile Two: {weapon.profileTwo[0].profileName}</option>
-                    }
-                    { weapon.profileThree[0] &&
-              <option value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
-                    }
-                    { weapon.profileFour[0] &&
-              <option value={weapon.profileFour[0].profileName}>Profile Four: {weapon.profileFour[0].profileName}</option>
-                    }
-                    { weapon.profileFive[0] &&
-              <option  value={weapon.profileFive[0].profileName}>Profile Five: {weapon.profileFive[0].profileName}</option>
-                    }
-                  </select>
-                </div>
               
                 {/*Muzzle*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Muzzle</button>
-                  { attachments &&
+                  { attachments && ((formData.muzzle === 'None' && display) || (formData.muzzle !== 'None')) &&
             <select className='dropdown button' 
               onChange={handleChange}
               name="muzzle">
-              <option>Select muzzle</option>
+          
+              <option>{getMuzzle()[0].attachmentName}</option>
               {
                 attachments &&
-          getMuzzle().map(
+          getMuzzle().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
+                
                 <option 
                   key={attachment._id} 
                   value={attachment.attachmentName} 
@@ -1423,7 +1420,16 @@ function CreateAClass() {
               )
             }            
           )}
+          
             </select> 
+                  }
+                  { attachments && (formData.muzzle === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='muzzle'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
                   }
                 </div>
 
@@ -1431,14 +1437,18 @@ function CreateAClass() {
                 {/* Laser   */}
                 <div className='column is-one-fifth weapon-part'>
                   <button  className='button is-black'>Laser</button>
-                  { attachments &&
+                  { attachments && ((formData.laser === 'None' && display) || (formData.laser !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="laser">
-              <option>None</option>
+              <option>{getLaser()[0].attachmentName}</option>
               {
                 attachments &&
-          getLaser().map(
+          getLaser().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={oneLaser}>{attachment.attachmentName}</option>
@@ -1448,19 +1458,31 @@ function CreateAClass() {
               }
             </select> 
                   }
+                  { attachments && (formData.laser === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='laser'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
+                  }
                 </div>
 
                 {/* Barrel*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Barrel</button>
-                  { attachments &&
+                  { attachments && ((formData.barrel === 'None' && display) || (formData.barrel !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="barrel">
-              <option >None</option>
+              <option >{getBarrel()[0].attachmentName}</option>
               {
                 attachments &&
-          getBarrel().map(
+          getBarrel().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} 
@@ -1472,19 +1494,31 @@ function CreateAClass() {
               }
             </select> 
                   }
+                  { attachments && (formData.barrel === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='barrel'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
+                  }
                 </div>
 
                 {/* Optic*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Optic</button>
-                  { attachments &&
+                  { attachments && ((formData.optic === 'None' && display) || (formData.optic !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="optic">
-              <option >Select Optic</option>
+              <option >{getOptic()[0].attachmentName}</option>
               {
                 attachments &&
-          getOptic().map(
+          getOptic().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={oneOptic}>{attachment.attachmentName}</option>
@@ -1493,6 +1527,15 @@ function CreateAClass() {
           )
               }
             </select> 
+                  }
+
+                  { attachments && (formData.optic === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='optic'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
                   }
                 </div>
               </div>
@@ -1505,14 +1548,18 @@ function CreateAClass() {
               <div className='columns'>
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Stock</button>
-                  { attachments &&
+                  { attachments && ((formData.stock === 'None' && display) || (formData.stock !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="stock">
-              <option >Select Stock</option>
+              <option >{getStock()[0].attachmentName}</option>
               {
                 attachments &&
-          getStock().map(
+          getStock().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={oneStock}>{attachment.attachmentName}</option>
@@ -1522,19 +1569,33 @@ function CreateAClass() {
               }
             </select> 
                   }
+
+                  { attachments && (formData.stock === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='stock'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
+                  }
+
                 </div>
 
                 {/* Underbarrel*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Underbarrel</button>
-                  { attachments &&
+                  { attachments && ((formData.underBarrel === 'None' && display) || (formData.underBarrel !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="underBarrel">
-              <option >Select Underbarrel</option>
+              <option >{getUnderBarrel()[0].attachmentName}</option>
               {
                 attachments &&
-          getUnderBarrel().map(
+          getUnderBarrel().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel} name="Underbarrel">{attachment.attachmentName}</option>
@@ -1544,19 +1605,86 @@ function CreateAClass() {
               }
             </select> 
                   }
+                  { attachments && (formData.underBarrel === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='underBarrel'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
+                  }
                 </div>
+
+                <div className=" column is-one-fifth weapon-part">
+                  
+                  <button className='button is-black'>Ammo</button>
+                  { attachments && ((formData.profile === 'None' && display) || (formData.profile !== 'None')) &&
+                    <select className='dropdown button'
+                      onChange={handleChange}
+                      name="profile">
+                      <option text='Profile One' onClick={setProfileStats} value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
+
+                      { weapon.profileTwo[0] &&
+              <option value= {weapon.profileTwo[0].profileName}
+                onClick={setProfileStats}
+                text='Profile Two'
+              >Profile Two: {weapon.profileTwo[0].profileName}</option>
+                      }
+                      { weapon.profileThree[0] &&
+              <option value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
+                      }
+                      { weapon.profileFour[0] &&
+              <option value={weapon.profileFour[0].profileName}>Profile Four: {weapon.profileFour[0].profileName}</option>
+                      }
+                      { weapon.profileFive[0] &&
+              <option  value={weapon.profileFive[0].profileName}>Profile Five: {weapon.profileFive[0].profileName}</option>
+                      }
+                      {
+                        attachments &&
+          getAmmo().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
+            attachment => {
+              return (  
+                <option key={attachment._id} value={attachment.attachmentName}  text='Profile One' onClick={ (e)=> { 
+                  oneAmmo(e); setProfileStats(e)
+                }
+                } name="Ammo">{attachment.attachmentName}</option>
+              )
+            }            
+          )
+                      }
+                    </select>
+                  }
+                  { attachments && (formData.profile === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='barrel'>
+                    <option>Unavailable</option>
+
+                  </select>
+                  }
+                    
+                </div>
+
+                
 
                 {/* Perks*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Perk</button>
-                  { attachments &&
+                  { attachments && ((formData.perk === 'None' && display) || (formData.perk !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="perk">
-              <option disabled >Select Perk</option>
+              <option>{getPerk()[0].attachmentName}</option>
               {
                 attachments &&
-          getPerk().map(
+          getPerk().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk} name="Perk">{attachment.attachmentName}</option>
@@ -1566,41 +1694,31 @@ function CreateAClass() {
               }
             </select> 
                   }
-                </div>
+                  { attachments && (formData.perk === 'None' && !display) &&
+                  <select className='dropdown button'
+                    name='perk'>
+                    <option>None - limit met</option>
 
-                {/* Ammo*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Ammo</button>
-                  { attachments &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="ammunition">
-              <option >Select Ammo</option>
-              {
-                attachments &&
-          getAmmo().map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneAmmo} name="Ammo">{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
+                  </select>
+                    
                   }
                 </div>
 
                 {/* Grip*/}
                 <div className='column is-one-fifth weapon-part'>
                   <button className='button is-black'>Grip</button>
-                  { attachments &&
+                  { attachments && ((formData.rearGrip === 'None' && display) || (formData.rearGrip !== 'None')) &&
             <select className='dropdown button'
               onChange={handleChange}
               name="rearGrip">
-              <option default>Select Grip</option>
+              <option default>{getGrip()[0].attachmentName}</option>
               {
                 attachments &&
-          getGrip().map(
+          getGrip().filter(
+            attach => {
+              return attach.attachmentName !== 'None'
+            }
+          ).map(
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip} name="Grip">{attachment.attachmentName}</option>
@@ -1609,6 +1727,14 @@ function CreateAClass() {
           )
               }
             </select> 
+                  }
+                  { attachArray.length === 5 && (formData.rearGrip === 'None' || formData.rearGrip === null) &&
+                  <select className='dropdown button'
+                    name='rearGrip'>
+                    <option>None - limit met</option>
+
+                  </select>
+                    
                   }
                 </div>
               </div>
@@ -1701,15 +1827,11 @@ function CreateAClass() {
                   }  
                 </div>            
               </div>
-
-            
             </div>
           </div>
         </form>
       </div>}
     </section>
-
-
   )
 }
 
