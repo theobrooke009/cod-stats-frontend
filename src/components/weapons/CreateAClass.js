@@ -124,19 +124,7 @@ function CreateAClass() {
 
   const sumSprintSpeed = Object.values(sprintSpeed).reduce( (a, b) => a + b, 0)
 
-  const [magSize, setMagSize] = React.useState({
-    muzzleMag: 0,
-    laserMag: 0,
-    barrelMag: 0,
-    opticMag: 0,
-    stockMag: 0,
-    underBarrelMag: 0,
-    perkMag: 0,
-    ammoMag: 0,
-    gripMag: 0,
-  })
-
-  const sumMagSize = Object.values(magSize).reduce( (a, b) => a + b, 0)
+  const [magSize, setMagSize] = React.useState(0)
 
   const [hipFire, setHipFire] = React.useState({
     muzzleHipFire: 0,
@@ -217,6 +205,8 @@ function CreateAClass() {
     profile: 'None',
     name: 'None',
     image: 'None',
+    gunName: 'None',
+    gameFrom: 'None',
     muzzle: 'None',
     barrel: 'None',
     laser: 'None',
@@ -229,7 +219,7 @@ function CreateAClass() {
   
   const attachArray = Object.entries(formData).filter(
     keys => {
-      return keys[1] !== null && !keys[1].includes('None') && keys[0] !== 'profile'
+      return keys[1] !== null && !keys[1].includes('None') && keys[0] !== 'profile' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && !keys[1].includes('Default')
     }
   ).map(
     key => {
@@ -237,8 +227,9 @@ function CreateAClass() {
     }
   )
 
-  console.log('array', attachArray)
+
   console.log(isError)
+  console.log('mag size', magSize)
 
 
 
@@ -249,7 +240,13 @@ function CreateAClass() {
     const getData = async () => {
       try {
         const response = await getOneWeapon(weaponId)
-        setWeapon(response.data)        
+        setWeapon(response.data)
+        setMagSize(response.data.magSize)
+        setFormData({ ...formData, 
+          image: response.data.image, 
+          gunName: response.data.name,
+          gameFrom: response.data.gameFrom, 
+        })     
       } catch (err) {
         setIsError(err)
       }
@@ -338,12 +335,6 @@ function CreateAClass() {
           ...sprintSpeed, muzzleSprintSpeed: selectedMuzzle[0].sprintSpeed,
         })
       } else (sprintSpeed.muzzleSprintSpeed = 0)
-      
-      if (selectedMuzzle[0].magSize) {
-        setMagSize({
-          ...magSize, muzzleMag: selectedMuzzle[0].magSize,
-        })
-      } else (magSize.muzzleMag = 0)
 
       if (selectedMuzzle[0].hipfireArea) {
         setHipFire({
@@ -450,13 +441,7 @@ function CreateAClass() {
           ...sprintSpeed, laserSprintSpeed: selectedLaser[0].sprintSpeed,
         })
       } else (sprintSpeed.laserSprintSpeed = 0)
-      
-      if (selectedLaser[0].magSize) {
-        setMagSize({
-          ...magSize, laserMag: selectedLaser[0].magSize,
-        })
-      } else (magSize.laserMag = 0)
-
+    
       if (selectedLaser[0].hipfireArea) {
         setHipFire({
           ...hipFire, laserHipFire: selectedLaser[0].hipfireArea,
@@ -564,12 +549,6 @@ function CreateAClass() {
           ...sprintSpeed, barrelSprintSpeed: selectedBarrel[0].sprintSpeed,
         })
       } else (sprintSpeed.barrelSprintSpeed = 0)
-      
-      if (selectedBarrel[0].magSize) {
-        setMagSize({
-          ...magSize, barrelMag: selectedBarrel[0].magSize,
-        })
-      } else (magSize.barrelMag = 0)
 
       if (selectedBarrel[0].hipfireArea) {
         setHipFire({
@@ -678,12 +657,6 @@ function CreateAClass() {
           ...sprintSpeed, opticSprintSpeed: selectedOptic[0].sprintSpeed,
         })
       } else (sprintSpeed.opticSprintSpeed = 0)
-      
-      if (selectedOptic[0].magSize) {
-        setMagSize({
-          ...magSize, opticMag: selectedOptic[0].magSize,
-        })
-      } else (magSize.opticMag = 0)
 
       if (selectedOptic[0].hipfireArea) {
         setHipFire({
@@ -791,12 +764,6 @@ function CreateAClass() {
           ...sprintSpeed, stockSprintSpeed: selectedStock[0].sprintSpeed,
         })
       } else (sprintSpeed.stockSprintSpeed = 0)
-      
-      if (selectedStock[0].magSize) {
-        setMagSize({
-          ...magSize, stockMag: selectedStock[0].magSize,
-        })
-      } else (magSize.stockMag = 0)
 
       if (selectedStock[0].hipfireArea) {
         setHipFire({
@@ -858,7 +825,6 @@ function CreateAClass() {
         }
       )
 
-     
       if (selectedUnderBarrel[0].adsModifier){
         setAdsModifier(
           { ...adsModifier, underBarrelAds: selectedUnderBarrel[0].adsModifier }
@@ -906,12 +872,6 @@ function CreateAClass() {
           ...sprintSpeed, UnderBarrelSprintSpeed: selectedUnderBarrel[0].sprintSpeed,
         })
       } else (sprintSpeed.underBarrelSprintSpeed = 0)
-      
-      if (selectedUnderBarrel[0].magSize) {
-        setMagSize({
-          ...magSize, underBarrelMag: selectedUnderBarrel[0].magSize,
-        })
-      } else (magSize.underBarrelMag = 0)
 
       if (selectedUnderBarrel[0].hipfireArea) {
         setHipFire({
@@ -1019,12 +979,6 @@ function CreateAClass() {
           ...sprintSpeed, perkSprintSpeed: selectedPerk[0].sprintSpeed,
         })
       } else (sprintSpeed.perkSprintSpeed = 0)
-      
-      if (selectedPerk[0].magSize) {
-        setMagSize({
-          ...magSize, perkMag: selectedPerk[0].magSize,
-        })
-      } else (magSize.perkMag = 0)
 
       if (selectedPerk[0].hipfireArea) {
         setHipFire({
@@ -1063,7 +1017,6 @@ function CreateAClass() {
     return 0
   }
 
-
   //Ammo functions
 
   function getAmmo() {
@@ -1078,7 +1031,6 @@ function CreateAClass() {
   }
 
   function oneAmmo(e) {
-    console.log('AMMO', e.target.innerHTML)
     if (attachments && weapon) {
       const selectedAmmo = attachments.filter(
         attachment => {
@@ -1134,12 +1086,6 @@ function CreateAClass() {
           ...sprintSpeed, ammoSprintSpeed: selectedAmmo[0].sprintSpeed,
         })
       } else (sprintSpeed.ammoSprintSpeed = 0)
-      
-      if (selectedAmmo[0].magSize) {
-        setMagSize({
-          ...magSize, ammoMag: selectedAmmo[0].magSize,
-        })
-      } else (magSize.ammoMag = 0)
 
       if (selectedAmmo[0].hipfireArea) {
         setHipFire({
@@ -1246,12 +1192,6 @@ function CreateAClass() {
           ...sprintSpeed, gripSprintSpeed: selectedGrip[0].sprintSpeed,
         })
       } else (sprintSpeed.gripSprintSpeed = 0)
-      
-      if (selectedGrip[0].magSize) {
-        setMagSize({
-          ...magSize, gripMag: selectedGrip[0].magSize,
-        })
-      } else (magSize.gripMag = 0)
 
       if (selectedGrip[0].hipfireArea) {
         setHipFire({
@@ -1300,7 +1240,7 @@ function CreateAClass() {
   
   }
 
-  console.log('profile stats', profile)
+
  
   
   const getProfileStats = () => {
@@ -1344,13 +1284,14 @@ function CreateAClass() {
 
   const [display, setDisplay] = React.useState(true)
   const handleChange = e => {
+    setMagSize(weapon.magSize)
     setFormData({ ...formData, [e.target.name]: e.target.value })
     if (attachArray.length === 4) {
       return setDisplay(false)
     } else return setDisplay(true)
   }
 
-  console.log('form data', formData)
+
 
   //percent handler
 
@@ -1363,13 +1304,12 @@ function CreateAClass() {
     } else return percentHandler = 1
   }
 
-  console.log('display', display)
  
 
   return (
     
     <section className='create-class'>
-      { weapon && 
+      { weapon && attachments &&
       <div>
         <form
           onSubmit={(handleSubmit)}
@@ -1382,7 +1322,7 @@ function CreateAClass() {
               <input 
                 placeholder="Name your class"
                 onChange={handleChange}
-                name="profile"
+                name="name"
               ></input>
               <button type="submit" className="button is-info">Create This Class</button>
             </div>
@@ -1399,8 +1339,11 @@ function CreateAClass() {
             <select className='dropdown button' 
               onChange={handleChange}
               name="muzzle">
-          
-              <option>{getMuzzle()[0].attachmentName}</option>
+              {
+                <option>{getMuzzle()[0].attachmentName}</option>
+              } 
+            
+              
               {
                 attachments &&
           getMuzzle().filter(
@@ -1426,7 +1369,7 @@ function CreateAClass() {
                   { attachments && (formData.muzzle === 'None' && !display) &&
                   <select className='dropdown button'
                     name='muzzle'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1461,7 +1404,7 @@ function CreateAClass() {
                   { attachments && (formData.laser === 'None' && !display) &&
                   <select className='dropdown button'
                     name='laser'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1497,7 +1440,7 @@ function CreateAClass() {
                   { attachments && (formData.barrel === 'None' && !display) &&
                   <select className='dropdown button'
                     name='barrel'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1532,7 +1475,7 @@ function CreateAClass() {
                   { attachments && (formData.optic === 'None' && !display) &&
                   <select className='dropdown button'
                     name='optic'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1573,7 +1516,7 @@ function CreateAClass() {
                   { attachments && (formData.stock === 'None' && !display) &&
                   <select className='dropdown button'
                     name='stock'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1608,7 +1551,7 @@ function CreateAClass() {
                   { attachments && (formData.underBarrel === 'None' && !display) &&
                   <select className='dropdown button'
                     name='underBarrel'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1631,13 +1574,22 @@ function CreateAClass() {
               >Profile Two: {weapon.profileTwo[0].profileName}</option>
                       }
                       { weapon.profileThree[0] &&
-              <option value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
+              <option 
+                onClick={setProfileStats}
+                text='Profile Three'
+                value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
                       }
                       { weapon.profileFour[0] &&
-              <option value={weapon.profileFour[0].profileName}>Profile Four: {weapon.profileFour[0].profileName}</option>
+              <option value={weapon.profileFour[0].profileName}
+                onClick={setProfileStats}
+                text='Profile Four'
+              >Profile Four: {weapon.profileFour[0].profileName}</option>
                       }
                       { weapon.profileFive[0] &&
-              <option  value={weapon.profileFive[0].profileName}>Profile Five: {weapon.profileFive[0].profileName}</option>
+              <option  value={weapon.profileFive[0].profileName}
+                onClick={setProfileStats}
+                text='Profile Five'
+              >Profile Five: {weapon.profileFive[0].profileName}</option>
                       }
                       {
                         attachments &&
@@ -1649,7 +1601,7 @@ function CreateAClass() {
             attachment => {
               return (  
                 <option key={attachment._id} value={attachment.attachmentName}  text='Profile One' onClick={ (e)=> { 
-                  oneAmmo(e); setProfileStats(e)
+                  oneAmmo(e); setProfileStats(e); setMagSize(weapon.magSize + attachment.magSize)
                 }
                 } name="Ammo">{attachment.attachmentName}</option>
               )
@@ -1697,7 +1649,7 @@ function CreateAClass() {
                   { attachments && (formData.perk === 'None' && !display) &&
                   <select className='dropdown button'
                     name='perk'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1728,10 +1680,10 @@ function CreateAClass() {
               }
             </select> 
                   }
-                  { attachArray.length === 5 && (formData.rearGrip === 'None' || formData.rearGrip === null) &&
+                  { attachments && (formData.rearGrip === 'None' && !display) &&
                   <select className='dropdown button'
                     name='rearGrip'>
-                    <option>None - limit met</option>
+                    <option>Unavailable</option>
 
                   </select>
                     
@@ -1746,7 +1698,7 @@ function CreateAClass() {
                     <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
                     <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
                     <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
-                    <h3>Magazine Size: {weapon.magSize + sumMagSize}</h3>
+                    <h3>Magazine Size: {magSize}</h3>
                     <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
                   </div>
                 }
