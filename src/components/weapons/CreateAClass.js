@@ -3,13 +3,26 @@ import React from 'react'
 import { getAllAttachments, createAClass, getOneWeapon } from '../lib/api.js'
 import { useParams } from 'react-router-dom'
 import DamageProfileCard from './DamageProfileCard.js'
+import MuzzleCard from './CreateAClassFunctions/MuzzleFunctions.js'
+import LaserCard from './CreateAClassFunctions/LaserFunctions.js'
+import BarrelCard from './CreateAClassFunctions/BarrelFunctions.js'
+import OpticCard from './CreateAClassFunctions/OpticFunctions.js'
+import StockCard from './CreateAClassFunctions/StockFunction.js'
+import UnderBarrelCard from './CreateAClassFunctions/UnderBarrelFunctions.js'
+import AmmoCard from './CreateAClassFunctions/AmmoFunctions.js'
+import PerkCard from './CreateAClassFunctions/PerkFunctions.js'
+import GripCard from './CreateAClassFunctions/GripFunctions.js'
 import { useNavigate } from 'react-router-dom'
-
 
 
 function CreateAClass() {
   const [weapon, setWeapon] = React.useState(null)
   const [attachments, setAttachments] = React.useState(null)
+  const [display, setDisplay] = React.useState(true)
+  const [isError, setIsError] = React.useState(false)
+  const [profile, setProfile] = React.useState('Profile One')
+  const { weaponId } = useParams()
+  const navigate = useNavigate()
 
 
   const [adsModifier, setAdsModifier] = React.useState({
@@ -197,10 +210,6 @@ function CreateAClass() {
 
   const sumStrafe = Object.values(strafe).reduce( (a, b) => a + b, 0)
 
-  const [isError, setIsError] = React.useState(false)
-  const [profile, setProfile] = React.useState('Profile One')
-  const { weaponId } = useParams()
-
   const [formData, setFormData] = React.useState({
     profile: 'None',
     name: 'None',
@@ -219,7 +228,7 @@ function CreateAClass() {
   
   const attachArray = Object.entries(formData).filter(
     keys => {
-      return keys[1] !== null && !keys[1].includes('None') && keys[0] !== 'profile' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && !keys[1].includes('Default')
+      return keys[1] !== null && !keys[1].includes('None') && keys[1] !== 'Default' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && !keys[1].includes('Default')
     }
   ).map(
     key => {
@@ -227,14 +236,9 @@ function CreateAClass() {
     }
   )
 
+  console.log('form', formData)
 
   console.log(isError)
-  console.log('mag size', magSize)
-
-
-
-  const navigate = useNavigate()
-
 
   React.useEffect(() => {
     const getData = async () => {
@@ -265,983 +269,13 @@ function CreateAClass() {
     }
     getData()
   }, [])
-
-  //Muzzle Functions
-
-  function getMuzzle() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Muzzle'
-        }
-      )
-    }
-    return 0
-  }
-
-
-  function oneMuzzle(e) {
-    if (attachments && weapon) {
-      const selectedMuzzle = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-      if (selectedMuzzle[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, muzzleAds: selectedMuzzle[0].adsModifier }
-        )
-      } else (adsModifier.muzzleAds = 0)
-
-      if (selectedMuzzle[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, muzzleRange: selectedMuzzle[0].rangeModifier,
-        })
-      } else (rangeModifier.muzzleRange = 0)
-
-      if (selectedMuzzle[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, muzzleVel: selectedMuzzle[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.muzzleVel = 0)
-
-      if (selectedMuzzle[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, muzzleVert: selectedMuzzle[0].verticalRecoil,
-        })
-      } else (vertRecoil.muzzleVert = 0)
-
-      if (selectedMuzzle[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, muzzleHoriz: selectedMuzzle[0].horizontalRecoil,
-        })
-      } else (horizRecoil.muzzleHoriz = 0)
-
-      if (selectedMuzzle[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, muzzleMov: selectedMuzzle[0].movementSpeed,
-        })
-      } else (movSpeed.muzzleMov = 0)
-
-      if (selectedMuzzle[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, muzzleAdsMov: selectedMuzzle[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.muzzleAdsMov = 0 )
-
-      if (selectedMuzzle[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, muzzleSprintSpeed: selectedMuzzle[0].sprintSpeed,
-        })
-      } else (sprintSpeed.muzzleSprintSpeed = 0)
-
-      if (selectedMuzzle[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, muzzleHipFire: selectedMuzzle[0].hipfireArea,
-        })
-      } else (hipFire.muzzleHipFire = 0)
-
-      if (selectedMuzzle[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, muzzleSprintToFire: selectedMuzzle[0].sprintToFire,
-        })
-      } else (sprintToFire.muzzleSprintToFire = 0)
-
-      if (selectedMuzzle[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, muzzleTacSprint: selectedMuzzle[0].tacSprintToFire,
-        })
-      } else (tacSprint.muzzleTacSprint = 0)
-
-      if (selectedMuzzle[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, muzzleReload: selectedMuzzle[0].reloadTime,
-        })
-      } else (reloadTime.muzzleReload = 0)
-
-      if (selectedMuzzle[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, muzzleStrafe: selectedMuzzle[0].strafeSpeed,
-        })
-      } else (strafe.muzzleStrafe = 0)
-      return selectedMuzzle
-    } 
-
-    return 0
-  }
-
-
-  //Laser Functions
-
-  function getLaser() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Laser'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneLaser(e) {
-    if (attachments && weapon) {
-      const selectedLaser = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedLaser[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, laserAds: selectedLaser[0].adsModifier }
-        )
-      } else (adsModifier.laserAds = 0)
-
-      if (selectedLaser[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, laserRange: selectedLaser[0].rangeModifier,
-        })
-      } else (rangeModifier.laserRange = 0)
-
-      if (selectedLaser[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, laserVel: selectedLaser[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.laserVel = 0)
-
-      if (selectedLaser[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, laserVert: selectedLaser[0].verticalRecoil,
-        })
-      } else (vertRecoil.laserVert = 0)
-
-      if (selectedLaser[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, laserHoriz: selectedLaser[0].horizontalRecoil,
-        })
-      } else (horizRecoil.laserHoriz = 0)
-
-      if (selectedLaser[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, laserMov: selectedLaser[0].movementSpeed,
-        })
-      } else (movSpeed.laserMov = 0)
-
-      if (selectedLaser[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, laserAdsMov: selectedLaser[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.laserAdsMov = 0 )
-
-      if (selectedLaser[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, laserSprintSpeed: selectedLaser[0].sprintSpeed,
-        })
-      } else (sprintSpeed.laserSprintSpeed = 0)
-    
-      if (selectedLaser[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, laserHipFire: selectedLaser[0].hipfireArea,
-        })
-      } else (hipFire.laserHipFire = 0)
-
-      if (selectedLaser[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, laserSprintToFire: selectedLaser[0].sprintToFire,
-        })
-      } else (sprintToFire.laserSprintToFire = 0)
-
-      if (selectedLaser[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, laserTacSprint: selectedLaser[0].tacSprintToFire,
-        })
-      } else (tacSprint.laserTacSprint = 0)
-
-      if (selectedLaser[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, laserReload: selectedLaser[0].reloadTime,
-        })
-      } else (reloadTime.laserReload = 0)
-
-      if (selectedLaser[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, laserStrafe: selectedLaser[0].strafeSpeed,
-        })
-      } else (strafe.laserStrafe = 0)
-
-      return selectedLaser
-    } 
-
-
-    return 0
-  }
-
-  //barrel functions
-
-  function getBarrel() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Barrel' 
-          // & attachment.attachmentName !== 'None'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneBarrel(e) {
-    if (attachments && weapon) {
-      const selectedBarrel = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedBarrel[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, barrelAds: selectedBarrel[0].adsModifier }
-        )
-      } else (adsModifier.barrelAds = 0)
-
-      if (selectedBarrel[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, barrelRange: selectedBarrel[0].rangeModifier,
-        })
-      } else (rangeModifier.barrelRange = 0)
-
-      if (selectedBarrel[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, barrelVel: selectedBarrel[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.barrelVel = 0)
-
-      if (selectedBarrel[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, barrelVert: selectedBarrel[0].verticalRecoil,
-        })
-      } else (vertRecoil.barrelVert = 0)
-
-      if (selectedBarrel[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, barrelHoriz: selectedBarrel[0].horizontalRecoil,
-        })
-      } else (horizRecoil.barrelHoriz = 0)
-
-      if (selectedBarrel[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, barrelMov: selectedBarrel[0].movementSpeed,
-        })
-      } else (movSpeed.barrelMov = 0)
-
-      if (selectedBarrel[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, barrelAdsMov: selectedBarrel[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.barrelAdsMov = 0 )
-
-      if (selectedBarrel[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, barrelSprintSpeed: selectedBarrel[0].sprintSpeed,
-        })
-      } else (sprintSpeed.barrelSprintSpeed = 0)
-
-      if (selectedBarrel[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, barrelHipFire: selectedBarrel[0].hipfireArea,
-        })
-      } else (hipFire.barrelHipFire = 0)
-
-      if (selectedBarrel[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, barrelSprintToFire: selectedBarrel[0].sprintToFire,
-        })
-      } else (sprintToFire.barrelSprintToFire = 0)
-
-      if (selectedBarrel[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, barrelTacSprint: selectedBarrel[0].tacSprintToFire,
-        })
-      } else (tacSprint.barrelTacSprint = 0)
-
-      if (selectedBarrel[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, barrelReload: selectedBarrel[0].reloadTime,
-        })
-      } else (reloadTime.barrelReload = 0)
-
-      if (selectedBarrel[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, barrelStrafe: selectedBarrel[0].strafeSpeed,
-        })
-      } else (strafe.barrelStrafe = 0)
-
-      return selectedBarrel
-    } 
-
-
-    return 0
-  }
-
-  //Optic functions
-
-  function getOptic() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Optic' 
-          // && attachment.attachmentName !== 'None'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneOptic(e) {
-    if (attachments && weapon) {
-      const selectedOptic = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedOptic[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, opticAds: selectedOptic[0].adsModifier }
-        )
-      } else (adsModifier.opticAds = 0)
-
-      if (selectedOptic[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, opticRange: selectedOptic[0].rangeModifier,
-        })
-      } else (rangeModifier.opticRange = 0)
-
-      if (selectedOptic[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, opticVel: selectedOptic[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.opticVel = 0)
-
-      if (selectedOptic[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, opticVert: selectedOptic[0].verticalRecoil,
-        })
-      } else (vertRecoil.opticVert = 0)
-
-      if (selectedOptic[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, opticHoriz: selectedOptic[0].horizontalRecoil,
-        })
-      } else (horizRecoil.opticHoriz = 0)
-
-      if (selectedOptic[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, opticMov: selectedOptic[0].movementSpeed,
-        })
-      } else (movSpeed.opticMov = 0)
-
-      if (selectedOptic[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, opticAdsMov: selectedOptic[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.opticAdsMov = 0 )
-
-      if (selectedOptic[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, opticSprintSpeed: selectedOptic[0].sprintSpeed,
-        })
-      } else (sprintSpeed.opticSprintSpeed = 0)
-
-      if (selectedOptic[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, opticHipFire: selectedOptic[0].hipfireArea,
-        })
-      } else (hipFire.opticHipFire = 0)
-
-      if (selectedOptic[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, opticSprintToFire: selectedOptic[0].sprintToFire,
-        })
-      } else (sprintToFire.opticSprintToFire = 0)
-
-      if (selectedOptic[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, opticTacSprint: selectedOptic[0].tacSprintToFire,
-        })
-      } else (tacSprint.opticTacSprint = 0)
-
-      if (selectedOptic[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, opticReload: selectedOptic[0].reloadTime,
-        })
-      } else (reloadTime.opticReload = 0)
-
-      if (selectedOptic[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, opticStrafe: selectedOptic[0].strafeSpeed,
-        })
-      } else (strafe.opticStrafe = 0)
-
-      return selectedOptic
-    } 
-
-
-    return 0
-  }
-
-  //Stock functions
-
-  function getStock() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Stock'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneStock(e) {
-    if (attachments && weapon) {
-      const selectedStock = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedStock[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, stockAds: selectedStock[0].adsModifier }
-        )
-      } else (adsModifier.stockAds = 0)
-
-      if (selectedStock[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, stockRange: selectedStock[0].rangeModifier,
-        })
-      } else (rangeModifier.stockRange = 0)
-
-      if (selectedStock[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, stockVel: selectedStock[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.stockVel = 0)
-
-      if (selectedStock[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, stockVert: selectedStock[0].verticalRecoil,
-        })
-      } else (vertRecoil.stockVert = 0)
-
-      if (selectedStock[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, stockHoriz: selectedStock[0].horizontalRecoil,
-        })
-      } else (horizRecoil.stockHoriz = 0)
-
-      if (selectedStock[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, stockMov: selectedStock[0].movementSpeed,
-        })
-      } else (movSpeed.stockMov = 0)
-
-      if (selectedStock[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, stockAdsMov: selectedStock[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.stockAdsMov = 0 )
-
-      if (selectedStock[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, stockSprintSpeed: selectedStock[0].sprintSpeed,
-        })
-      } else (sprintSpeed.stockSprintSpeed = 0)
-
-      if (selectedStock[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, stockHipFire: selectedStock[0].hipfireArea,
-        })
-      } else (hipFire.stockHipFire = 0)
-
-      if (selectedStock[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, stockSprintToFire: selectedStock[0].sprintToFire,
-        })
-      } else (sprintToFire.stockSprintToFire = 0)
-
-      if (selectedStock[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, stockTacSprint: selectedStock[0].tacSprintToFire,
-        })
-      } else (tacSprint.stockTacSprint = 0)
-
-      if (selectedStock[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, stockReload: selectedStock[0].reloadTime,
-        })
-      } else (reloadTime.stockReload = 0)
-
-      if (selectedStock[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, stockStrafe: selectedStock[0].strafeSpeed,
-        })
-      } else (strafe.stockStrafe = 0)
-
-      return selectedStock
-    } 
-
-
-    return 0
-  }
-
-  //Underbarrel functions
-
-  function getUnderBarrel() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Underbarrel'
-        }
-      )
-    }
-    return 0
-  }
-
-
-  function oneUnderBarrel(e) {
-    if (attachments && weapon) {
-      const selectedUnderBarrel = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedUnderBarrel[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, underBarrelAds: selectedUnderBarrel[0].adsModifier }
-        )
-      } else (adsModifier.underBarrelAds = 0)
-
-      if (selectedUnderBarrel[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, underBarrelRange: selectedUnderBarrel[0].rangeModifier,
-        })
-      } else (rangeModifier.underBarrelRange = 0)
-
-      if (selectedUnderBarrel[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, underBarrelVel: selectedUnderBarrel[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.underBarrelVel = 0)
-
-      if (selectedUnderBarrel[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, underBarrelVert: selectedUnderBarrel[0].verticalRecoil,
-        })
-      } else (vertRecoil.underBarrelVert = 0)
-
-      if (selectedUnderBarrel[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, underBarrelHoriz: selectedUnderBarrel[0].horizontalRecoil,
-        })
-      } else (horizRecoil.underBarrelHoriz = 0)
-
-      if (selectedUnderBarrel[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, underBarrelMov: selectedUnderBarrel[0].movementSpeed,
-        })
-      } else (movSpeed.underBarrelMov = 0)
-
-      if (selectedUnderBarrel[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, underBarrelAdsMov: selectedUnderBarrel[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.underBarrelAdsMov = 0 )
-
-      if (selectedUnderBarrel[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, UnderBarrelSprintSpeed: selectedUnderBarrel[0].sprintSpeed,
-        })
-      } else (sprintSpeed.underBarrelSprintSpeed = 0)
-
-      if (selectedUnderBarrel[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, underBarrelHipFire: selectedUnderBarrel[0].hipfireArea,
-        })
-      } else (hipFire.underBarrelHipFire = 0)
-
-      if (selectedUnderBarrel[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, underBarrelSprintToFire: selectedUnderBarrel[0].sprintToFire,
-        })
-      } else (sprintToFire.underBarrelSprintToFire = 0)
-
-      if (selectedUnderBarrel[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, underBarrelTacSprint: selectedUnderBarrel[0].tacSprintToFire,
-        })
-      } else (tacSprint.underBarrelTacSprint = 0)
-
-      if (selectedUnderBarrel[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, underBarrelReload: selectedUnderBarrel[0].reloadTime,
-        })
-      } else (reloadTime.underBarrelReload = 0)
-
-      if (selectedUnderBarrel[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, underBarrelStrafe: selectedUnderBarrel[0].strafeSpeed,
-        })
-      } else (strafe.underBarrelStrafe = 0)
-
-      return selectedUnderBarrel
-    } 
-
-
-    return 0
-  }
-
-  //perk functions
-
-  function getPerk() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Perk'
-        }
-      )
-    }
-    return 0
-  }
-
-  function onePerk(e) {
-    if (attachments && weapon) {
-      const selectedPerk = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedPerk[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, perkAds: selectedPerk[0].adsModifier }
-        )
-      } else (adsModifier.perkAds = 0)
-
-      if (selectedPerk[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, perkRange: selectedPerk[0].rangeModifier,
-        })
-      } else (rangeModifier.perkRange = 0)
-
-      if (selectedPerk[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, perkVel: selectedPerk[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.perkVel = 0)
-
-      if (selectedPerk[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, perkVert: selectedPerk[0].verticalRecoil,
-        })
-      } else (vertRecoil.perkVert = 0)
-
-      if (selectedPerk[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, perkHoriz: selectedPerk[0].horizontalRecoil,
-        })
-      } else (horizRecoil.perkHoriz = 0)
-
-      if (selectedPerk[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, perkMov: selectedPerk[0].movementSpeed,
-        })
-      } else (movSpeed.perkMov = 0)
-
-      if (selectedPerk[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, perkAdsMov: selectedPerk[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.perkAdsMov = 0 )
-
-      if (selectedPerk[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, perkSprintSpeed: selectedPerk[0].sprintSpeed,
-        })
-      } else (sprintSpeed.perkSprintSpeed = 0)
-
-      if (selectedPerk[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, perkHipFire: selectedPerk[0].hipfireArea,
-        })
-      } else (hipFire.perkHipFire = 0)
-
-      if (selectedPerk[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, perkSprintToFire: selectedPerk[0].sprintToFire,
-        })
-      } else (sprintToFire.perkSprintToFire = 0)
-
-      if (selectedPerk[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, perkTacSprint: selectedPerk[0].tacSprintToFire,
-        })
-      } else (tacSprint.perkTacSprint = 0)
-
-      if (selectedPerk[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, perkReload: selectedPerk[0].reloadTime,
-        })
-      } else (reloadTime.perkReload = 0)
-
-      if (selectedPerk[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, perkStrafe: selectedPerk[0].strafeSpeed,
-        })
-      } else (strafe.perkStrafe = 0)
-
-      return selectedPerk
-    } 
-
-
-    return 0
-  }
-
-  //Ammo functions
-
-  function getAmmo() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammo'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneAmmo(e) {
-    if (attachments && weapon) {
-      const selectedAmmo = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-   
-      if (selectedAmmo[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, ammoAds: selectedAmmo[0].adsModifier }
-        )
-      } else (adsModifier.ammoAds = 0)
-
-      if (selectedAmmo[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, ammoRange: selectedAmmo[0].rangeModifier,
-        })
-      } else (rangeModifier.ammoRange = 0)
-
-      if (selectedAmmo[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, ammoVel: selectedAmmo[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.ammoVel = 0)
-
-      if (selectedAmmo[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, ammoVert: selectedAmmo[0].verticalRecoil,
-        })
-      } else (vertRecoil.ammoVert = 0)
-
-      if (selectedAmmo[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, ammoHoriz: selectedAmmo[0].horizontalRecoil,
-        })
-      } else (horizRecoil.ammoHoriz = 0)
-
-      if (selectedAmmo[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, ammoMov: selectedAmmo[0].movementSpeed,
-        })
-      } else (movSpeed.ammoMov = 0)
-
-      if (selectedAmmo[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, ammoAdsMov: selectedAmmo[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.ammoAdsMov = 0 )
-
-      if (selectedAmmo[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, ammoSprintSpeed: selectedAmmo[0].sprintSpeed,
-        })
-      } else (sprintSpeed.ammoSprintSpeed = 0)
-
-      if (selectedAmmo[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, ammoHipFire: selectedAmmo[0].hipfireArea,
-        })
-      } else (hipFire.ammoHipFire = 0)
-
-      if (selectedAmmo[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, ammoSprintToFire: selectedAmmo[0].sprintToFire,
-        })
-      } else (sprintToFire.ammoSprintToFire = 0)
-
-      if (selectedAmmo[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, ammoTacSprint: selectedAmmo[0].tacSprintToFire,
-        })
-      } else (tacSprint.ammoTacSprint = 0)
-
-      if (selectedAmmo[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, ammoReload: selectedAmmo[0].reloadTime,
-        })
-      } else (reloadTime.ammoReload = 0)
-
-      if (selectedAmmo[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, ammoStrafe: selectedAmmo[0].strafeSpeed,
-        })
-      } else (strafe.ammoStrafe = 0)
-
-      return selectedAmmo
-    } 
-
-
-    return 0
-  }
-  //Grip functions
-
-  function getGrip() {
-    if (attachments && weapon) {
-      return attachments.filter(
-        attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Rear Grip'
-        }
-      )
-    }
-    return 0
-  }
-
-  function oneGrip(e) {
-    if (attachments && weapon && e.target.innerHTML !== 'Select Grip') {
-      const selectedGrip = attachments.filter(
-        attachment => {
-          return  attachment.weapons.includes(weapon.name) && attachment.attachmentName.includes(e.target.innerHTML)
-          
-        }
-      )
-
-      if (selectedGrip[0].adsModifier){
-        setAdsModifier(
-          { ...adsModifier, gripAds: selectedGrip[0].adsModifier }
-        )
-      } else (adsModifier.gripAds = 0)
-
-      if (selectedGrip[0].rangeModifier){
-        setRangeModifier({
-          ...rangeModifier, gripRange: selectedGrip[0].rangeModifier,
-        })
-      } else (rangeModifier.gripRange = 0)
-
-      if (selectedGrip[0].bulletVelocityModifier) {
-        setBulletVelMod({
-          ...bulletVelMod, gripVel: selectedGrip[0].bulletVelocityModifier,
-        })
-      } else (bulletVelMod.gripVel = 0)
-
-      if (selectedGrip[0].verticalRecoil) {
-        setVertRecoil({
-          ...vertRecoil, gripVert: selectedGrip[0].verticalRecoil,
-        })
-      } else (vertRecoil.gripVert = 0)
-
-      if (selectedGrip[0].horizontalRecoil) {
-        setHorizRecoil({
-          ...horizRecoil, gripHoriz: selectedGrip[0].horizontalRecoil,
-        })
-      } else (horizRecoil.gripHoriz = 0)
-
-      if (selectedGrip[0].movementSpeed) {
-        setMovSpeed({
-          ...movSpeed, gripMov: selectedGrip[0].movementSpeed,
-        })
-      } else (movSpeed.gripMov = 0)
-
-      if (selectedGrip[0].adsMovementSpeed) {
-        setAdsMovSpeed({
-          ...adsMovSpeed, gripAdsMov: selectedGrip[0].adsMovementSpeed,
-        })
-      } else (adsMovSpeed.gripAdsMov = 0 )
-
-      if (selectedGrip[0].sprintSpeed) {
-        setSprintSpeed({
-          ...sprintSpeed, gripSprintSpeed: selectedGrip[0].sprintSpeed,
-        })
-      } else (sprintSpeed.gripSprintSpeed = 0)
-
-      if (selectedGrip[0].hipfireArea) {
-        setHipFire({
-          ...hipFire, gripHipFire: selectedGrip[0].hipfireArea,
-        })
-      } else (hipFire.gripHipFire = 0)
-
-      if (selectedGrip[0].sprintToFire) {
-        setSprintToFire({
-          ...sprintToFire, gripSprintToFire: selectedGrip[0].sprintToFire,
-        })
-      } else (sprintToFire.gripSprintToFire = 0)
-
-      if (selectedGrip[0].tacSprintToFire) {
-        setTacSprint({
-          ...tacSprint, gripTacSprint: selectedGrip[0].tacSprintToFire,
-        })
-      } else (tacSprint.gripTacSprint = 0)
-
-      if (selectedGrip[0].reloadTime) {
-        setReloadTime({
-          ...reloadTime, gripReload: selectedGrip[0].reloadTime,
-        })
-      } else (reloadTime.gripReload = 0)
-
-      if (selectedGrip[0].strafeSpeed) {
-        setStrafe({
-          ...strafe, gripStrafe: selectedGrip[0].strafeSpeed,
-        })
-      } else (strafe.gripStrafe = 0)
-
-      return selectedGrip
-    } 
-
-
-    return 0
-  }
-
+  
   //Damage Profile Functions
 
-
   const setProfileStats = (e) => {
-
     setProfile(e.target.text)
-
-  
   }
 
-
- 
   
   const getProfileStats = () => {
     if (weapon){
@@ -1267,7 +301,6 @@ function CreateAClass() {
     return 0
   }
 
-
   //form submit
 
   const handleSubmit = async e => {
@@ -1275,14 +308,13 @@ function CreateAClass() {
     try {
       const { data } = await createAClass(weaponId, formData)
       console.log('data here', data)
-      navigate('/weapons')
+      navigate(`/weapons/${weaponId}`)
     } catch (err) {
       console.log(err)
       setIsError(err)
     }
   }
 
-  const [display, setDisplay] = React.useState(true)
   const handleChange = e => {
     setMagSize(weapon.magSize)
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -1291,7 +323,7 @@ function CreateAClass() {
     } else return setDisplay(true)
   }
 
-
+  console.log(attachArray)
 
   //percent handler
 
@@ -1303,8 +335,6 @@ function CreateAClass() {
       return ((percentHandler / 100) * 100) + 1
     } else return percentHandler = 1
   }
-
- 
 
   return (
     
@@ -1333,397 +363,82 @@ function CreateAClass() {
               <div className='columns is-one-fifth'>
               
                 {/*Muzzle*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Muzzle</button>
-                  { attachments && ((formData.muzzle === 'None' && display) || (formData.muzzle !== 'None')) &&
-            <select className='dropdown button' 
-              onChange={handleChange}
-              name="muzzle">
-              {
-                <option>{getMuzzle()[0].attachmentName}</option>
-              } 
-            
-              
-              {
-                attachments &&
-          getMuzzle().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                
-                <option 
-                  key={attachment._id} 
-                  value={attachment.attachmentName} 
-                  onClick={oneMuzzle} 
-                >
-                  {attachment.attachmentName}</option>
-              )
-            }            
-          )}
-          
-            </select> 
-                  }
-                  { attachments && (formData.muzzle === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='muzzle'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
-
+                <MuzzleCard className='column is-one-fifth weapon-part' key={weapon._id} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}
+                />
 
                 {/* Laser   */}
-                <div className='column is-one-fifth weapon-part'>
-                  <button  className='button is-black'>Laser</button>
-                  { attachments && ((formData.laser === 'None' && display) || (formData.laser !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="laser">
-              <option>{getLaser()[0].attachmentName}</option>
-              {
-                attachments &&
-          getLaser().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneLaser}>{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-                  { attachments && (formData.laser === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='laser'>
-                    <option>Unavailable</option>
 
-                  </select>
-                    
-                  }
-                </div>
+                <LaserCard className='column is-one-fifth weapon-part' key={weapon.name} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
 
                 {/* Barrel*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Barrel</button>
-                  { attachments && ((formData.barrel === 'None' && display) || (formData.barrel !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="barrel">
-              <option >{getBarrel()[0].attachmentName}</option>
-              {
-                attachments &&
-          getBarrel().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} 
-                  value={attachment.attachmentName} 
-                  onClick={oneBarrel}>{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-                  { attachments && (formData.barrel === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='barrel'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
+                <BarrelCard className='column is-one-fifth weapon-part' key={weapon.image} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
 
                 {/* Optic*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Optic</button>
-                  { attachments && ((formData.optic === 'None' && display) || (formData.optic !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="optic">
-              <option >{getOptic()[0].attachmentName}</option>
-              {
-                attachments &&
-          getOptic().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneOptic}>{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
+                <OpticCard className='column is-one-fifth weapon-part' key={weapon.adsTime} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
 
-                  { attachments && (formData.optic === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='optic'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
               </div>
+            </div>
 
-              <div className='weapon-image'>
-                <img src={weapon.image}/>
-              </div>
+            <div className='weapon-image'>
+              <img src={weapon.image}/>
+            </div>
+
+            <div className='columns'>
+
 
               {/* Stock*/}
-              <div className='columns'>
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Stock</button>
-                  { attachments && ((formData.stock === 'None' && display) || (formData.stock !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="stock">
-              <option >{getStock()[0].attachmentName}</option>
+              <StockCard className='column is-one-fifth weapon-part' key={weapon.magSize} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+
+              {/* Underbarrel*/}
+              <UnderBarrelCard className='column is-one-fifth weapon-part' key={weapon.strafeSpeed} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+
+              {/*Ammo*/}
+
+              <AmmoCard className='column is-one-fifth weapon-part' key={weapon.reloadTime} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} setProfileStats={setProfileStats} setMagSize={setMagSize}/>
+
+              {/* Perks*/}
+
+              <PerkCard className='column is-one-fifth weapon-part' key={weapon.sprintSpeed} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+
+
+              {/* Grip*/}
+              <GripCard  className='column is-one-fifth weapon-part' key={weapon.hipFireArea} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+
+            </div>
+            <div className='base-stats'>
               {
-                attachments &&
-          getStock().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneStock}>{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-
-                  { attachments && (formData.stock === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='stock'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-
-                </div>
-
-                {/* Underbarrel*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Underbarrel</button>
-                  { attachments && ((formData.underBarrel === 'None' && display) || (formData.underBarrel !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="underBarrel">
-              <option >{getUnderBarrel()[0].attachmentName}</option>
-              {
-                attachments &&
-          getUnderBarrel().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel} name="Underbarrel">{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-                  { attachments && (formData.underBarrel === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='underBarrel'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
-
-                <div className=" column is-one-fifth weapon-part">
-                  
-                  <button className='button is-black'>Ammo</button>
-                  { attachments && ((formData.profile === 'None' && display) || (formData.profile !== 'None')) &&
-                    <select className='dropdown button'
-                      onChange={handleChange}
-                      name="profile">
-                      <option text='Profile One' onClick={setProfileStats} value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
-
-                      { weapon.profileTwo[0] &&
-              <option value= {weapon.profileTwo[0].profileName}
-                onClick={setProfileStats}
-                text='Profile Two'
-              >Profile Two: {weapon.profileTwo[0].profileName}</option>
-                      }
-                      { weapon.profileThree[0] &&
-              <option 
-                onClick={setProfileStats}
-                text='Profile Three'
-                value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
-                      }
-                      { weapon.profileFour[0] &&
-              <option value={weapon.profileFour[0].profileName}
-                onClick={setProfileStats}
-                text='Profile Four'
-              >Profile Four: {weapon.profileFour[0].profileName}</option>
-                      }
-                      { weapon.profileFive[0] &&
-              <option  value={weapon.profileFive[0].profileName}
-                onClick={setProfileStats}
-                text='Profile Five'
-              >Profile Five: {weapon.profileFive[0].profileName}</option>
-                      }
-                      {
-                        attachments &&
-          getAmmo().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName}  text='Profile One' onClick={ (e)=> { 
-                  oneAmmo(e); setProfileStats(e); setMagSize(weapon.magSize + attachment.magSize)
-                }
-                } name="Ammo">{attachment.attachmentName}</option>
-              )
-            }            
-          )
-                      }
-                    </select>
-                  }
-                  { attachments && (formData.profile === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='barrel'>
-                    <option>Unavailable</option>
-
-                  </select>
-                  }
-                    
-                </div>
-
-                
-
-                {/* Perks*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Perk</button>
-                  { attachments && ((formData.perk === 'None' && display) || (formData.perk !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="perk">
-              <option>{getPerk()[0].attachmentName}</option>
-              {
-                attachments &&
-          getPerk().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk} name="Perk">{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-                  { attachments && (formData.perk === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='perk'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
-
-                {/* Grip*/}
-                <div className='column is-one-fifth weapon-part'>
-                  <button className='button is-black'>Grip</button>
-                  { attachments && ((formData.rearGrip === 'None' && display) || (formData.rearGrip !== 'None')) &&
-            <select className='dropdown button'
-              onChange={handleChange}
-              name="rearGrip">
-              <option default>{getGrip()[0].attachmentName}</option>
-              {
-                attachments &&
-          getGrip().filter(
-            attach => {
-              return attach.attachmentName !== 'None'
-            }
-          ).map(
-            attachment => {
-              return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip} name="Grip">{attachment.attachmentName}</option>
-              )
-            }            
-          )
-              }
-            </select> 
-                  }
-                  { attachments && (formData.rearGrip === 'None' && !display) &&
-                  <select className='dropdown button'
-                    name='rearGrip'>
-                    <option>Unavailable</option>
-
-                  </select>
-                    
-                  }
-                </div>
-              </div>
-              <div className='base-stats'>
-                {
-                  <div className='variable-stats'>
-                    <h1>Gunfight</h1>
-                    <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
-                    <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
-                    <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
-                    <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
-                    <h3>Magazine Size: {magSize}</h3>
-                    <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
-                  </div>
-                }
-
                 <div className='variable-stats'>
-                  <h1>Movement</h1>
-                  <h3>Movement Speed: {(weapon.movementSpeed * percentConverter(sumMovSpeed)).toFixed(2)}</h3>
-                  <h3>Strafe Speed: {(weapon.strafeSpeed * percentConverter(sumStrafe)).toFixed(2)}</h3>
-                  <h3>Sprint Speed: {(weapon.sprintSpeed * percentConverter(sumSprintSpeed)).toFixed(2)}</h3>
-                  <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
-                  <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
-                  <h3>ADS Movement: {(weapon.adsMovementSpeed * percentConverter(sumAdsMovSpeed)).toFixed(2)}</h3>
+                  <h1>Gunfight</h1>
+                  <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
+                  <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
+                  <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
+                  <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
+                  <h3>Magazine Size: {magSize}</h3>
+                  <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
                 </div>
+              }
 
-                <div className='variable-stats'>
-                  <h1>Recoil</h1>
-                  <h3>Vertical Recoil as %: { sumVertRec}</h3>
-                  <h3>Horizontal Recoil as %: {sumHorizRec}</h3>
-                </div>
+              <div className='variable-stats'>
+                <h1>Movement</h1>
+                <h3>Movement Speed: {(weapon.movementSpeed * percentConverter(sumMovSpeed)).toFixed(2)}</h3>
+                <h3>Strafe Speed: {(weapon.strafeSpeed * percentConverter(sumStrafe)).toFixed(2)}</h3>
+                <h3>Sprint Speed: {(weapon.sprintSpeed * percentConverter(sumSprintSpeed)).toFixed(2)}</h3>
+                <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
+                <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
+                <h3>ADS Movement: {(weapon.adsMovementSpeed * percentConverter(sumAdsMovSpeed)).toFixed(2)}</h3>
               </div>
+
+              <div className='variable-stats'>
+                <h1>Recoil</h1>
+                <h3>Vertical Recoil as %: { sumVertRec}</h3>
+                <h3>Horizontal Recoil as %: {sumHorizRec}</h3>
+              </div>
+            </div>
             
-              <div className='stats'>
-                <div className='range-boxes'>
-                  {
-                    weapon && getProfileStats().rangeOne &&
+            <div className='stats'>
+              <div className='range-boxes'>
+                {
+                  weapon && getProfileStats().rangeOne &&
                 
                   <div className='range-component'>
                     {
@@ -1735,9 +450,9 @@ function CreateAClass() {
                     }
                   </div>
                 
-                  }
-                  {
-                    weapon && getProfileStats().rangeTwo &&
+                }
+                {
+                  weapon && getProfileStats().rangeTwo &&
                 
                   <div className='range-component'>
                     {
@@ -1748,10 +463,10 @@ function CreateAClass() {
                       )
                     }
                   </div>
-                  }
+                }
 
-                  {
-                    weapon && getProfileStats().rangeThree &&
+                {
+                  weapon && getProfileStats().rangeThree &&
                   <div className='range-component'>
                     {
                       getProfileStats().rangeThree.map(
@@ -1762,10 +477,10 @@ function CreateAClass() {
                     }
                   </div>
               
-                  }
+                }
 
-                  {
-                    weapon && getProfileStats().rangeFour &&
+                {
+                  weapon && getProfileStats().rangeFour &&
               
                   <div className='range-component'>
                     {
@@ -1776,9 +491,8 @@ function CreateAClass() {
                       )
                     }
                   </div>
-                  }  
-                </div>            
-              </div>
+                }  
+              </div>            
             </div>
           </div>
         </form>

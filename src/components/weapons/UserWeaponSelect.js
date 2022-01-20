@@ -1,7 +1,6 @@
 import React from 'react'
-import { getAllGuns } from '../lib/api.js'
-import WeaponCard from './WeaponCards/WeaponCard.js'
-import { Link } from 'react-router-dom'
+import { getAllUserGuns } from '../lib/api.js'
+import UserWeaponCard from './WeaponCards/UserWeaponCard.js'
 
 
 function WeaponList() {
@@ -16,7 +15,7 @@ function WeaponList() {
   React.useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getAllGuns()
+        const response = await getAllUserGuns()
         setWeapons(response.data)
       } catch (err) {
         setIsError(true)
@@ -28,6 +27,7 @@ function WeaponList() {
 
   
   function setGameState(e){
+    console.log(e.target.innerText)
     setGame(e.target.innerText)
     // setType('')
   }
@@ -101,14 +101,6 @@ function WeaponList() {
       <div className='container columns'>
         <div className='column is-one-fifth'>
           <div className='weapon-type-buttons'>
-
-            <div>
-              <Link to={'/userweapons'}>
-                <div className="weapon-card">
-                  <button>userweapons</button>
-                </div>
-              </Link>
-            </div>
             <button className='button is-black is-focused'
               onClick={setWeaponType}
             >Assault Rifle</button>
@@ -144,17 +136,17 @@ function WeaponList() {
 
           {weapons && game &&
         <div className='weapons-container'>
-          {isError && <h1>error</h1>}
+          {isError && <h1>{isError}</h1>}
           <div className='weapon-cards'>
             {
               showWeapons().sort(function(a, b) {
-                if (a.name < b.name) { 
+                if (a.addedAt < b.addedAt ) { 
                   return -1
-                } if (a.name > b.name) {
+                } if (a.addedAt  > b.addedAt ) {
                   return 1
                 }
               }).map(weapon => (
-                <WeaponCard key={weapon._id} weapon={weapon} />
+                <UserWeaponCard  key={weapon._id} weapon={weapon} />
               ))
             }
 
