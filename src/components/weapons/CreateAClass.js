@@ -224,11 +224,13 @@ function CreateAClass() {
     underBarrel: 'None',
     rearGrip: 'None',
     perk: 'None',
+    weaponType: 'None',
   })
   
+
   const attachArray = Object.entries(formData).filter(
     keys => {
-      return keys[1] !== null && !keys[1].includes('None') && keys[1] !== 'Default' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && !keys[1].includes('Default')
+      return keys[1] !== null && !keys[1].includes('None') && keys[1] !== 'Default' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && keys[0] !== 'weaponType' && !keys[1].includes('Default')
     }
   ).map(
     key => {
@@ -249,7 +251,8 @@ function CreateAClass() {
         setFormData({ ...formData, 
           image: response.data.image, 
           gunName: response.data.name,
-          gameFrom: response.data.gameFrom, 
+          gameFrom: response.data.gameFrom,
+          weaponType: response.data.weaponType,
         })     
       } catch (err) {
         setIsError(err)

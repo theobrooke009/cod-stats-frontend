@@ -7,6 +7,7 @@ import WeaponProfile from './components/weapons/WeaponProfile.js'
 import CreateAClass from './components/weapons/CreateAClass.js'
 import UserWeaponSelect from './components/weapons/UserWeaponSelect.js'
 import UserWeaponProfile from './components/weapons/UserWeaponProfile.js'
+import User from './components/user/User.js'
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/weapons/:weaponId/build" element={<CreateAClass/>}/>
         <Route path="/userweapons" element={<UserWeaponSelect/>}/>
         <Route path="/userweapons/:userWeaponId" element={<UserWeaponProfile/>}/>
-
+        <Route path="/profile" element={<User/>}/>
       </Routes>
     </BrowserRouter>
   )

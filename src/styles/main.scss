@@ -310,3 +310,62 @@ justify-content: center;
   }
 }
 
+.profile-header{
+  border: 1px solid black;
+  display: flex;
+  .profile-image{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    img{
+      height: 250px;
+      width: auto;
+      margin-bottom: 7px;
+    }
+    .image-form{
+      display: flex;
+      flex-direction: column;
+      input{
+        height: 40px;
+        margin: 5px;
+      }
+      button{
+        height: 40px;
+        margin: 0 5px;
+      }
+    }
+  }
+  .user-name-header{
+    h1{
+      margin-top: 30px;
+      font-size: 75px;
+    }
+    h3{
+      font-size: 35px;
+    }
+  }
+}
+
+.profile-user-weapons{
+  .profile-header{
+    .weapons-column{
+      border: 1px solid black;
+
+    }
+    
+  }
+
+  .created-weapons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .weapon-card{
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+    max-width: 170px;
+    margin: 10px;
+  }
+}

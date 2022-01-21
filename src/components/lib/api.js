@@ -53,3 +53,7 @@ export function loginUser(formData) {
 export function getUser() {
   return axios.get(`${baseUrl}/profile`, headers())
 }
+
+export function editUser(userId, formData) {
+  return axios.put(`${baseUrl}/profile/${userId}`, formData, headers())
+}
