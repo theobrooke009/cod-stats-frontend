@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { getUser,  getAllUserGuns, editUser } from '../lib/api'
 import UserWeaponCard from '../weapons/WeaponCards/UserWeaponCard.js'
 
@@ -120,7 +121,17 @@ function UserProfile() {
           </div>
 
           <div className='column weapons-column is-four-fifths'>
+            <div className='link-buttons'>
+              <Link to={'/weapons'}>
+                <button className='button is-black' >Build Your Own Class</button>
+              </Link>
+              <Link to={'/userweapons'}>
+                <button className='button is-black' >Find More User Classes</button>
+              </Link>
+            </div>
+            <h3>Created Weapons</h3>
             <div className='created-weapons'>
+              
               { 
                 weapons && user && weapons.filter(
                   weapon => {
@@ -134,8 +145,12 @@ function UserProfile() {
               }
               
             </div>
-
+            <h3>Liked Weapons</h3>
+            <Link to={'/userweapons'}>
+              <button className='button is-black' >Find More User Classes</button>
+            </Link>
             <div className='created-weapons'>
+            
               { 
                 weapons && user && weapons.filter(
                   weapon => {
