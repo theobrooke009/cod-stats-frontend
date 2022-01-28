@@ -9,6 +9,7 @@ function MuzzleCard({ formData, attachments, display, handleChange, weapon, adsM
       )
     }
   }
+  
 
   function oneMuzzle(e) {
     if (attachments && weapon) {

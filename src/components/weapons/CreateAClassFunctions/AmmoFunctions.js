@@ -4,7 +4,7 @@ function AmmoCard ({ formData, attachments, display, handleChange, weapon, adsMo
     if (attachments && weapon) {
       return attachments.filter(
         attachment => {
-          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammo'
+          return attachment.weapons.includes(weapon.name) && attachment.type === 'Ammunition'
         }
       )
     }

@@ -35,6 +35,7 @@ function DamageProfileCard({ profile, rangeMod }) {
         </div>
       }
 
+
       <div className='damage-range'>
         <h3>Head Damage: {profile.headDamage}</h3>
       </div>

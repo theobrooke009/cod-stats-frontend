@@ -272,12 +272,16 @@ function CreateAClass() {
     }
     getData()
   }, [])
+
+  console.log('attach', attachments)
   
   //Damage Profile Functions
 
   const setProfileStats = (e) => {
     setProfile(e.target.text)
   }
+
+  console.log('profile', profile)
 
   
   const getProfileStats = () => {
@@ -347,23 +351,24 @@ function CreateAClass() {
         <form
           onSubmit={(handleSubmit)}
           className="form">
-          <div className="create-header">
-            <div>
-              <h1>{weapon.name}</h1>
-            </div>
-            <div className="class-buttons">
-              <input 
-                placeholder="Name your class"
-                onChange={handleChange}
-                name="name"
-              ></input>
-              <button type="submit" className="button is-info">Create This Class</button>
-            </div>
-          </div>
+
           <div className='attachments'>
             <div className='main-div'>
+              <div className="create-header">
+                <div>
+                  <h1>{weapon.name}</h1>
+                </div>
+                <div className="class-buttons">
+                  <input 
+                    placeholder="Name your class"
+                    onChange={handleChange}
+                    name="name"
+                  ></input>
+                  <button type="submit" className="button is-info">Create This Class</button>
+                </div>
+              </div>
 
-              <div className='columns is-one-fifth'>
+              <div className='columns attachments-top'>
               
                 {/*Muzzle*/}
                 <MuzzleCard className='column is-one-fifth weapon-part' key={weapon._id} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}
@@ -381,14 +386,72 @@ function CreateAClass() {
 
               </div>
             </div>
+  
+            <div className='create-weapon-div'>
+              <div className='dynamic-create-images'>
+                <img className='create-weapon-image' src={weapon.image}/>
+                <div className='attach-images'>
+                  { attachArray.includes('muzzle') &&
+                  <div className='attach-image'>
+                    <img className='class-attach-image' alt='muzzle' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331902/cod/muzzle.png"/>
+                  </div>
+                  }
+                  { attachArray.includes('laser') &&
+                <div className='attach-image'>
+                  <img className='class-attach-image' alt='laser' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332191/cod/laser.png"/>
+                </div>
+                  }
+                  { attachArray.includes('barrel') &&
+                <div className='attach-image'>
+                  <img className='barrel-image' id='barrel-image' alt='barrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643334250/cod/200_sf4d6n.png"/>
+                </div>
+                  }
 
-            <div className='weapon-image'>
-              <img src={weapon.image}/>
+                  { attachArray.includes('optic') &&
+                <div className='class-attach-image'>
+                  <img  alt='optic' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331364/cod/optic.png"/>
+                </div>
+                  }
+
+                  { attachArray.includes('stock') &&
+                <div className='attach-image'>
+                  <img className='class-attach-image' alt='stock' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331829/cod/stock.png"/>
+                </div>
+                  }
+
+                  { attachArray.includes('underBarrel') &&
+                <div className='attach-image'>
+                  <img className='class-attach-image' alt='underbarrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331439/cod/underbarrel.png"/>
+                </div>
+                  }
+
+                  { attachArray.includes('profile') &&
+                <div className='attach-image'>
+                  <img className='class-attach-image' alt='ammo' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331789/cod/ammo.png"/>
+                </div>
+                  }
+                  { attachArray.includes('rearGrip') &&
+                <div className='attach-image'>               
+                  <img className='class-attach-image' alt='reargrip' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332037/cod/reargrip.png"/>
+                </div>
+                  }
+
+                  { attachArray.includes('perk') &&
+                <div className='attach-image'>
+                  <img className='class-attach-image' alt='perk' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332319/cod/perk.png"/>
+                </div>
+                  }
+
+                </div>
+              </div>
+
+              
+            </div>
+            <div>
+              
             </div>
 
-            <div className='columns'>
-
-
+            <div className='columns attachments-bottom'>
               {/* Stock*/}
               <StockCard className='column is-one-fifth weapon-part' key={weapon.magSize} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
 
@@ -408,40 +471,41 @@ function CreateAClass() {
               <GripCard  className='column is-one-fifth weapon-part' key={weapon.hipFireArea} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
 
             </div>
-            <div className='base-stats'>
-              {
-                <div className='variable-stats'>
-                  <h1>Gunfight</h1>
-                  <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
-                  <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
-                  <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
-                  <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
-                  <h3>Magazine Size: {magSize}</h3>
-                  <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
-                </div>
-              }
-
-              <div className='variable-stats'>
-                <h1>Movement</h1>
-                <h3>Movement Speed: {(weapon.movementSpeed * percentConverter(sumMovSpeed)).toFixed(2)}</h3>
-                <h3>Strafe Speed: {(weapon.strafeSpeed * percentConverter(sumStrafe)).toFixed(2)}</h3>
-                <h3>Sprint Speed: {(weapon.sprintSpeed * percentConverter(sumSprintSpeed)).toFixed(2)}</h3>
-                <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
-                <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
-                <h3>ADS Movement: {(weapon.adsMovementSpeed * percentConverter(sumAdsMovSpeed)).toFixed(2)}</h3>
-              </div>
-
-              <div className='variable-stats'>
-                <h1>Recoil</h1>
-                <h3>Vertical Recoil as %: { sumVertRec}</h3>
-                <h3>Horizontal Recoil as %: {sumHorizRec}</h3>
-              </div>
-            </div>
-            
-            <div className='stats'>
-              <div className='range-boxes'>
+            <div className='create-stats-div'>
+              <div className='base-stats'>
                 {
-                  weapon && getProfileStats().rangeOne &&
+                  <div className='variable-stats'>
+                    <h1 className='create-class-stats'>Gunfight</h1>
+                    <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
+                    <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
+                    <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
+                    <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
+                    <h3>Magazine Size: {magSize}</h3>
+                    <h3>Open Bolt Delay: {weapon.openBoltDelay}</h3>
+                  </div>
+                }
+
+                <div className='variable-stats'>
+                  <h1 className='create-class-stats' >Movement</h1>
+                  <h3>Movement Speed: {(weapon.movementSpeed * percentConverter(sumMovSpeed)).toFixed(2)}</h3>
+                  <h3>Strafe Speed: {(weapon.strafeSpeed * percentConverter(sumStrafe)).toFixed(2)}</h3>
+                  <h3>Sprint Speed: {(weapon.sprintSpeed * percentConverter(sumSprintSpeed)).toFixed(2)}</h3>
+                  <h3>Sprint To Fire: {weapon.sprintToFire + sumSprintToFire}</h3>
+                  <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire + sumTacSprint}</h3>
+                  <h3>ADS Movement: {(weapon.adsMovementSpeed * percentConverter(sumAdsMovSpeed)).toFixed(2)}</h3>
+                </div>
+
+                <div className='variable-stats'>
+                  <h1 className='create-class-stats'>Recoil</h1>
+                  <h3>Vertical Recoil as %: { sumVertRec}</h3>
+                  <h3>Horizontal Recoil as %: {sumHorizRec}</h3>
+                </div>
+              </div>
+            
+              <div className='stats'>
+                <div className='range-boxes'>
+                  {
+                    weapon && getProfileStats().rangeOne &&
                 
                   <div className='range-component'>
                     {
@@ -453,49 +517,50 @@ function CreateAClass() {
                     }
                   </div>
                 
-                }
-                {
-                  weapon && getProfileStats().rangeTwo &&
+                  }
+                  {
+                    weapon && getProfileStats().rangeTwo &&
                 
                   <div className='range-component'>
                     {
                       getProfileStats().rangeTwo.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
+                          <DamageProfileCard key={profile.name} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
                   </div>
-                }
+                  }
 
-                {
-                  weapon && getProfileStats().rangeThree &&
+                  {
+                    weapon && getProfileStats().rangeThree &&
                   <div className='range-component'>
                     {
                       getProfileStats().rangeThree.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
+                          <DamageProfileCard key={profile.id} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
                   </div>
               
-                }
+                  }
 
-                {
-                  weapon && getProfileStats().rangeFour &&
+                  {
+                    weapon && getProfileStats().rangeFour &&
               
                   <div className='range-component'>
                     {
                       getProfileStats().rangeFour.map(
                         profile => (
-                          <DamageProfileCard key={profile._id} profile={profile} rangeMod={sumRange}/>
+                          <DamageProfileCard key={profile._id_} profile={profile} rangeMod={sumRange}/>
                         )   
                       )
                     }
                   </div>
-                }  
-              </div>            
+                  }  
+                </div>            
+              </div>
             </div>
           </div>
         </form>

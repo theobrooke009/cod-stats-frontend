@@ -8,12 +8,15 @@ import CreateAClass from './components/weapons/CreateAClass.js'
 import UserWeaponSelect from './components/weapons/UserWeaponSelect.js'
 import UserWeaponProfile from './components/weapons/UserWeaponProfile.js'
 import User from './components/user/User.js'
+import Navbar from './components/common/Navbar.js'
+import Footer from './components/common/Footer.js'
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
-        <Route path="/weapons" element={<WeaponSelect/>} />
+        <Route path="/weapons" element={<WeaponSelect/>}/>
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/weapons/:weaponId" element={<WeaponProfile/>}/>
@@ -22,6 +25,7 @@ function App() {
         <Route path="/userweapons/:userWeaponId" element={<UserWeaponProfile/>}/>
         <Route path="/profile" element={<User/>}/>
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

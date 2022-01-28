@@ -1,7 +1,8 @@
 import React from 'react'
 import { getAllGuns } from '../lib/api.js'
 import WeaponCard from './WeaponCards/WeaponCard.js'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 
 function WeaponList() {
@@ -9,9 +10,12 @@ function WeaponList() {
   const [game, setGame] = React.useState('Modern Warfare')
   const [type, setType] = React.useState('')
   const [isError, setIsError] = React.useState(false)
+  const [isActive, setisActive] = React.useState(false)
+
+  console.log(isActive, setisActive)
 
 
-  console.log('here',weapons)
+  console.log('here',weapons, motion)
   
   React.useEffect(() => {
     const getData = async () => {
@@ -89,51 +93,78 @@ function WeaponList() {
 
   return (
     <section>
+      <div className="logo-div">
+        <img className="logo-image"src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643249938/cod/pngaaa.com-665123_omjtgo.png"/>
+      </div>
       <div className='game-buttons'>
-        <button className='button is-black is-focused'
+        <button className='button is-black'
           onClick={setGameState}>Modern Warfare</button>
-        <button className='button is-black is-focused'
+        <button className='button is-black'
           onClick={setGameState}>Cold War</button>
-        <button className='button is-black is-focused'
+        <button className='button is-black'
           onClick={setGameState}>Vanguard</button>
       </div>
 
       <div className='container columns'>
-        <div className='column is-one-fifth'>
+        <div className='column type-column is-one-fifth'>
+        
+          <div
+            onClick={() => {
+              setisActive(!isActive)
+            }}
+            role="button"
+            className={`dropdown mobile-drop ${isActive ? 'is-active' : ''}`}
+            aria-label="menu"
+            aria-expanded="false"
+          >
+            <div className = "dropdown-trigger">
+              <button className = "button  mobile-drop is-black" aria-haspopup = "true" aria-controls = "dropdown-menu">
+                <span className="select-head">Weapon Class</span>
+                <span className = "icon is-small is-white">
+                  <i className = "fa fa-angle-down is-white" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div className = "dropdown-menu" id = "dropdown-menu" role = "menu">
+              <div className = "dropdown-content">
+                <a onClick={setWeaponType} className = "dropdown-item">Assault Rifle</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">SMG</a>
+                <hr className = "dropdown-divider"/>
+                <a href = "#" className = "dropdown-item is-active">LMG</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Sniper</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Shotgun</a>
+              </div>
+            </div>
+          </div>
+          <div className='reset-div'>
+            <button className="button mobile-reset is-black" onClick={setWeaponType} >Reset</button>
+          </div>
           <div className='weapon-type-buttons'>
 
-            <div>
-              <Link to={'/userweapons'}>
-                <div className="weapon-card">
-                  <button>userweapons</button>
-                </div>
-              </Link>
-            </div>
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >Assault Rifle</button>
 
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >SMG</button>
 
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >LMG</button>
 
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >Shotgun</button>
 
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >Sniper</button>
 
-            <button className='button is-black is-focused'
-              onClick={setWeaponType}
-            >Pistol</button>
-
-            <button className='button is-black is-focused'
+            <button className='button is-black'
               onClick={setWeaponType}
             >Reset</button>
 
@@ -141,11 +172,17 @@ function WeaponList() {
         </div>
        
         <div className='column is-full big-column'>
-
+            
           {weapons && game &&
-        <div className='weapons-container'>
+        <motion.div className='weapons-container'
+          initial={{ y: '100vh', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}>
           {isError && <h1>error</h1>}
-          <div className='weapon-cards'>
+          <motion.div className='weapon-cards'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}>
             {
               showWeapons().sort(function(a, b) {
                 if (a.name < b.name) { 
@@ -158,9 +195,9 @@ function WeaponList() {
               ))
             }
 
-          </div>
+          </motion.div>
           
-        </div>}
+        </motion.div>}
         </div>
         
 

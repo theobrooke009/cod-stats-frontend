@@ -4,6 +4,7 @@ import { getOneWeapon } from '../lib/api.js'
 import DamageProfileCard from './DamageProfileCard.js'
 import { isAuthenticated } from '../lib/auth.js'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 
 
@@ -68,12 +69,22 @@ function WeaponProfile() {
   console.log(isError)
   
   return (
-    <section className='weapon-page'>
+    <motion.section className='weapon-page'
+      initial={{ y: '100vh', opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.5, duration: 0.5 }}>
       { weapon &&
-        <section className='profile'>
+        <section className='profile'
+        >
           <div className='header'>
             <div className='title'>
-              <div><h1>{weapon.name}</h1></div>
+              <div><h1 className='mobile-weapon-name'>{weapon.name}</h1></div>
+              <div className="mobile-weapon-image">
+                <motion.img src={weapon.image}
+                  initial={{  opacity: 0 }}
+                  animate={{  opacity: 1 }}
+                  transition={{ delay: 1, duration: 0.25 }}/>
+              </div>
               <div className="profile-and-create">
                 <select className='profile-select dropdown button'
                   onChange={setProfileStats}>
@@ -96,65 +107,67 @@ function WeaponProfile() {
                 </select>
 
                 {
-                  isAuth && <button className='button is-info profile-select'
+                  isAuth && <button className='button profile-select'
                     onClick={handleCreateClass}
                   >Create A Class</button>
                 }
 
                 {
-                  !isAuth && <button className='button is-info profile-select'>Login or Register to create your own build</button>
+                  !isAuth && <button className='button profile-select'>Login or Register to create your own build</button>
                 }
 
               </div>
             </div>
-            <div className="weapon-image">
-              <img src={weapon.image}/>
+            
+            <div className="profile-weapon-image">
+              <motion.img src={weapon.image}
+                initial={{  opacity: 0 }}
+                animate={{  opacity: 1 }}
+                transition={{ delay: 1, duration: 0.25 }}/>
             </div>
           </div>
-          {/* <div className='container'> */}
-
-            
           <div className='weapon-profile'>
-            <div className='weapon-stats'>
+            <div className='scrollable'>
+              <div className='weapon-stats'>
 
-              <div className='stats-title'><h2>WEAPON STATS</h2></div>
-              <div className='stats'>
-                <div className='stat-boxes'>
-                  <div><h2>MOVEMENT</h2> </div>
-                  <div>
-                    <h3>Movement Speed: {weapon.movementSpeed} Mph</h3>
-                    <h3>Sprint Speed: {weapon.sprintSpeed} Mph</h3>
-                    <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire} Mph</h3>
-                    <h3>ADS Movement Speed: {weapon.adsMovementSpeed} Ms</h3>
-                    <h3>Strafe Speed: {weapon.strafeSpeed} Ms</h3>
-                  </div>
-                </div>
-                <div>
-                  <div className='stat-boxes'>
-                    <div><h2>GUNFIGHT</h2></div>
+                <div className='stats-title'><h2>WEAPON STATS</h2></div>
+                <div className='stats columns'>
+                  <div className='stat-boxes column is-half'>
+                    <div><h2>MOVEMENT</h2> </div>
                     <div>
-                      <h3>Rate of Fire: {getProfileStats().fireRate} RPM</h3>
-                      <h3>ADS Time: {weapon.adsTime} Ms</h3>
-                      <h3>Reload Time: {weapon.reloadTime} Ms</h3>
-                      <h3>Hipfire Area: {weapon.hipfireArea} Ms</h3>
-                      <h3>Bullet Velocity: {weapon.bulletVelocity} Meters per second</h3>
-                      <h3>Magazine Size: {weapon.magSize} Ms</h3>
-                      <h3>Open Bolt Delay: {weapon.openBoltDelay} Ms</h3>
+                      <h3>Movement Speed: {weapon.movementSpeed} Mph</h3>
+                      <h3>Sprint Speed: {weapon.sprintSpeed} Mph</h3>
+                      <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire} Mph</h3>
+                      <h3>ADS Movement Speed: {weapon.adsMovementSpeed} Ms</h3>
+                      <h3>Strafe Speed: {weapon.strafeSpeed} Ms</h3>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='stat-boxes column is-half'>
+                      <div><h2>GUNFIGHT</h2></div>
+                      <div>
+                        <h3>Rate of Fire: {getProfileStats().fireRate} RPM</h3>
+                        <h3>ADS Time: {weapon.adsTime} Ms</h3>
+                        <h3>Reload Time: {weapon.reloadTime} Ms</h3>
+                        <h3>Hipfire Area: {weapon.hipfireArea} Ms</h3>
+                        <h3>Bullet Velocity: {weapon.bulletVelocity} Meters per second</h3>
+                        <h3>Magazine Size: {weapon.magSize} Ms</h3>
+                        <h3>Open Bolt Delay: {weapon.openBoltDelay} Ms</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
               
               
-            <div className="weapon-stats">
-              <div className='stats-title'><h2>WEAPON STATS</h2></div>
-              <div className='stats'>
-                <div className='range-boxes'>
-                  {
-                    weapon && getProfileStats().rangeOne[0] &&
+              <div className="range-stats">
+                <div className='stats-title'><h2>RANGE STATS</h2></div>
+                <div className='stats'>
+                  <div className='columns range-boxes'>
+                    {
+                      weapon && getProfileStats().rangeOne[0] &&
                 
-                  <div className='range-component'>
+                  <div className='column range-component'>
                     {
                       getProfileStats().rangeOne.map(
                         profile => (
@@ -164,11 +177,11 @@ function WeaponProfile() {
                     }
                   </div>
                 
-                  }
-                  {
-                    weapon && getProfileStats().rangeTwo[0] &&
+                    }
+                    {
+                      weapon && getProfileStats().rangeTwo[0] &&
                 
-                  <div className='range-component'>
+                  <div className='column range-component'>
                     {
                       getProfileStats().rangeTwo.map(
                         profile => (
@@ -177,10 +190,10 @@ function WeaponProfile() {
                       )
                     }
                   </div>
-                  }
-                  {
-                    weapon && getProfileStats().rangeThree[0] &&
-                  <div className='range-component'>
+                    }
+                    {
+                      weapon && getProfileStats().rangeThree[0] &&
+                  <div className='column range-component'>
                     {
                       getProfileStats().rangeThree.map(
                         profile => (
@@ -190,12 +203,12 @@ function WeaponProfile() {
                     }
                   </div>
               
-                  }
+                    }
 
-                  {
-                    weapon && getProfileStats().rangeFour[0] &&
+                    {
+                      weapon && getProfileStats().rangeFour[0] &&
               
-                  <div className='range-component'>
+                  <div className='column range-component'>
                     {
                       getProfileStats().rangeFour.map(
                         profile => (
@@ -204,16 +217,17 @@ function WeaponProfile() {
                       )
                     }
                   </div>
-                  }  
-                </div>            
+                    }  
+                  </div>            
+                </div>
               </div>
-            </div>      
+            </div>
           </div> 
 
        
         </section>
       }
-    </section>
+    </motion.section>
   )
 
 }

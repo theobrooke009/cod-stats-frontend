@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export function removeToken() {
-  window.localStorage.removeToken('token')
+  window.localStorage.removeItem('token')
 }
 
 function getPayload() {
