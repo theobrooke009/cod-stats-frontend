@@ -110,32 +110,79 @@ function WeaponProfile() {
             
           <div className='weapon-profile'>
             <div className='weapon-stats'>
-
-              <div className='stats-title'><h2>ATTACHMENTS</h2></div>
               <div className='stats'>
-                <div className='stat-boxes'>
-                  <div><h2>MOVEMENT</h2> </div>
-                  <div>
-                    {/* <h3>Movement Speed: {weapon.movementSpeed} Mph</h3>
-                    <h3>Sprint Speed: {weapon.sprintSpeed} Mph</h3>
-                    <h3>Tactical Sprint To Fire: {weapon.tacSprintToFire} Mph</h3>
-                    <h3>ADS Movement Speed: {weapon.adsMovementSpeed} Ms</h3>
-                    <h3>Strafe Speed: {weapon.strafeSpeed} Ms</h3> */}
+                <div className='user-added-attachments'>
+                  <div className='stats-title'><h2>ATTACHMENTS</h2></div>
+
+                  { weapon && weapon.muzzle !== 'None' && 
+                  <div className='user-attachments'>
+                    <h1>MUZZLE</h1>
+                    <h3> {weapon.muzzle}</h3>
                   </div>
+                  
+                  }
+
+                  { weapon && weapon.laser !== 'None' && 
+                  <div className='user-attachments'>
+                    <h1>LASER</h1>
+                    <h3> {weapon.laser}</h3>
+                  </div>
+                  
+                  }
+
+                  { weapon && weapon.barrel !== 'None' && 
+                  <div className='user-attachments'>
+                    <h1>BARREL</h1>
+                    <h3> {weapon.barrel}</h3>
+                  </div>
+                  
+                  }
+
+                  { weapon && weapon.optic !== 'None' && 
+                  <div className='user-attachments'>
+                    <h1>OPTIC</h1>
+                    <h3> {weapon.optic}</h3>
+                  </div>
+                  
+                  }
+
+                  { weapon && weapon.stock !== 'None' && 
+                         <div className='user-attachments'>
+                           <h1>STOCK</h1>
+                           <h3> {weapon.stock}</h3>
+                         </div>
+                  }
+
+                  { weapon && weapon.underBarrel !== 'None' && 
+                         <div className='user-attachments'>
+                           <h1>UNDERBARREL</h1>
+                           <h3> {weapon.underBarrel}</h3>
+                         </div>
+                  }
+
+                  { weapon && weapon.profile !== 'None' && weapon.profile !== 'Default' && 
+                         <div className='user-attachments'>
+                           <h1>AMMO</h1>
+                           <h3> {weapon.profile}</h3>
+                         </div>
+                  }
+
+                  { weapon && weapon.perk !== 'None' && 
+                         <div className='user-attachments'>
+                           <h1>PERK</h1>
+                           <h3> {weapon.perk}</h3>
+                         </div>
+                  }
+
+                  { weapon && weapon.rearGrip !== 'None' && 
+                         <div className='user-attachments'>
+                           <h1>GRIP</h1>
+                           <h3> {weapon.rearGrip}</h3>
+                         </div>
+                  }
                 </div>
+
                 <div>
-                  <div className='stat-boxes'>
-                    <div><h2>GUNFIGHT</h2></div>
-                    <div>
-                      {/* <h3>Rate of Fire: {getProfileStats().fireRate} RPM</h3>
-                      <h3>ADS Time: {weapon.adsTime} Ms</h3>
-                      <h3>Reload Time: {weapon.reloadTime} Ms</h3>
-                      <h3>Hipfire Area: {weapon.hipfireArea} Ms</h3>
-                      <h3>Bullet Velocity: {weapon.bulletVelocity} Meters per second</h3>
-                      <h3>Magazine Size: {weapon.magSize} Ms</h3>
-                      <h3>Open Bolt Delay: {weapon.openBoltDelay} Ms</h3> */}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

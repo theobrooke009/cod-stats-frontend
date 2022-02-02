@@ -13,6 +13,7 @@ import AmmoCard from './CreateAClassFunctions/AmmoFunctions.js'
 import PerkCard from './CreateAClassFunctions/PerkFunctions.js'
 import GripCard from './CreateAClassFunctions/GripFunctions.js'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 
 function CreateAClass() {
@@ -214,6 +215,7 @@ function CreateAClass() {
     profile: 'None',
     name: 'None',
     image: 'None',
+    buildImage: 'None',
     gunName: 'None',
     gameFrom: 'None',
     muzzle: 'None',
@@ -230,7 +232,16 @@ function CreateAClass() {
 
   const attachArray = Object.entries(formData).filter(
     keys => {
-      return keys[1] !== null && !keys[1].includes('None') && keys[1] !== 'Default' && keys[0] !== 'gunName' && keys[0] !== 'gameFrom' && keys[0] !== 'image' && keys[0] !== 'weaponType' && !keys[1].includes('Default')
+      return keys[1] !== null 
+      && keys[1] !== 'None'
+      && keys[1] !== 'Default' 
+      && keys[0] !== 'gunName' 
+      && keys[0] !== 'gameFrom' 
+      && keys[0] !== 'image' 
+      && keys[0] !== 'weaponType' 
+      && keys[0] !== 'adsTime'
+      && keys[0] !== 'buildImage'  
+      && keys[0] !== 'name'  
     }
   ).map(
     key => {
@@ -246,6 +257,8 @@ function CreateAClass() {
     const getData = async () => {
       try {
         const response = await getOneWeapon(weaponId)
+        const res = await getAllAttachments()
+        setAttachments(res.data)
         setWeapon(response.data)
         setMagSize(response.data.magSize)
         setFormData({ ...formData, 
@@ -253,6 +266,7 @@ function CreateAClass() {
           gunName: response.data.name,
           gameFrom: response.data.gameFrom,
           weaponType: response.data.weaponType,
+          buildImage: response.data.buildImage,
         })     
       } catch (err) {
         setIsError(err)
@@ -261,17 +275,6 @@ function CreateAClass() {
     getData()
   }, [weaponId])
 
-  React.useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getAllAttachments()
-        setAttachments(response.data)
-      } catch (err) {
-        setIsError(err)
-      }
-    }
-    getData()
-  }, [])
 
   console.log('attach', attachments)
   
@@ -323,6 +326,7 @@ function CreateAClass() {
   }
 
   const handleChange = e => {
+    console.log(e)
     setMagSize(weapon.magSize)
     setFormData({ ...formData, [e.target.name]: e.target.value })
     if (attachArray.length === 4) {
@@ -366,6 +370,88 @@ function CreateAClass() {
                   ></input>
                   <button type="submit" className="button is-info">Create This Class</button>
                 </div>
+                <div className='attach-images'>
+                  { attachArray.includes('muzzle') &&
+                  <div className='attach-image'>
+                    <motion.img className='class-attach-image' alt='muzzle' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643722802/cod/150_hi8otg.png"
+                      initial={{ y: '10vh', opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      delay={{ delay: 0.5, duration: 0.5 }}
+                    />
+                  </div>
+                  }
+                  { attachArray.includes('laser') &&
+                <div className='attach-image'>
+                  <motion.img className='class-attach-image' alt='laser' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332191/cod/laser.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 0.5 }}/>
+                </div>
+                  }
+                  { attachArray.includes('barrel') &&
+                <div className='attach-image'>
+                  <motion.img className='barrel-attach-image' id='barrel-image' alt='barrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643334250/cod/200_sf4d6n.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 0.5 }}
+                  />
+                </div>
+                  }
+
+                  { attachArray.includes('optic') &&
+                <div className='attach-image'>
+                  <motion.img  className='class-attach-image' alt='optic' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643723578/cod/128_qie0bw.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 0.5 }}/>
+                </div>
+                  }
+
+                  { attachArray.includes('stock') &&
+                <div className='attach-image'>
+                  <motion.img className='class-attach-image' alt='stock' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331829/cod/stock.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 0.5 }}/>
+                </div>
+                  }
+
+                  { attachArray.includes('underBarrel') &&
+                <div className='attach-image'>
+                  <motion.img className='class-attach-image' alt='underbarrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643723313/cod/Webp.net-resizeimage_1_qkr0rq.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 2 }}/>
+                </div>
+                  }
+
+                  { attachArray.includes('profile') &&
+                <div className='attach-image'>
+                  <motion.img className='class-attach-image' alt='ammo' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331789/cod/ammo.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 2 }}/>
+                </div>
+                  }
+                  { attachArray.includes('rearGrip') &&
+                <div className='attach-image'>               
+                  <motion.img className='class-attach-image' alt='reargrip' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332037/cod/reargrip.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 2 }}/>
+                </div>
+                  }
+
+                  { attachArray.includes('perk') &&
+                <div className='attach-image'>
+                  <motion.img className='class-attach-image' alt='perk' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332319/cod/perk.png"
+                    initial={{ y: '10vh', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    delay={{ delay: 0.5, duration: 2 }}/>
+                </div>
+                  }
+
+                </div>
               </div>
 
               <div className='columns attachments-top'>
@@ -388,63 +474,7 @@ function CreateAClass() {
             </div>
   
             <div className='create-weapon-div'>
-              <div className='dynamic-create-images'>
-                <img className='create-weapon-image' src={weapon.image}/>
-                <div className='attach-images'>
-                  { attachArray.includes('muzzle') &&
-                  <div className='attach-image'>
-                    <img className='class-attach-image' alt='muzzle' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331902/cod/muzzle.png"/>
-                  </div>
-                  }
-                  { attachArray.includes('laser') &&
-                <div className='attach-image'>
-                  <img className='class-attach-image' alt='laser' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332191/cod/laser.png"/>
-                </div>
-                  }
-                  { attachArray.includes('barrel') &&
-                <div className='attach-image'>
-                  <img className='barrel-image' id='barrel-image' alt='barrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643334250/cod/200_sf4d6n.png"/>
-                </div>
-                  }
-
-                  { attachArray.includes('optic') &&
-                <div className='class-attach-image'>
-                  <img  alt='optic' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331364/cod/optic.png"/>
-                </div>
-                  }
-
-                  { attachArray.includes('stock') &&
-                <div className='attach-image'>
-                  <img className='class-attach-image' alt='stock' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331829/cod/stock.png"/>
-                </div>
-                  }
-
-                  { attachArray.includes('underBarrel') &&
-                <div className='attach-image'>
-                  <img className='class-attach-image' alt='underbarrel' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331439/cod/underbarrel.png"/>
-                </div>
-                  }
-
-                  { attachArray.includes('profile') &&
-                <div className='attach-image'>
-                  <img className='class-attach-image' alt='ammo' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643331789/cod/ammo.png"/>
-                </div>
-                  }
-                  { attachArray.includes('rearGrip') &&
-                <div className='attach-image'>               
-                  <img className='class-attach-image' alt='reargrip' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332037/cod/reargrip.png"/>
-                </div>
-                  }
-
-                  { attachArray.includes('perk') &&
-                <div className='attach-image'>
-                  <img className='class-attach-image' alt='perk' src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643332319/cod/perk.png"/>
-                </div>
-                  }
-
-                </div>
-              </div>
-
+              <img className='create-weapon-image' src={weapon.image}/>
               
             </div>
             <div>
@@ -474,9 +504,10 @@ function CreateAClass() {
             <div className='create-stats-div'>
               <div className='base-stats'>
                 {
+                  // setFormData({ ...formData, [e.target.name]: e.target.value }
                   <div className='variable-stats'>
                     <h1 className='create-class-stats'>Gunfight</h1>
-                    <h3>ADS Time: {weapon.adsTime + sumAds }</h3>
+                    <h3>ADS Time: <span>{weapon.adsTime + sumAds }</span></h3>
                     <h3>Reload Time: {weapon.reloadTime + sumReloadTime}</h3>
                     <h3>Bullet Velocity: {(weapon.bulletVelocity * percentConverter(sumBulletVel)).toFixed(2)}</h3>
                     <h3>Hipfire Area: {(weapon.hipfireArea * percentConverter(sumHipFire)).toFixed(2)}</h3>
@@ -502,7 +533,10 @@ function CreateAClass() {
                 </div>
               </div>
             
-              <div className='stats'>
+              <div className='create-class-range-stats'>
+                <div className='range-header'>
+                  <h1 className='header'>Ranges</h1>
+                </div>
                 <div className='range-boxes'>
                   {
                     weapon && getProfileStats().rangeOne &&

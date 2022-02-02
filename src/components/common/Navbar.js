@@ -33,7 +33,7 @@ function Navbar() {
         {
           !isAuth &&
             <div className="navbar-item" id="site-access">
-              <Link to="/login">
+              <Link to="/">
                 <h3>Login</h3>
               </Link>
             </div>
@@ -42,7 +42,7 @@ function Navbar() {
         {
           !isAuth &&
             <div className="navbar-item" id="site-access">
-              <Link to="/register" >
+              <Link to="/" >
                 <h3>Register</h3>
               </Link>
             </div>
@@ -50,7 +50,7 @@ function Navbar() {
         {
           isAuth &&
             <div className="navbar-item" id="site-access">
-              <Link to="/login" onClick={handleLogout}>
+              <Link to="/" onClick={handleLogout}>
                 <h3>Logout</h3>
               </Link>
             </div>
@@ -64,7 +64,7 @@ function Navbar() {
           {
             !isAuth &&
             <div className="navbar-item">
-              <Link to="/login">
+              <Link to="/">
                 <h3>Login</h3>
               </Link>
             </div>
@@ -73,7 +73,7 @@ function Navbar() {
           {
             !isAuth &&
             <div className="navbar-item">
-              <Link to="/register" >
+              <Link to="/" >
                 <h3>Register</h3>
               </Link>
             </div>
@@ -81,7 +81,7 @@ function Navbar() {
           {
             isAuth &&
             <div className="navbar-item">
-              <Link to="/login" onClick={handleLogout}>
+              <Link to="/" onClick={handleLogout}>
                 <h3>Logout</h3>
               </Link>
             </div>

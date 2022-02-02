@@ -20,9 +20,10 @@ function UserProfile() {
       try {
         const response = await getUser()
         const res = await getAllUserGuns()
+
         setUser(response.data)
         setWeapon(res.data)
-
+  
       } catch (err) {
         setIsError(err)
       }
@@ -50,10 +51,9 @@ function UserProfile() {
       setIsError(err)
     }
   }
-
   return (
    
-    <section>
+    <section className='profile-section'>
       { user && weapons && 
       <div>
         <div className='profile-header columns'>
@@ -116,11 +116,9 @@ function UserProfile() {
         </div>
 
         <div className='profile-user-weapons columns'>
-          <div className='column weapons-column is-one-fifth'>
 
-          </div>
 
-          <div className='column weapons-column is-four-fifths'>
+          <div className='column weapons-colum'>
             <div className='link-buttons'>
               <Link to={'/weapons'}>
                 <button className='button is-black' >Build Your Own Class</button>
@@ -129,43 +127,73 @@ function UserProfile() {
                 <button className='button is-black' >Find More User Classes</button>
               </Link>
             </div>
-            <h3>Created Weapons</h3>
-            <div className='created-weapons'>
-              
-              { 
-                weapons && user && weapons.filter(
-                  weapon => {
-                    return weapon.addedBy === user._id
-                  }
-                ).map(
-                  weapon => (
-                    <UserWeaponCard  key={weapon._id} weapon={weapon} />
-                  )
-                )
-              }
-              
-            </div>
-            <h3>Liked Weapons</h3>
-            <Link to={'/userweapons'}>
-              <button className='button is-black' >Find More User Classes</button>
-            </Link>
-            <div className='created-weapons'>
-            
-              { 
-                weapons && user && weapons.filter(
-                  weapon => {
-                    return weapon.likedBy.includes(user._id)
-                  }
-                ).map(
-                  weapon => (
-                    <UserWeaponCard  key={weapon._id} weapon={weapon} />
-                  )
-                )
-              }
-              
-            </div>
-          </div>
+            <div className='created-and-favourited columns'>
+              <div className='user-made-weapons column'>
+                <div className='user-created-weapons'>
+                  <div className='created-title'>
+                    <h3>Created Classes</h3>
+                  </div>
+                  <div className='created-weapons-container'>
+                    { 
+                      weapons && user && weapons.filter(
+                        weapon => {
+                          return weapon.addedBy === user._id
+                        }
+                      ).map(
+                        weapon => (
+                          <UserWeaponCard  key={weapon._id} weapon={weapon} />
+                        )
+                      )
+                    }
+                  </div>
+                </div>
+              </div>
 
+              <div className='user-made-weapons column'>
+                <div className='user-created-weapons'>
+                  <div className='created-title'>
+                    <h3>Favourited Classes</h3>
+                  </div>
+                  <div className='created-weapons-container'>
+                    { 
+                      weapons && user && weapons.filter(
+                        weapon => {
+                          return weapon.likedBy.includes(user._id)
+                        }
+                      ).map(
+                        weapon => (
+                          <UserWeaponCard  key={weapon.name} weapon={weapon} />
+                        )
+                      )
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+              
+            {/* <div>
+              <h3>Liked Weapons</h3>
+              <Link to={'/userweapons'}>
+                <button className='button is-black' >Find More User Classes</button>
+              </Link>
+              <div className='created-weapons'>
+                  <div>
+                { 
+                  weapons && user && weapons.filter(
+                    weapon => {
+                      return weapon.likedBy.includes(user._id)
+                    }
+                  ).map(
+                    weapon => (
+                      <UserWeaponCard  key={weapon._id} weapon={weapon}/>
+                    )
+                  )
+                }
+              
+              </div>
+            </div>
+          </div> */}
+          </div>
         </div>
       </div>
       }
