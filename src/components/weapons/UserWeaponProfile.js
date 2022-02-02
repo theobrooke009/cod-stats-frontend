@@ -75,6 +75,7 @@ function WeaponProfile() {
           <div className='header'>
             <div className='title'>
               <div><h1>{weapon.name}</h1></div>
+              <div><h4>{weapon.gunName.toUpperCase()} - {weapon.weaponType.toUpperCase()}</h4></div>
               <div className="profile-and-create">
 
                 {

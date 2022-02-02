@@ -1,6 +1,6 @@
 import React from 'react'
 import { getAllUserGuns } from '../lib/api.js'
-import UserWeaponCard from './WeaponCards/UserWeaponCard.js'
+import UserWeaponSelect from './WeaponCards/UserWeaponSelect.js'
 
 
 function WeaponList() {
@@ -146,7 +146,7 @@ function WeaponList() {
                   return 1
                 }
               }).map(weapon => (
-                <UserWeaponCard  key={weapon._id} weapon={weapon} />
+                <UserWeaponSelect  key={weapon._id} weapon={weapon} />
               ))
             }
 

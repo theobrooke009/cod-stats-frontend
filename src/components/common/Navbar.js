@@ -19,6 +19,11 @@ function Navbar() {
     <nav className="navbar columns is-black" id="desktop-nav">     
       <div className="column is-three-quarters-desktop is-three-quarters-tablet" id="site-links">
         <div className="navbar-item">
+          <Link to="/profile">
+            <h3>Profile</h3>
+          </Link>
+        </div>
+        <div className="navbar-item">
           <Link to="/weapons">
             <h3>Classes</h3>
           </Link>
