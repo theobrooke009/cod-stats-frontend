@@ -1,4 +1,4 @@
-function BarrelCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function BarrelCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getBarrel() {
     if (attachments && weapon) {
@@ -108,12 +108,12 @@ function BarrelCard ({ formData, attachments, display, handleChange, weapon, ads
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Barrel</button>
-      { attachments && ((formData.barrel === 'None' && display) || (formData.barrel !== 'None')) &&
-            <select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Barrel</button>
+      { attachments && ((formData.barrel === 'None' && attachArray.length <= 4) || (formData.barrel !== 'None')) &&
+            <select className='dropdown button select-attachment'
               onChange={handleChange}
               name="barrel">
-              <option >{getBarrel()[0].attachmentName}</option>
+              <option className='attachment-dropdown-option'>{getBarrel()[0].attachmentName}</option>
               {
                 attachments &&
           getBarrel().filter(
@@ -123,7 +123,7 @@ function BarrelCard ({ formData, attachments, display, handleChange, weapon, ads
           ).map(
             attachment => {
               return (  
-                <option key={attachment._id} 
+                <option className='attachment-dropdown-option' key={attachment._id} 
                   value={attachment.attachmentName} 
                   onClick={oneBarrel}>{attachment.attachmentName}</option>
               )
@@ -132,10 +132,11 @@ function BarrelCard ({ formData, attachments, display, handleChange, weapon, ads
               }
             </select> 
       }
-      { attachments && (formData.barrel === 'None' && !display) &&
-                  <select className='dropdown button'
+      { attachments && (formData.barrel === 'None' && attachArray.length > 4) &&
+                  <select 
+                    className='dropdown button unavailable'
                     name='barrel'>
-                    <option>Unavailable</option>
+                    <option className='unavailable'>Unavailable</option>
 
                   </select>
                     

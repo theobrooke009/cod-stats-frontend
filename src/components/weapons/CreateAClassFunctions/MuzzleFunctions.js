@@ -1,4 +1,4 @@
-function MuzzleCard({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function MuzzleCard({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
   
   function getMuzzle() {
     if (attachments && weapon) {
@@ -106,13 +106,15 @@ function MuzzleCard({ formData, attachments, display, handleChange, weapon, adsM
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Muzzle</button>
-      { attachments && ((formData.muzzle === 'None' && display) || (formData.muzzle !== 'None')) &&
-<select className='dropdown button' 
+      <button className='button is-black select-attachment-button'>Muzzle</button>
+      { attachments && ((formData.muzzle === 'None' && attachArray.length <= 4) || (formData.muzzle !== 'None')) &&
+<select className='dropdown button select-attachment' 
   onChange={handleChange}
   name="muzzle">
   {
-    <option>{getMuzzle()[0].attachmentName}</option>
+    <option
+      className='attachment-dropdown-option'
+    >{getMuzzle()[0].attachmentName}</option>
   } 
 
 
@@ -127,6 +129,7 @@ getMuzzle().filter(
     return (  
   
       <option 
+        className='attachment-dropdown-option'
         key={attachment._id} 
         value={attachment.attachmentName} 
         onClick={oneMuzzle} 
@@ -138,8 +141,8 @@ getMuzzle().filter(
 
 </select> 
       }
-      { attachments && (formData.muzzle === 'None' && !display) &&
-    <select className='dropdown button'
+      { attachments && (formData.muzzle === 'None' && attachArray.length > 4) &&
+    <select className='dropdown button unavailable'
       name='muzzle'>
       <option>Unavailable</option>
 

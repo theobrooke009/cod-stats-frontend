@@ -53,7 +53,7 @@ function Register({ setLogin }) {
             name='username'
           />
         </div>
-        <div>
+        <div className='field'>
           <label className='label'>Email Address</label>
           <input 
             className='register-input'
@@ -71,7 +71,7 @@ function Register({ setLogin }) {
             </motion.div>
           }     
         </div>
-        <div>
+        <div className='field'>
           <label className='label'>Password</label>
           <input 
             className='register-input'
@@ -81,7 +81,7 @@ function Register({ setLogin }) {
             type='password'
           />
         </div>
-        <div>
+        <div className='field'>
           <label className='label'>Password Confirmation</label>
           <input
             className='register-input'

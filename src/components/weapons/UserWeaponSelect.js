@@ -8,6 +8,7 @@ function WeaponList() {
   const [game, setGame] = React.useState('Modern Warfare')
   const [type, setType] = React.useState('')
   const [isError, setIsError] = React.useState(false)
+  const [isActive, setisActive] = React.useState(false)
 
 
   console.log('here',weapons)
@@ -89,6 +90,9 @@ function WeaponList() {
 
   return (
     <section>
+      <div className="logo-div">
+        <img className="logo-image"src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643249938/cod/pngaaa.com-665123_omjtgo.png"/>
+      </div>
       <div className='game-buttons'>
         <button className='button is-black is-focused'
           onClick={setGameState}>Modern Warfare</button>
@@ -99,7 +103,42 @@ function WeaponList() {
       </div>
 
       <div className='container columns'>
-        <div className='column is-one-fifth'>
+        <div className='column type-column is-one-fifth'>
+                  
+          <div
+            onClick={() => {
+              setisActive(!isActive)
+            }}
+            role="button"
+            className={`dropdown mobile-drop ${isActive ? 'is-active' : ''}`}
+            aria-label="menu"
+            aria-expanded="false"
+          >
+            <div className = "dropdown-trigger">
+              <button className = "button  mobile-drop is-black" aria-haspopup = "true" aria-controls = "dropdown-menu">
+                <span className="select-head">Weapon Class</span>
+                <span className = "icon is-small is-white">
+                  <i className = "fa fa-angle-down is-white" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div className = "dropdown-menu" id = "dropdown-menu" role = "menu">
+              <div className = "dropdown-content">
+                <a onClick={setWeaponType} className = "dropdown-item">Assault Rifle</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">SMG</a>
+                <hr className = "dropdown-divider"/>
+                <a href = "#" className = "dropdown-item is-active">LMG</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Sniper</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Shotgun</a>
+              </div>
+            </div>
+          </div>
+          <div className='reset-div'>
+            <button className="button mobile-reset is-black" onClick={setWeaponType} >Reset</button>
+          </div>
           <div className='weapon-type-buttons'>
             <button className='button is-black is-focused'
               onClick={setWeaponType}

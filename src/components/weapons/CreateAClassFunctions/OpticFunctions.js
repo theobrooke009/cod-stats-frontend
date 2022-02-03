@@ -1,4 +1,4 @@
-function OpticCard({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function OpticCard({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray  }) {
 
   function getOptic() {
     if (attachments && weapon) {
@@ -108,12 +108,14 @@ function OpticCard({ formData, attachments, display, handleChange, weapon, adsMo
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Optic</button>
-      { attachments && ((formData.optic === 'None' && display) || (formData.optic !== 'None')) &&
-            <select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Optic</button>
+      { attachments && ((formData.optic === 'None' && attachArray.length <= 4) || (formData.optic !== 'None')) &&
+            <select className='dropdown button select-attachment'
               onChange={handleChange}
               name="optic">
-              <option >{getOptic()[0].attachmentName}</option>
+              <option 
+                className='attachment-dropdown-option'
+              >{getOptic()[0].attachmentName}</option>
               {
                 attachments &&
           getOptic().filter(
@@ -123,7 +125,9 @@ function OpticCard({ formData, attachments, display, handleChange, weapon, adsMo
           ).map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneOptic}>{attachment.attachmentName}</option>
+                <option 
+                  className='attachment-dropdown-option'
+                  key={attachment._id} value={attachment.attachmentName} onClick={oneOptic}>{attachment.attachmentName}</option>
               )
             }            
           )
@@ -131,8 +135,8 @@ function OpticCard({ formData, attachments, display, handleChange, weapon, adsMo
             </select> 
       }
 
-      { attachments && (formData.optic === 'None' && !display) &&
-                  <select className='dropdown button'
+      { attachments && (formData.optic === 'None' && attachArray.length > 4) &&
+                  <select className='dropdown button unavailable'
                     name='optic'>
                     <option>Unavailable</option>
 

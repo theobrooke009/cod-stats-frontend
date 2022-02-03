@@ -1,4 +1,4 @@
-function LaserCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function LaserCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getLaser() {
     if (attachments && weapon) {
@@ -108,12 +108,14 @@ function LaserCard ({ formData, attachments, display, handleChange, weapon, adsM
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button  className='button is-black'>Laser</button>
-      { attachments && ((formData.laser === 'None' && display) || (formData.laser !== 'None')) &&
-            <select className='dropdown button'
+      <button  className='button is-black select-attachment-button'>Laser</button>
+      { attachments && ((formData.laser === 'None' && attachArray.length <= 4) || (formData.laser !== 'None')) &&
+            <select className='dropdown button select-attachment'
               onChange={handleChange}
               name="laser">
-              <option>{getLaser()[0].attachmentName}</option>
+              <option
+                className='attachment-dropdown-option'
+              >{getLaser()[0].attachmentName}</option>
               {
                 attachments &&
           getLaser().filter(
@@ -123,15 +125,17 @@ function LaserCard ({ formData, attachments, display, handleChange, weapon, adsM
           ).map(
             attachment => {
               return (  
-                <option key={attachment._id} value={attachment.attachmentName} onClick={oneLaser}>{attachment.attachmentName}</option>
+                <option 
+                  className='attachment-dropdown-option'
+                  key={attachment._id} value={attachment.attachmentName} onClick={oneLaser}>{attachment.attachmentName}</option>
               )
             }            
           )
               }
             </select> 
       }
-      { attachments && (formData.laser === 'None' && !display) &&
-                  <select className='dropdown button'
+      { attachments && (formData.laser === 'None' && attachArray.length > 4) &&
+                  <select className='dropdown button unavailable'
                     name='laser'>
                     <option>Unavailable</option>
 

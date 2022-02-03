@@ -9,19 +9,21 @@ import User from './components/user/User.js'
 import Navbar from './components/common/Navbar.js'
 import Footer from './components/common/Footer.js'
 import LoginRegister from './components/auth/LoginRegister.js'
+// import Secure from './components/common/SecureRoute.js'
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LoginRegister/>}/>
+        <Route exact path="/" element={<LoginRegister/>}/>
         <Route path="/weapons" element={<WeaponSelect/>}/>
         <Route path="/weapons/:weaponId" element={<WeaponProfile/>}/>
         <Route path="/weapons/:weaponId/build" element={<CreateAClass/>}/>
         <Route path="/userweapons" element={<UserWeaponSelect/>}/>
         <Route path="/userweapons/:userWeaponId" element={<UserWeaponProfile/>}/>
-        <Route path="/profile" element={<User/>}/>
+        <Route path="/profile" element={<User/>}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

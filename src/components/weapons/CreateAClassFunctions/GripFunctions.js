@@ -1,4 +1,4 @@
-function GripCard({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function GripCard({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getGrip() {
     if (attachments && weapon) {
@@ -107,12 +107,14 @@ function GripCard({ formData, attachments, display, handleChange, weapon, adsMod
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Grip</button>
-      { attachments && ((formData.rearGrip === 'None' && display) || (formData.rearGrip !== 'None')) &&
-<select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Grip</button>
+      { attachments && ((formData.rearGrip === 'None' && attachArray.length <= 4) || (formData.rearGrip !== 'None')) &&
+<select className='dropdown button select-attachment'
   onChange={handleChange}
   name="rearGrip">
-  <option default>{getGrip()[0].attachmentName}</option>
+  <option 
+    className='attachment-dropdown-option'
+    default>{getGrip()[0].attachmentName}</option>
   {
     attachments &&
 getGrip().filter(
@@ -122,15 +124,17 @@ getGrip().filter(
 ).map(
   attachment => {
     return (  
-      <option key={attachment._id} value={attachment.attachmentName} onClick={oneGrip} name="Grip">{attachment.attachmentName}</option>
+      <option 
+        className='attachment-dropdown-option'
+        key={attachment._id} value={attachment.attachmentName} onClick={oneGrip} name="Grip">{attachment.attachmentName}</option>
     )
   }            
 )
   }
 </select> 
       }
-      { attachments && (formData.rearGrip === 'None' && !display) &&
-      <select className='dropdown button'
+      { attachments && (formData.rearGrip === 'None' && attachArray.length > 4) &&
+      <select className='dropdown button unavailable'
         name='rearGrip'>
         <option>Unavailable</option>
 

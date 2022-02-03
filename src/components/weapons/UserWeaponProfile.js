@@ -72,7 +72,7 @@ function WeaponProfile() {
     <section className='weapon-page'>
       { weapon &&
         <section className='profile'>
-          <div className='header'>
+          <div className='user-weapon-profile-header'>
             <div className='title'>
               <div><h1>{weapon.name}</h1></div>
               <div><h4>{weapon.gunName.toUpperCase()} - {weapon.weaponType.toUpperCase()}</h4></div>
@@ -109,7 +109,7 @@ function WeaponProfile() {
           {/* <div className='container'> */}
 
             
-          <div className='weapon-profile'>
+          <div className='user-weapon-profile'>
             <div className='weapon-stats'>
               <div className='stats'>
                 <div className='user-added-attachments'>

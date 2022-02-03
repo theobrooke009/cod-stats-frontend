@@ -1,4 +1,4 @@
-function PerkCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function PerkCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getPerk() {
     if (attachments && weapon) {
@@ -107,12 +107,14 @@ function PerkCard ({ formData, attachments, display, handleChange, weapon, adsMo
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Perk</button>
-      { attachments && ((formData.perk === 'None' && display) || (formData.perk !== 'None')) &&
-<select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Perk</button>
+      { attachments && ((formData.perk === 'None' && attachArray.length <= 4) || (formData.perk !== 'None')) &&
+<select className='dropdown button select-attachment'
   onChange={handleChange}
   name="perk">
-  <option>{getPerk()[0].attachmentName}</option>
+  <option
+    className='attachment-dropdown-option'
+  >{getPerk()[0].attachmentName}</option>
   {
     attachments &&
 getPerk().filter(
@@ -122,15 +124,17 @@ getPerk().filter(
 ).map(
   attachment => {
     return (  
-      <option key={attachment._id} value={attachment.attachmentName} onClick={onePerk} name="Perk">{attachment.attachmentName}</option>
+      <option 
+        className='attachment-dropdown-option'
+        key={attachment._id} value={attachment.attachmentName} onClick={onePerk} name="Perk">{attachment.attachmentName}</option>
     )
   }            
 )
   }
 </select> 
       }
-      { attachments && (formData.perk === 'None' && !display) &&
-      <select className='dropdown button'
+      { attachments && (formData.perk === 'None' && attachArray.length > 4) &&
+      <select className='dropdown button unavailable'
         name='perk'>
         <option>Unavailable</option>
 

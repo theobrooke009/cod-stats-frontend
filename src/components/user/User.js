@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUser,  getAllUserGuns, editUser } from '../lib/api'
+import { isAuthenticated } from '../lib/auth'
 import UserWeaponCard from '../weapons/WeaponCards/UserWeaponCard.js'
+import LoginRegister from '../auth/LoginRegister'
 
 function UserProfile() {
 
@@ -13,6 +15,7 @@ function UserProfile() {
     image: null,
   })
 
+  const isAuth = isAuthenticated()
   console.log(isError, weapons, editUser)
 
   React.useEffect(() => {
@@ -54,7 +57,14 @@ function UserProfile() {
   return (
    
     <section className='profile-section'>
-      { user && weapons && 
+      {
+        !isAuth &&
+        <>        
+          <LoginRegister/>
+        </>
+      }
+
+      { user && weapons && isAuth &&
       <div>
         <div className='profile-header columns'>
           <div className='profile-image column is-one-fifth'>
@@ -119,7 +129,7 @@ function UserProfile() {
 
 
           <div className='column weapons-colum'>
-            <div className='link-buttons'>
+            <div className='profile-link-buttons'>
               <Link to={'/weapons'}>
                 <button className='button is-black' >Build Your Own Class</button>
               </Link>
@@ -131,7 +141,7 @@ function UserProfile() {
               <div className='user-made-weapons column'>
                 <div className='user-created-weapons'>
                   <div className='created-title'>
-                    <h3>Created Classes</h3>
+                    <h3>Created Classes  &#9658; </h3>
                   </div>
                   <div className='created-weapons-container'>
                     { 
@@ -152,7 +162,7 @@ function UserProfile() {
               <div className='user-made-weapons column'>
                 <div className='user-created-weapons'>
                   <div className='created-title'>
-                    <h3>Favourited Classes</h3>
+                    <h3>Favourited Classes  &#9658;</h3>
                   </div>
                   <div className='created-weapons-container'>
                     { 

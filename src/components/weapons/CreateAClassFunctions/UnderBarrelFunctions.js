@@ -1,4 +1,4 @@
-function UnderBarrelCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function UnderBarrelCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getUnderBarrel() {
     if (attachments && weapon) {
@@ -107,12 +107,14 @@ function UnderBarrelCard ({ formData, attachments, display, handleChange, weapon
   }
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Underbarrel</button>
-      { attachments && ((formData.underBarrel === 'None' && display) || (formData.underBarrel !== 'None')) &&
-<select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Underbarrel</button>
+      { attachments && ((formData.underBarrel === 'None' && attachArray.length <= 4) || (formData.underBarrel !== 'None')) &&
+<select className='dropdown button select-attachment'
   onChange={handleChange}
   name="underBarrel">
-  <option >{getUnderBarrel()[0].attachmentName}</option>
+  <option 
+    className='attachment-dropdown-option'
+  >{getUnderBarrel()[0].attachmentName}</option>
   {
     attachments &&
 getUnderBarrel().filter(
@@ -122,15 +124,17 @@ getUnderBarrel().filter(
 ).map(
   attachment => {
     return (  
-      <option key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel} name="Underbarrel">{attachment.attachmentName}</option>
+      <option 
+        className='attachment-dropdown-option'
+        key={attachment._id} value={attachment.attachmentName} onClick={oneUnderBarrel} name="Underbarrel">{attachment.attachmentName}</option>
     )
   }            
 )
   }
 </select> 
       }
-      { attachments && (formData.underBarrel === 'None' && !display) &&
-      <select className='dropdown button'
+      { attachments && (formData.underBarrel === 'None' && attachArray.length > 4) &&
+      <select className='dropdown button unavailable'
         name='underBarrel'>
         <option>Unavailable</option>
 

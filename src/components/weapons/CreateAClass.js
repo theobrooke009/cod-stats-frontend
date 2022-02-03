@@ -19,7 +19,7 @@ import { motion } from 'framer-motion'
 function CreateAClass() {
   const [weapon, setWeapon] = React.useState(null)
   const [attachments, setAttachments] = React.useState(null)
-  const [display, setDisplay] = React.useState(true)
+  // const [display, setDisplay] = React.useState(true)
   const [isError, setIsError] = React.useState(false)
   const [profile, setProfile] = React.useState('Profile One')
   const { weaponId } = useParams()
@@ -329,10 +329,16 @@ function CreateAClass() {
     console.log(e)
     setMagSize(weapon.magSize)
     setFormData({ ...formData, [e.target.name]: e.target.value })
-    if (attachArray.length === 4) {
-      return setDisplay(false)
-    } else return setDisplay(true)
+    // if (attachArray.length > 4 ) {
+    //   return setDisplay(false)
+    // } 
+    
+    // if (attachArray.length <= 4 ) {
+    //   return setDisplay(true)
+    // } 
   }
+
+  console.log('length', attachArray.length)
 
   console.log(attachArray)
 
@@ -361,6 +367,9 @@ function CreateAClass() {
               <div className="create-header">
                 <div>
                   <h1>{weapon.name}</h1>
+                </div>
+                <div className='mobile-create-weapon-div'>
+                  <img className='create-weapon-image' src={weapon.image}/>
                 </div>
                 <div className="class-buttons">
                   <input 
@@ -453,29 +462,27 @@ function CreateAClass() {
 
                 </div>
               </div>
-
               <div className='columns attachments-top'>
               
                 {/*Muzzle*/}
-                <MuzzleCard className='column is-one-fifth weapon-part' key={weapon._id} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}
+                <MuzzleCard className='column is-one-fifth weapon-part' key={weapon._id} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}
                 />
 
                 {/* Laser   */}
 
-                <LaserCard className='column is-one-fifth weapon-part' key={weapon.name} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+                <LaserCard className='column is-one-fifth weapon-part' key={weapon.name} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
                 {/* Barrel*/}
-                <BarrelCard className='column is-one-fifth weapon-part' key={weapon.image} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+                <BarrelCard className='column is-one-fifth weapon-part' key={weapon.image} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
                 {/* Optic*/}
-                <OpticCard className='column is-one-fifth weapon-part' key={weapon.adsTime} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+                <OpticCard className='column is-one-fifth weapon-part' key={weapon.adsTime} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
               </div>
             </div>
   
             <div className='create-weapon-div'>
               <img className='create-weapon-image' src={weapon.image}/>
-              
             </div>
             <div>
               
@@ -483,22 +490,22 @@ function CreateAClass() {
 
             <div className='columns attachments-bottom'>
               {/* Stock*/}
-              <StockCard className='column is-one-fifth weapon-part' key={weapon.magSize} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+              <StockCard className='column is-one-fifth weapon-part' key={weapon.magSize} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
               {/* Underbarrel*/}
-              <UnderBarrelCard className='column is-one-fifth weapon-part' key={weapon.strafeSpeed} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+              <UnderBarrelCard className='column is-one-fifth weapon-part' key={weapon.strafeSpeed} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
               {/*Ammo*/}
 
-              <AmmoCard className='column is-one-fifth weapon-part' key={weapon.reloadTime} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} setProfileStats={setProfileStats} setMagSize={setMagSize}/>
+              <AmmoCard className='column is-one-fifth weapon-part' key={weapon.reloadTime} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} setProfileStats={setProfileStats} setMagSize={setMagSize} attachArray={attachArray}/>
 
               {/* Perks*/}
 
-              <PerkCard className='column is-one-fifth weapon-part' key={weapon.sprintSpeed} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+              <PerkCard className='column is-one-fifth weapon-part' key={weapon.sprintSpeed} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
 
               {/* Grip*/}
-              <GripCard  className='column is-one-fifth weapon-part' key={weapon.hipFireArea} attachments={attachments} formData={formData} display={display} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe}/>
+              <GripCard  className='column is-one-fifth weapon-part' key={weapon.hipFireArea} attachments={attachments} formData={formData} handleChange={handleChange} weapon={weapon} adsModifier={adsModifier} setAdsModifier={setAdsModifier} setRangeModifier={setRangeModifier} rangeModifier={rangeModifier} bulletVelMod={bulletVelMod} setBulletVelMod={setBulletVelMod} vertRecoil={vertRecoil} setVertRecoil={setVertRecoil} horizRecoil={horizRecoil} setHorizRecoil={setHorizRecoil} movSpeed={movSpeed} setMovSpeed={setMovSpeed} adsMovSpeed={adsMovSpeed} setAdsMovSpeed={setAdsMovSpeed} sprintSpeed={sprintSpeed}setSprintSpeed={setSprintSpeed} hipFire={hipFire} setHipFire={setHipFire} sprintToFire={sprintToFire} setSprintToFire={setSprintToFire} tacSprint={tacSprint} setTacSprint={setTacSprint} reloadTime={reloadTime} setReloadTime={setReloadTime} strafe={strafe} setStrafe={setStrafe} attachArray={attachArray}/>
 
             </div>
             <div className='create-stats-div'>

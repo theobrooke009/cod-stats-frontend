@@ -1,4 +1,4 @@
-function AmmoCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, setProfileStats, setMagSize }) {
+function AmmoCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, setProfileStats, setMagSize, attachArray }) {
   
   function getAmmo() {
     if (attachments && weapon) {
@@ -109,21 +109,26 @@ function AmmoCard ({ formData, attachments, display, handleChange, weapon, adsMo
   return (
     <div className=" column is-one-fifth weapon-part">
                   
-      <button className='button is-black'>Ammo</button>
-      { attachments && ((formData.profile === 'None' && display) || (formData.profile !== 'None')) &&
-        <select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Ammo</button>
+      { attachments && ((formData.profile === 'None' && attachArray.length <= 4) || (formData.profile !== 'None')) &&
+        <select className='dropdown button select-attachment'
           onChange={handleChange}
           name="profile">
-          <option text='Profile One' onClick={setProfileStats} value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
+          <option 
+            className='attachment-dropdown-option'
+            text='Profile One' onClick={setProfileStats} value={weapon.profileOne[0].profileName}>{weapon.profileOne[0].profileName}</option>
 
           { weapon.profileTwo[0] &&
-  <option value= {weapon.profileTwo[0].profileName}
+  <option 
+    className='attachment-dropdown-option'
+    value= {weapon.profileTwo[0].profileName}
     onClick={setProfileStats}
     text='Profile Two'
   >Profile Two: {weapon.profileTwo[0].profileName}</option>
           }
           { weapon.profileThree[0] &&
   <option 
+    className='attachment-dropdown-option'
     onClick={setProfileStats}
     text='Profile Three'
     value={weapon.profileThree[0].profileName}>Profile Three: {weapon.profileThree[0].profileName}</option>
@@ -135,7 +140,7 @@ function AmmoCard ({ formData, attachments, display, handleChange, weapon, adsMo
   >Profile Four: {weapon.profileFour[0].profileName}</option>
           }
           { weapon.profileFive[0] &&
-  <option  value={weapon.profileFive[0].profileName}
+  <option  className='attachment-dropdown-option' value={weapon.profileFive[0].profileName}
     onClick={setProfileStats}
     text='Profile Five'
   >Profile Five: {weapon.profileFive[0].profileName}</option>
@@ -149,7 +154,7 @@ getAmmo().filter(
 ).map(
   attachment => {
     return (  
-      <option key={attachment._id} value={attachment.attachmentName}  text='Profile One' onClick={ (e)=> { 
+      <option className='attachment-dropdown-option' key={attachment._id} value={attachment.attachmentName}  text='Profile One' onClick={ (e)=> { 
         oneAmmo(e); setProfileStats(e); setMagSize(weapon.magSize + attachment.magSize)
       }
       } name="Ammo">{attachment.attachmentName}</option>
@@ -159,10 +164,10 @@ getAmmo().filter(
           }
         </select>
       }
-      { attachments && (formData.profile === 'None' && !display) &&
-      <select className='dropdown button'
+      { attachments && (formData.profile === 'None' && attachArray.length > 4) &&
+      <select className='dropdown button unavailable'
         name='barrel'>
-        <option>Unavailable</option>
+        <option className='attachment-dropdown-option'>Unavailable</option>
 
       </select>
       }

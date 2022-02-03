@@ -1,4 +1,4 @@
-function StockCard ({ formData, attachments, display, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe }) {
+function StockCard ({ formData, attachments, handleChange, weapon, adsModifier, setAdsModifier, rangeModifier, setRangeModifier, bulletVelMod, setBulletVelMod, vertRecoil, setVertRecoil, horizRecoil, setHorizRecoil, movSpeed, setMovSpeed, adsMovSpeed, setAdsMovSpeed, sprintSpeed, setSprintSpeed, hipFire, setHipFire, sprintToFire, setSprintToFire, tacSprint, setTacSprint, reloadTime, setReloadTime, strafe, setStrafe, attachArray }) {
 
   function getStock() {
     if (attachments && weapon) {
@@ -107,12 +107,14 @@ function StockCard ({ formData, attachments, display, handleChange, weapon, adsM
 
   return (
     <div className='column is-one-fifth weapon-part'>
-      <button className='button is-black'>Stock</button>
-      { attachments && ((formData.stock === 'None' && display) || (formData.stock !== 'None')) &&
-<select className='dropdown button'
+      <button className='button is-black select-attachment-button'>Stock</button>
+      { attachments && ((formData.stock === 'None' && attachArray.length <= 4) || (formData.stock !== 'None')) &&
+<select className='dropdown button select-attachment'
   onChange={handleChange}
   name="stock">
-  <option >{getStock()[0].attachmentName}</option>
+  <option 
+    className='attachment-dropdown-option'
+  >{getStock()[0].attachmentName}</option>
   {
     attachments &&
 getStock().filter(
@@ -122,7 +124,9 @@ getStock().filter(
 ).map(
   attachment => {
     return (  
-      <option key={attachment._id} value={attachment.attachmentName} onClick={oneStock}>{attachment.attachmentName}</option>
+      <option 
+        className='attachment-dropdown-option'
+        key={attachment._id} value={attachment.attachmentName} onClick={oneStock}>{attachment.attachmentName}</option>
     )
   }            
 )
@@ -130,8 +134,8 @@ getStock().filter(
 </select> 
       }
 
-      { attachments && (formData.stock === 'None' && !display) &&
-      <select className='dropdown button'
+      { attachments && (formData.stock === 'None' && attachArray.length > 4) &&
+      <select className='dropdown button unavailable'
         name='stock'>
         <option>Unavailable</option>
 
