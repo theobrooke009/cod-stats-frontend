@@ -1357,9 +1357,16 @@ margin-left: 50px;
 
   .type-column{
     display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    width: 500px;
+    .reset-div{
+      margin: 0 10px;
+      .mobile-reset{
+        margin-top: 10px;
+      }
+    }
   }
   .weapon-type-buttons{
     display: none;
@@ -1375,7 +1382,6 @@ margin-left: 50px;
       height: 65px;
       width: 200px;
       font-size: 25px;
-      margin-top: 5px;
       .select-head{
         font-family: 'Teko', sans-serif;
       }

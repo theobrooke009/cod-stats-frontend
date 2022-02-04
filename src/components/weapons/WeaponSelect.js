@@ -12,16 +12,13 @@ function WeaponList() {
   const [isError, setIsError] = React.useState(false)
   const [isActive, setisActive] = React.useState(false)
 
-  console.log(isActive, setisActive)
-
-
-  console.log('here',weapons, motion)
   
   React.useEffect(() => {
     const getData = async () => {
       try {
         const response = await getAllGuns()
         setWeapons(response.data)
+        console.log('here for weapons', response.data)
       } catch (err) {
         setIsError(true)
         console.log('error is', err)
@@ -131,11 +128,15 @@ function WeaponList() {
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">SMG</a>
                 <hr className = "dropdown-divider"/>
-                <a href = "#" className = "dropdown-item is-active">LMG</a>
+                <a onClick={setWeaponType} className = "dropdown-item">LMG</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Marksman Rifle</a>
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">Sniper</a>
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">Shotgun</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Tactical Rifle</a>
               </div>
             </div>
           </div>
@@ -156,6 +157,10 @@ function WeaponList() {
               onClick={setWeaponType}
             >LMG</button>
 
+            <button className='button is-black is-focused'
+              onClick={setWeaponType}
+            >Marksman Rifle</button>
+
             <button className='button is-black'
               onClick={setWeaponType}
             >Shotgun</button>
@@ -163,6 +168,10 @@ function WeaponList() {
             <button className='button is-black'
               onClick={setWeaponType}
             >Sniper</button>
+
+            <button className='button is-black is-focused'
+              onClick={setWeaponType}
+            >Tactical Rifle</button>
 
             <button className='button is-black'
               onClick={setWeaponType}

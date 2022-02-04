@@ -128,11 +128,15 @@ function WeaponList() {
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">SMG</a>
                 <hr className = "dropdown-divider"/>
-                <a href = "#" className = "dropdown-item is-active">LMG</a>
+                <a onClick={setWeaponType} className = "dropdown-item">LMG</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Marksman Rifle</a>
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">Sniper</a>
                 <hr className = "dropdown-divider"/>
                 <a onClick={setWeaponType} className = "dropdown-item">Shotgun</a>
+                <hr className = "dropdown-divider"/>
+                <a onClick={setWeaponType} className = "dropdown-item">Tactical Rifle</a>
               </div>
             </div>
           </div>
@@ -154,6 +158,10 @@ function WeaponList() {
 
             <button className='button is-black is-focused'
               onClick={setWeaponType}
+            >Marksman Rifle</button>
+
+            <button className='button is-black is-focused'
+              onClick={setWeaponType}
             >Shotgun</button>
 
             <button className='button is-black is-focused'
@@ -162,7 +170,7 @@ function WeaponList() {
 
             <button className='button is-black is-focused'
               onClick={setWeaponType}
-            >Pistol</button>
+            >Tactical Rifle</button>
 
             <button className='button is-black is-focused'
               onClick={setWeaponType}
