@@ -10,8 +10,18 @@ import Navbar from './components/common/Navbar.js'
 import Footer from './components/common/Footer.js'
 import LoginRegister from './components/auth/LoginRegister.js'
 // import Secure from './components/common/SecureRoute.js'
+import { getAllGuns } from './components/lib/api.js'
 
 function App() {
+ 
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await getAllGuns()
+      console.log('gun data', res.data)
+    }
+    getData()
+  })
+
   return (
     <BrowserRouter>
       <Navbar />
