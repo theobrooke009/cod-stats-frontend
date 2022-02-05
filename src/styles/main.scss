@@ -12,6 +12,14 @@ body{
   width: 100%;
 }
 
+section{
+  background-color: black;
+  background-image: url("https://res.cloudinary.com/dvio5jxzq/image/upload/v1643251940/cod/call-of-duty-modern-warfare-section-background-desktop-01-ps4-en-05nov19_lzbod1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .auth-container{
   height: 500px;
   width: 500px;
@@ -970,7 +978,10 @@ and (-webkit-min-device-pixel-ratio: 2) {
     height: 812px;
     // background-image: none;
     width: auto;
+  }
 
+  #root{
+    height: 1200px;
   }
 
   #mobile-nav-links{
@@ -1128,7 +1139,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
   .weapons-container{
     height: 115vw;
     overflow: scroll;
-    margin-bottom: 110px;
+    margin-bottom: 60px;
   }
   .weapon-card{
     height: 75%;
@@ -1235,6 +1246,7 @@ header{
 .attachments{
   margin: 0;
   padding-top: 0;
+  width: 375px;
 }
 
 .create-header{
@@ -1280,9 +1292,11 @@ header{
 
 .mobile-create-weapon-div{
   display: flex;
-  width: 45%;
+  width: 85%;
   height: auto;
   img{
+
+
     margin: 0;
   }
 }
@@ -1420,6 +1434,7 @@ header{
 .weapon-page{
   width: 375px;
   border: none;
+  margin-bottom: 0;
 
 }
 
@@ -1533,6 +1548,7 @@ margin-left: 50px;
   .weapons-container{
     height: 500px;
     margin: 0 20px 0 20px;
+    margin-bottom: 0;
   }
 
   .mobile-drop{
