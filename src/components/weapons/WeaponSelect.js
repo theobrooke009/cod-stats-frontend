@@ -116,7 +116,7 @@ function WeaponList() {
               <button className = "button  mobile-drop is-black" aria-haspopup = "true" aria-controls = "dropdown-menu">
                 <span className="select-head">Weapon Class</span>
                 <span className = "icon is-white">
-                  <i className = "fa fa-angle-down is-white" aria-hidden="true">	&#8964;</i>
+                  <i className = "fa fa-angle-down is-white" aria-hidden="true"></i>
                 </span>
               </button>
             </div>

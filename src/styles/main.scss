@@ -9,6 +9,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%; 
+  width: 100%;
 }
 
 .auth-container{
@@ -32,7 +33,7 @@ body{
     width: 500px;
    
     .login-div{
-      width: 500px;
+      width: auto;
       height: auto;
       align-content: center;
       -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
@@ -959,18 +960,45 @@ box-shadow: 1px 2px 3px 2px rgba(0,0,0,.5);
 
 
 @media only screen 
-and (min-device-width: 320px)
-and (max-device-width: 812px)
+and (min-device-width: 375px)
+and (max-device-height: 812px)
 and (-webkit-min-device-pixel-ratio: 2) {
+  body{
+    section{
+      width: 100%
+    }
+    height: 812px;
+    // background-image: none;
+    width: auto;
+
+  }
 
   #mobile-nav-links{
     display: inline;
   }
 
+  section{
+    width: 400px;
+  }
+
+
+
+  .auth-page{
+    height: 812px;
+  }
+
+
 
   #desktop-nav{
     display: flex;
+    // width: 375px;
   }
+
+  #desktop-foot{
+    height: 70px
+  }
+
+
 
 
   #access{
@@ -999,10 +1027,15 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
   }
 
+  .columns{
+    margin-right: 0;
+  }
+
   #site-access{
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    padding-right: 0px;
 
     .navbar-item{
       margin: 5px;
@@ -1032,7 +1065,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
 
   body{
-    width: 375px;
+    width: 100%;
   }
   .logo-div{
     display: flex;
@@ -1077,6 +1110,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
     }
   }
 
+
   .is-one-fifth{
     border: 0px;
   }
@@ -1094,6 +1128,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
   .weapons-container{
     height: 115vw;
     overflow: scroll;
+    margin-bottom: 110px;
   }
   .weapon-card{
     height: 75%;
@@ -1294,17 +1329,25 @@ header{
   display: flex;
   justify-content: center;
   height: 400%;
-  width: 350px;
+  width: 300px;
   -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
   -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
   box-shadow: 0px 0px 0px 0px rgba(0,0,0,0); 
   .login-form{
-    width: 450px;
-
+    width: 100%;
+    .login-input{
+      padding: 0 10px;
+    }
   }
   .register-div{
     height: 400%;
-    width: 75%;
+    width: 100%;
+    .field{
+      padding: 0 15px;
+    }
+    .register-button{
+     margin-left: 15px;
+    }
   }
 }
 
@@ -1425,9 +1468,11 @@ header{
 
 
 @media only screen 
-and (min-device-width: 813px)
-and (max-device-width: 1500px)
+and (min-device-width: 812px)
+and (max-device-width: 1600px)
 and (-webkit-min-device-pixel-ratio: 2){
+
+  
 
 #access{
   .navbar-item{
