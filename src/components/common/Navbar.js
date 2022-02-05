@@ -17,7 +17,7 @@ function Navbar() {
 
   return (
     <nav className="navbar columns is-black" id="desktop-nav">     
-      <div className="column is-three-quarters-desktop is-three-quarters-tablet" id="site-links">
+      <div className="column is-half-desktop is-half-tablet is-half-mobile" id="site-links">
         <div className="navbar-item">
           <Link to="/profile">
             <h3>Profile</h3>
@@ -34,7 +34,15 @@ function Navbar() {
             <h3>User Classes</h3>
           </Link>
           }
+          
         </div>
+        
+
+  
+
+      </div>
+
+      <div className="column is-half-desktop is-half-tablet is-half-mobile" id="site-access">
         {
           !isAuth &&
             <div className="navbar-item" id="site-access">
@@ -52,6 +60,7 @@ function Navbar() {
               </Link>
             </div>
         }
+
         {
           isAuth &&
             <div className="navbar-item" id="site-access">
@@ -60,38 +69,6 @@ function Navbar() {
               </Link>
             </div>
         }
-      </div>
-        
-          
-
-      <div className="column is-one-quarter-desktop is-one-quarter-tablet" id="access">
-        <div className="navbar-item">
-          {
-            !isAuth &&
-            <div className="navbar-item">
-              <Link to="/">
-                <h3>Login</h3>
-              </Link>
-            </div>
-          }
-
-          {
-            !isAuth &&
-            <div className="navbar-item">
-              <Link to="/" >
-                <h3>Register</h3>
-              </Link>
-            </div>
-          }
-          {
-            isAuth &&
-            <div className="navbar-item">
-              <Link to="/" onClick={handleLogout}>
-                <h3>Logout</h3>
-              </Link>
-            </div>
-          }
-        </div>
       </div>
     </nav>
   )

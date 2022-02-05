@@ -40,6 +40,10 @@ function WeaponProfile() {
     setProfile(e.target.value)
   }
 
+  function handleLogin() {
+    navigate('/')
+  }
+
 
 
   const getProfileStats = () => {
@@ -113,7 +117,7 @@ function WeaponProfile() {
                 }
 
                 {
-                  !isAuth && <button className='button profile-select'>Login or Register to create your own build</button>
+                  !isAuth && <button onClick={handleLogin}className='button wp-no-auth is-black'>Login or Register to create your own build</button>
                 }
 
               </div>

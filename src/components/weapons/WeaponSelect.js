@@ -93,18 +93,16 @@ function WeaponList() {
       <div className="logo-div">
         <img className="logo-image"src="https://res.cloudinary.com/dvio5jxzq/image/upload/v1643249938/cod/pngaaa.com-665123_omjtgo.png"/>
       </div>
-      <div className='game-buttons'>
-        <button className='button is-black'
-          onClick={setGameState}>Modern Warfare</button>
-        <button className='button is-black'
-          onClick={setGameState}>Cold War</button>
-        <button className='button is-black'
-          onClick={setGameState}>Vanguard</button>
-      </div>
-
-      <div className='container columns'>
-        <div className='column type-column is-one-fifth'>
-        
+      <div className='small-screen-button-menu'>
+        <div className='game-buttons'>
+          <button className='button is-black'
+            onClick={setGameState}>Modern Warfare</button>
+          <button className='button is-black'
+            onClick={setGameState}>Cold War</button>
+          <button className='button is-black'
+            onClick={setGameState}>Vanguard</button> 
+        </div>
+        <div className='small-screen-drop-reset'>
           <div
             onClick={() => {
               setisActive(!isActive)
@@ -117,8 +115,8 @@ function WeaponList() {
             <div className = "dropdown-trigger">
               <button className = "button  mobile-drop is-black" aria-haspopup = "true" aria-controls = "dropdown-menu">
                 <span className="select-head">Weapon Class</span>
-                <span className = "icon is-small is-white">
-                  <i className = "fa fa-angle-down is-white" aria-hidden="true"></i>
+                <span className = "icon is-white">
+                  <i className = "fa fa-angle-down is-white" aria-hidden="true">	&#8964;</i>
                 </span>
               </button>
             </div>
@@ -143,6 +141,15 @@ function WeaponList() {
           <div className='reset-div'>
             <button className="button mobile-reset is-black" onClick={setWeaponType} >Reset</button>
           </div>
+        </div>
+        
+        
+      </div>
+
+      <div className='container columns'>
+        <div className='column type-column is-one-fifth'>
+        
+          
           <div className='weapon-type-buttons'>
 
             <button className='button is-black'
@@ -208,12 +215,7 @@ function WeaponList() {
           
         </motion.div>}
         </div>
-        
-
-      </div>
-
-
-   
+      </div>   
     </section>
   )
 }
