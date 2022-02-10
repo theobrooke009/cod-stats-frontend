@@ -462,6 +462,7 @@ function CreateAClass() {
 
                 </div>
               </div>
+
               <div className='columns attachments-top'>
               
                 {/*Muzzle*/}

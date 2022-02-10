@@ -71,7 +71,7 @@ function WeaponProfile() {
   return (
     <section className='weapon-page'>
       { weapon &&
-        <section className='profile'>
+        <section className='individual-profile'>
           <div className='user-weapon-profile-header'>
             <div className='title'>
               <div><h1>{weapon.name}</h1></div>

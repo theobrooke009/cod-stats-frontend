@@ -47,24 +47,19 @@ function WeaponProfile() {
 
 
   const getProfileStats = () => {
-    if (weapon){
-      if (profile && profile === 'Profile One') {
-        return weapon.profileOne[0]
-      }
-      if ( profile && profile === 'Profile Two') {
-        return weapon.profileTwo[0]
-      }
-      if (profile && profile === 'Profile Three') {
-        return weapon.profileThree[0]
-      }
-      if (profile && profile === 'Profile Four') {
-        return weapon.profileFour[0]
-      }
-      if (profile && profile === 'Profile Five') {
-        return weapon.profileFive[0]
-      }
-      if (profile && profile === 'Profile Six') {
-        return weapon.profileSix[0]
+    if (weapon && profile){
+      switch (profile) {
+        case 'Profile One': return weapon.profileOne[0] 
+               
+        case 'Profile Two': return weapon.profileTwo[0]
+
+        case 'Profile Three': return weapon.profileThree[0]
+  
+        case 'Profile Four': return weapon.profileFour[0]
+   
+        case 'Profile Five': return weapon.profileFive[0]
+
+        case 'Profile Six': return weapon.profileSix[0]
       }
     }
     return 0
@@ -78,7 +73,7 @@ function WeaponProfile() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.5 }}>
       { weapon &&
-        <section className='profile'
+        <section className='individual-profile'
         >
           <div className='header'>
             <div className='title'>

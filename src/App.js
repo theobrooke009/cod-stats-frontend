@@ -10,20 +10,12 @@ import Navbar from './components/common/Navbar.js'
 import Footer from './components/common/Footer.js'
 import LoginRegister from './components/auth/LoginRegister.js'
 // import Secure from './components/common/SecureRoute.js'
-import { getAllGuns } from './components/lib/api.js'
 import { baseUrl } from './config.js'
 
 function App() {
 
   console.log('baseurl here', baseUrl)
- 
-  React.useEffect(() => {
-    const getData = async () => {
-      const res = await getAllGuns()
-      console.log('gun data', res.data)
-    }
-    getData()
-  })
+
 
   return (
     <BrowserRouter>
